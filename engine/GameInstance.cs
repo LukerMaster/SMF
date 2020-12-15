@@ -1,0 +1,133 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using SFML.Graphics;
+using SFML.System;
+using SFML.Window;
+using SMF.engine;
+using SMF.game;
+
+namespace SMF.engine
+{
+    class GameInstance
+    {
+        InstanceVars vars;
+
+        public float desired_dt = 0.00833f;
+        private bool wasFullscreen;
+
+        List<IGameState> gameStates = new List<IGameState>();
+
+        /// <summary>
+        /// Resets the SFML View so it ALWAYS draws entire playfield regardless of window size or aspect ratio.
+        /// </summary>
+        private void WindowResized(object sender, SizeEventArgs e)
+        {
+            View view = new View();
+            view.Size = new Vector2f(vars.Settings.playfieldSize.X, vars.Settings.playfieldSize.Y);
+            view.Center = new Vector2f(vars.Settings.playfieldSize.X / 2, vars.Settings.playfieldSize.Y / 2);
+
+            if (!vars.Settings.stretched)
+            {
+                float screenAspectRatio = (float)vars.Window.Size.X / vars.Window.Size.Y;
+                float fieldAspectRatio = (float)vars.Settings.playfieldSize.X / vars.Settings.playfieldSize.Y;
+
+                float fieldToScreenRatio = fieldAspectRatio / screenAspectRatio;
+
+                FloatRect viewport = new FloatRect();
+                viewport.Left = Math.Max(0, (1 - fieldToScreenRatio) / 2);
+                viewport.Width = Math.Min(1, fieldToScreenRatio);
+
+                viewport.Top = Math.Max(0, (1 - (1 / fieldToScreenRatio)) / 2);
+                viewport.Height = Math.Min(1 / fieldToScreenRatio, 1);
+                view.Viewport = viewport;
+            }
+            vars.Window.SetView(view);
+            if (vars.Settings.fullscreen && !wasFullscreen)
+            {
+                uint resX = vars.Window.Size.X;
+                uint resY = vars.Window.Size.Y;
+                vars.Window.Close();
+                vars.Window.Dispose();
+                vars.RecreateWindow(vars.Settings.windowName);
+                
+            }
+            else if (!vars.Settings.fullscreen && wasFullscreen)
+            {
+                uint resX = vars.Window.Size.X;
+                uint resY = vars.Window.Size.Y;
+                vars.Window.Close();
+                vars.Window.Dispose();
+                vars.RecreateWindow(vars.Settings.windowName);
+            }
+            wasFullscreen = vars.Settings.fullscreen;
+        }
+
+        public GameInstance(String windowName, EResolution res)
+        {
+            vars = new InstanceVars(windowName, res);
+            
+            vars.Window.Resized += WindowResized;
+
+            gameStates.Add(new MenuState(vars));
+
+            wasFullscreen = vars.Settings.fullscreen;
+
+            vars.Window.Closed += (object sender, EventArgs e) => vars.Settings.isGameOn = false;
+        }
+
+        /// <summary>
+        /// Loops the private Update() function while trying to maintain fixed framerate and frametime-independency.
+        /// Slows down however if frametime exceeds 10 times the desired value.
+        /// </summary>
+        public void Loop()
+        {
+            float elapsed_dt;
+            float dt = desired_dt; // deltaTime used for updates (in seconds)
+            Clock clock = new Clock();
+            while (vars.Settings.isGameOn)
+            {
+                clock.Restart();
+
+                Update(dt);
+
+                elapsed_dt = clock.ElapsedTime.AsSeconds();
+                
+                if (elapsed_dt < desired_dt)
+                {
+                    System.Threading.Thread.Sleep((int)((desired_dt - elapsed_dt) * 1000));
+                    dt = desired_dt;
+                }
+                else
+                {
+                    dt = elapsed_dt - desired_dt;
+                    if (dt > desired_dt * 10)
+                        dt = desired_dt * 10; // If game runs SUPER BADLY, don't use super high DT for updates, rather slow the game.
+                }
+            }
+            vars.Window.Close();
+        }
+        /// <summary>
+        /// Does game update using specified deltatime (that should be properly calculated in Loop() function).
+        /// Goes through every state in list of states.
+        /// </summary>
+        /// <param name="dt">Deltatime</param>
+        void Update(float dt)
+        {
+            WindowResized(null, null);
+            vars.Window.DispatchEvents();
+            vars.Window.Clear(Color.Black);
+
+            foreach (IGameState state in gameStates)
+            {
+                state.Update(dt);
+                if (state.IsVisible())
+                    state.Draw();
+                if (state.IsDisposable())
+                    gameStates.Remove(state);
+            }
+
+            vars.Window.Display();
+        }
+    }
+}

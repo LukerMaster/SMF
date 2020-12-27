@@ -7,10 +7,16 @@ namespace SMF.game
 {
     public class FishData
     {
+        public FishData ShallowCopy()
+        {
+            FishData other = (FishData)this.MemberwiseClone();
+            return other;
+        }
+
         public int ID = 0;
         public string Name = "";
-        public int SizeX = 192;
-        public int SizeY = 108;
+        public int SizeX = 128;
+        public int SizeY = 72;
 
         public int Health = 1000;
         public int HealthRegen = 0;
@@ -19,8 +25,8 @@ namespace SMF.game
         public int StaminaRegen = 500;
         public int StaminaRegenCooldown = 1000;
 
-        public int MaxSpeed = 1000;
-        public int Force = 1000;
+        public int MaxSpeed = 500;
+        public int Force = 50;
         public int Mass = 1000;
         public float Friction = 0.5f;
 

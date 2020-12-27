@@ -2,8 +2,8 @@
 <FishData>
 	<ID>3</ID>
 	<Name>Doggis</Name>
-	<SizeX>217</SizeX>
-	<SizeY>86</SizeY>
+	<SizeX>152</SizeX>
+	<SizeY>60</SizeY>
 	
 	<Health>1500</Health>
 	<HealthRegen>100</HealthRegen>
@@ -13,10 +13,10 @@
 	<StaminaRegen>500</StaminaRegen>
 	<StaminaRegenCooldown>500</StaminaRegenCooldown>
 	
-	<MaxSpeed>1400</MaxSpeed>
-	<Acceleration>1200</Acceleration>
-	<Jerk>1000</Jerk>
-	<Friction>0.8</Friction>
+	<MaxSpeed>500</MaxSpeed>
+	<Force>120</Force>
+	<Mass>800</Mass>
+	<Friction>0.7</Friction>
 	
 	
 	<EngineMult>1.2</EngineMult>

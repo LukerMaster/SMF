@@ -2,8 +2,8 @@
 <FishData>
 	<ID>0</ID>
 	<Name>Lenny</Name>
-	<SizeX>192</SizeX>
-	<SizeY>108</SizeY>
+	<SizeX>128</SizeX>
+	<SizeY>72</SizeY>
 	
 	<Health>1000</Health>
 	<HealthRegen>0</HealthRegen>
@@ -13,9 +13,9 @@
 	<StaminaRegen>500</StaminaRegen>
 	<StaminaRegenCooldown>1000</StaminaRegenCooldown>
 	
-	<MaxSpeed>1000</MaxSpeed>
-	<Acceleration>1000</Acceleration>
-	<Jerk>1000</Jerk>
+	<MaxSpeed>400</MaxSpeed>
+	<Force>100</Force>
+	<Mass>1000</Mass>
 	<Friction>0.5</Friction>
 	
 	

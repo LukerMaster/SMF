@@ -158,7 +158,7 @@ namespace SMF.game
                     finalValue += baseData.MaxSpeed * 0.4f * baseData.FinsMult;
                     break;
             }
-            return finalValue / 2;
+            return finalValue;
         }
         public static float GetMaxAcceleration(FishData baseData, int engineLvl, int finsLvl, int bodyLvl)
         {
@@ -167,31 +167,31 @@ namespace SMF.game
             switch (engineLvl)
             {
                 case 1:
-                    finalForce += baseData.Force * 0.1f * baseData.EngineMult;
+                    finalForce += baseData.Force * 1.8f * baseData.EngineMult;
                     break;
                 case 2:
-                    finalForce += baseData.Force * 0.15f * baseData.EngineMult;
+                    finalForce += baseData.Force * 2.2f * baseData.EngineMult;
                     break;
                 case 3:
-                    finalForce += baseData.Force * 0.3f * baseData.EngineMult;
+                    finalForce += baseData.Force * 3.0f * baseData.EngineMult;
                     break;
                 case 4:
-                    finalForce += baseData.Force * 0.45f * baseData.EngineMult;
+                    finalForce += baseData.Force * 4.0f * baseData.EngineMult;
                     break;
             }
             switch (finsLvl)
             {
                 case 1:
-                    finalForce += baseData.Force * 0.1f * baseData.FinsMult;
+                    finalForce += baseData.Force * 1.3f * baseData.FinsMult;
                     break;
                 case 2:
-                    finalForce += baseData.Force * 0.15f * baseData.FinsMult;
+                    finalForce += baseData.Force * 1.5f * baseData.FinsMult;
                     break;
                 case 3:
-                    finalForce += baseData.Force * 0.2f * baseData.FinsMult;
+                    finalForce += baseData.Force * 2.0f * baseData.FinsMult;
                     break;
                 case 4:
-                    finalForce += baseData.Force * 0.3f * baseData.FinsMult;
+                    finalForce += baseData.Force * 2.5f * baseData.FinsMult;
                     break;
             }
             switch (bodyLvl)
@@ -204,6 +204,26 @@ namespace SMF.game
                     break;
             }
             return 1000*finalForce/finalMass;
+        }
+        public static float GetFriction(FishData baseData, int finsLvl)
+        {
+            float finalValue = baseData.Friction;
+            switch (finsLvl)
+            {
+                case 1:
+                    finalValue = Math.Min(finalValue * 1.1f, 0.98f);
+                    break;
+                case 2:
+                    finalValue = Math.Min(finalValue * 1.2f, 0.98f);
+                    break;
+                case 3:
+                    finalValue = Math.Min(finalValue * 1.5f, 0.98f);
+                    break;
+                case 4:
+                    finalValue = Math.Min(finalValue * 2.0f, 0.98f);
+                    break;
+            }
+            return finalValue;
         }
     }
 }

@@ -38,11 +38,19 @@ namespace SMF.game
             bgSprite.Scale = new Vector2f((float)vars.Settings.playfieldSize.X / bgTexture.Size.X, (float)vars.Settings.playfieldSize.Y / bgTexture.Size.Y);
             smfSprite.Position = new Vector2f(50, 50);
             smfSprite.Scale = new Vector2f(0.6f, 0.6f);
-            
-            selectedFish = new Fish();
-            LoadNewFishData(0);
 
-            currentMenu = CreateMainMenu();
+            selectedFish = new Fish();
+
+            if (vars.Settings.selectedFish != null)
+            {
+                selectedFish = vars.Settings.selectedFish.DeepCopy();
+            }
+            else
+            {
+                LoadNewFishData(0);
+            }
+
+                currentMenu = CreateMainMenu();
             
         }
 
@@ -404,8 +412,9 @@ namespace SMF.game
         {
             Sprite previewSprite = new Sprite(selectedFish.sprite);
             previewSprite.Color = selectedFish.tint;
-            previewSprite.Position = new Vector2f(1860, 700);
-            previewSprite.Scale = new Vector2f(-Math.Abs(previewSprite.Scale.X * 1.5f), previewSprite.Scale.Y * 1.5f);
+            previewSprite.Position = new Vector2f(1720, 770);
+            previewSprite.Origin = new Vector2f(selectedFish.sprite.Texture.Size.X / 2, selectedFish.sprite.Texture.Size.Y / 2);
+            previewSprite.Scale = new Vector2f((float)-selectedFish.baseData.SizeX * 2f / selectedFish.sprite.Texture.Size.X, (float)selectedFish.baseData.SizeY * 2f / selectedFish.sprite.Texture.Size.Y);
             customSprite.Position = new Vector2f(1502, 270);
             customSprite.Scale = new Vector2f(418.0f / customSprite.Texture.Size.X, 700.0f / customSprite.Texture.Size.Y);
             vars.Window.Draw(customSprite);
@@ -416,11 +425,11 @@ namespace SMF.game
                 bars[i] = new RectangleShape();
 
             float[] percentages = new float[6];
-            percentages[0] = selectedFish.MaxHealth / 20000.0f;
-            percentages[1] = selectedFish.HealthRegen / 10000.0f;
-            percentages[2] = selectedFish.MaxSpeed / 10000.0f;
-            percentages[3] = selectedFish.MaxAcceleration / 10000.0f;
-            percentages[4] = selectedFish.baseData.Friction * selectedFish.baseData.Friction / 1.0f; // TO CHANGE
+            percentages[0] = selectedFish.MaxHealth / 13000.0f;
+            percentages[1] = Math.Max(0, selectedFish.HealthRegen / 1000.0f);
+            percentages[2] = selectedFish.MaxSpeed / 1600.0f;
+            percentages[3] = selectedFish.MaxAcceleration / 1500.0f;
+            percentages[4] = (float)Math.Pow(selectedFish.Friction, 3) / 0.941192f;
             percentages[5] = selectedFish.MaxStamina / 20000.0f;
             bars[0].FillColor = new Color(255, 0, 0, 255);
             bars[1].FillColor = new Color(255, 60, 60, 255);

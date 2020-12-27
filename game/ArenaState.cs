@@ -9,12 +9,14 @@ namespace SMF.game
     class ArenaState : engine.IGameState
     {
         InstanceVars vars;
-        Fish playerFish;
+        Fish playerFish = new Fish();
+        List<Fish> fishes = new List<Fish>();
 
         public ArenaState(InstanceVars vars)
         {
             this.vars = vars;
             playerFish = vars.Settings.selectedFish;
+            fishes.Add(new Fish());
         }
         public void Draw()
         {
@@ -33,7 +35,14 @@ namespace SMF.game
                 vars.Input.LeftPressed,
                 vars.Input.RightPressed,
                 vars.Input.LmbPressed,
-                vars.Input.RmbPressed);
+                vars.Input.BoostPressed);
+
+            if (vars.Input.EscapePressed)
+            {
+                vars.gameStates.Add(new MenuState(vars));
+                IsDisposable = true;
+            }
+
         }
 
     }

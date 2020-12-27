@@ -16,6 +16,8 @@ namespace SMF.engine
                 UpPressed = e.Code == Keyboard.Key.W    || e.Code == Keyboard.Key.Up    ? true : UpPressed;
                 DownPressed = e.Code == Keyboard.Key.S  || e.Code == Keyboard.Key.Down  ? true : DownPressed;
                 EnterPressed = e.Code == Keyboard.Key.Enter ? true : EnterPressed;
+                EscapePressed = e.Code == Keyboard.Key.Escape ? true : EscapePressed;
+                BoostPressed = e.Code == Keyboard.Key.LShift ? true : BoostPressed;
             };
 
             w.KeyReleased += (object sender, KeyEventArgs e) =>
@@ -25,6 +27,8 @@ namespace SMF.engine
                 UpPressed = e.Code == Keyboard.Key.W    || e.Code == Keyboard.Key.Up    ? false : UpPressed;
                 DownPressed = e.Code == Keyboard.Key.S  || e.Code == Keyboard.Key.Down  ? false : DownPressed;
                 EnterPressed = e.Code == Keyboard.Key.Enter ? false : EnterPressed;
+                EscapePressed = e.Code == Keyboard.Key.Escape ? false : EscapePressed;
+                BoostPressed = e.Code == Keyboard.Key.LShift ? false : BoostPressed;
             };
 
             w.MouseButtonPressed += (object sender, MouseButtonEventArgs e) =>
@@ -76,6 +80,8 @@ namespace SMF.engine
         private bool rightPressed;
         private bool downPressed;
         private bool enterPressed;
+        private bool escapePressed;
+        private bool boostPressed;
 
         public bool LmbPressed { get => lmbPressed; private set => lmbPressed = value; }
         public bool RmbPressed { get => rmbPressed; private set => rmbPressed = value; }
@@ -83,7 +89,9 @@ namespace SMF.engine
         public bool LeftPressed { get => leftPressed; private set => leftPressed = value; }
         public bool RightPressed { get => rightPressed; private set => rightPressed = value; }
         public bool DownPressed { get => downPressed; private set => downPressed = value; }
-        public Vector2i MousePos { get => mousePos; set => mousePos = value; }
-        public bool EnterPressed { get => enterPressed; set => enterPressed = value; }
+        public Vector2i MousePos { get => mousePos; private set => mousePos = value; }
+        public bool EnterPressed { get => enterPressed; private set => enterPressed = value; }
+        public bool EscapePressed { get => escapePressed; private set => escapePressed = value; }
+        public bool BoostPressed { get => boostPressed; private set => boostPressed = value; }
     }
 }

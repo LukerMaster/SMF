@@ -42,6 +42,7 @@ Fins:
   - Electromechanical fins with water flow analyzer
 4 - Fully electronic ZumTek automatic swim system
   - Extreme-impact Fin reinforcements
+  - Water-jet based braking system
 Nitro:
 0 - Basic fart&wiggle boost mechanism
 1 - Basic Single-Bottle Dry N2O system

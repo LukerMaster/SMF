@@ -70,15 +70,8 @@ namespace SMF.game
                 DrawCustomizeMenu();
         }
 
-        public bool IsDisposable()
-        {
-            return false;
-        }
-
-        public bool IsVisible()
-        {
-            return true;
-        }
+        public bool IsDisposable { get; set; } = false;
+        public bool IsVisible { get; set; } = true;
 
         Menu CreateMainMenu(int currentlySelected = 0) // Builder/helper function for creating menu faster.
         {
@@ -114,6 +107,12 @@ namespace SMF.game
             tempBtn.Anchor = new Vector2f(0.0f, 0.5f);
             tempBtn.Height = 100;
             tempBtn.Label = "Singleplayer";
+            tempBtn.OnClick = () =>
+            {
+                vars.Settings.selectedFish = selectedFish; 
+                vars.gameStates.Add(new ArenaState(vars));
+                IsDisposable = true;
+            };
             menu.componentList.Add(tempBtn);
 
             menu.CurrentlySelected = currentlySelected;
@@ -203,6 +202,7 @@ namespace SMF.game
             Menu menu = new Menu();
             menu.FlipUpDown = true;
             TextButton tempBtn = new TextButton(font);
+            AdjustButtonSet tempSet = new AdjustButtonSet(font);
 
             tempBtn.Position = new Vector2i(10, 900);
             tempBtn.Anchor = new Vector2f(0.0f, 0.5f);
@@ -210,57 +210,77 @@ namespace SMF.game
             tempBtn.Label = "Back";
             tempBtn.OnClick = () => { currentMenu = CreateCustomizeMenu(); };
             menu.componentList.Add(tempBtn);
+            int currentHeight = 800; // Used to position buttons next to each other no matter which are unlocked.
 
-            AdjustButtonSet tempSet = new AdjustButtonSet(font);
-            tempSet.Position = new Vector2i(10, 800);
-            tempSet.Anchor = new Vector2f(0.0f, 0.5f);
-            tempSet.Height = 100;
-            tempSet.Label = "Engine";
-            tempSet.SetStringFunction(() => TuningValues.GetLabelForTuningLevel(selectedFish.EngineLvl));
-            tempSet.SetOnClickPrev(() => selectedFish.EngineLvl--);
-            tempSet.SetOnClickNext(() => selectedFish.EngineLvl++);
-            menu.componentList.Add(tempSet);
-
-            tempSet = new AdjustButtonSet(font);
-            tempSet.Position = new Vector2i(10, 700);
-            tempSet.Anchor = new Vector2f(0.0f, 0.5f);
-            tempSet.Height = 100;
-            tempSet.Label = "Chassis";
-            tempSet.SetStringFunction(() => TuningValues.GetLabelForTuningLevel(selectedFish.ChassisLvl));
-            tempSet.SetOnClickPrev(() => selectedFish.ChassisLvl--);
-            tempSet.SetOnClickNext(() => selectedFish.ChassisLvl++);
-            menu.componentList.Add(tempSet);
-
-            tempSet = new AdjustButtonSet(font);
-            tempSet.Position = new Vector2i(10, 600);
-            tempSet.Anchor = new Vector2f(0.0f, 0.5f);
-            tempSet.Height = 100;
-            tempSet.Label = "Body";
-            tempSet.SetStringFunction(() => TuningValues.GetLabelForTuningLevel(selectedFish.BodyLvl));
-            tempSet.SetOnClickPrev(() => selectedFish.BodyLvl--);
-            tempSet.SetOnClickNext(() => selectedFish.BodyLvl++);
-            menu.componentList.Add(tempSet);
-
-            tempSet = new AdjustButtonSet(font);
-            tempSet.Position = new Vector2i(10, 500);
-            tempSet.Anchor = new Vector2f(0.0f, 0.5f);
-            tempSet.Height = 100;
-            tempSet.Label = "Fins";
-            tempSet.SetStringFunction(() => TuningValues.GetLabelForTuningLevel(selectedFish.FinsLvl));
-            tempSet.SetOnClickPrev(() => selectedFish.FinsLvl--);
-            tempSet.SetOnClickNext(() => selectedFish.FinsLvl++);
-            menu.componentList.Add(tempSet);
-
-            tempSet = new AdjustButtonSet(font);
-            tempSet.Position = new Vector2i(10, 400);
-            tempSet.Anchor = new Vector2f(0.0f, 0.5f);
-            tempSet.Height = 100;
-            tempSet.Label = "Nitro";
-            tempSet.SetStringFunction(() => TuningValues.GetLabelForTuningLevel(selectedFish.NitroLvl));
-            tempSet.SetOnClickPrev(() => selectedFish.NitroLvl--);
-            tempSet.SetOnClickNext(() => selectedFish.NitroLvl++);
-            menu.componentList.Add(tempSet);
-
+            if (selectedFish.baseData.EngineMult != 0)
+            {
+                tempSet = new AdjustButtonSet(font);
+                tempSet.Position = new Vector2i(10, currentHeight);
+                tempSet.Anchor = new Vector2f(0.0f, 0.5f);
+                tempSet.Height = 100;
+                tempSet.Label = "Engine";
+                tempSet.SetStringFunction(() => TuningValues.GetLabelForTuningLevel(selectedFish.EngineLvl));
+                tempSet.SetOnClickPrev(() => selectedFish.EngineLvl--);
+                tempSet.SetOnClickNext(() => selectedFish.EngineLvl++);
+                menu.componentList.Add(tempSet);
+                currentHeight -= 100;
+            }
+            
+            if (selectedFish.baseData.ChassisMult != 0)
+            {
+                tempSet = new AdjustButtonSet(font);
+                tempSet.Position = new Vector2i(10, currentHeight);
+                tempSet.Anchor = new Vector2f(0.0f, 0.5f);
+                tempSet.Height = 100;
+                tempSet.Label = "Chassis";
+                tempSet.SetStringFunction(() => TuningValues.GetLabelForTuningLevel(selectedFish.ChassisLvl));
+                tempSet.SetOnClickPrev(() => selectedFish.ChassisLvl--);
+                tempSet.SetOnClickNext(() => selectedFish.ChassisLvl++);
+                menu.componentList.Add(tempSet);
+                currentHeight -= 100;
+            }
+            
+            if (selectedFish.baseData.BodyMult != 0)
+            {
+                tempSet = new AdjustButtonSet(font);
+                tempSet.Position = new Vector2i(10, currentHeight);
+                tempSet.Anchor = new Vector2f(0.0f, 0.5f);
+                tempSet.Height = 100;
+                tempSet.Label = "Body";
+                tempSet.SetStringFunction(() => TuningValues.GetLabelForTuningLevel(selectedFish.BodyLvl));
+                tempSet.SetOnClickPrev(() => selectedFish.BodyLvl--);
+                tempSet.SetOnClickNext(() => selectedFish.BodyLvl++);
+                menu.componentList.Add(tempSet);
+                currentHeight -= 100;
+            }
+            
+            if (selectedFish.baseData.FinsMult != 0)
+            {
+                tempSet = new AdjustButtonSet(font);
+                tempSet.Position = new Vector2i(10, currentHeight);
+                tempSet.Anchor = new Vector2f(0.0f, 0.5f);
+                tempSet.Height = 100;
+                tempSet.Label = "Fins";
+                tempSet.SetStringFunction(() => TuningValues.GetLabelForTuningLevel(selectedFish.FinsLvl));
+                tempSet.SetOnClickPrev(() => selectedFish.FinsLvl--);
+                tempSet.SetOnClickNext(() => selectedFish.FinsLvl++);
+                menu.componentList.Add(tempSet);
+                currentHeight -= 100;
+            }
+            
+            if (selectedFish.baseData.NitroMult != 0)
+            {
+                tempSet = new AdjustButtonSet(font);
+                tempSet.Position = new Vector2i(10, currentHeight);
+                tempSet.Anchor = new Vector2f(0.0f, 0.5f);
+                tempSet.Height = 100;
+                tempSet.Label = "Nitro";
+                tempSet.SetStringFunction(() => TuningValues.GetLabelForTuningLevel(selectedFish.NitroLvl));
+                tempSet.SetOnClickPrev(() => selectedFish.NitroLvl--);
+                tempSet.SetOnClickNext(() => selectedFish.NitroLvl++);
+                menu.componentList.Add(tempSet);
+                currentHeight -= 100;
+            }
 
             return menu;
         }

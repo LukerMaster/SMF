@@ -20,8 +20,8 @@ namespace SMF.game
         public int StaminaRegenCooldown = 1000;
 
         public int MaxSpeed = 1000;
-        public int Acceleration = 1000;
-        public int Jerk = 1000;
+        public int Force = 1000;
+        public int Mass = 1000;
         public float Friction = 0.5f;
 
         public float EngineMult = 1;

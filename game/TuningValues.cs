@@ -158,51 +158,52 @@ namespace SMF.game
                     finalValue += baseData.MaxSpeed * 0.4f * baseData.FinsMult;
                     break;
             }
-            return finalValue;
+            return finalValue / 2;
         }
         public static float GetMaxAcceleration(FishData baseData, int engineLvl, int finsLvl, int bodyLvl)
         {
-            float finalValue = baseData.Acceleration;
+            float finalForce = baseData.Force;
+            float finalMass = baseData.Mass;
             switch (engineLvl)
             {
                 case 1:
-                    finalValue += baseData.Acceleration * 0.1f * baseData.EngineMult;
+                    finalForce += baseData.Force * 0.1f * baseData.EngineMult;
                     break;
                 case 2:
-                    finalValue += baseData.Acceleration * 0.15f * baseData.EngineMult;
+                    finalForce += baseData.Force * 0.15f * baseData.EngineMult;
                     break;
                 case 3:
-                    finalValue += baseData.Acceleration * 0.3f * baseData.EngineMult;
+                    finalForce += baseData.Force * 0.3f * baseData.EngineMult;
                     break;
                 case 4:
-                    finalValue += baseData.Acceleration * 0.45f * baseData.EngineMult;
+                    finalForce += baseData.Force * 0.45f * baseData.EngineMult;
                     break;
             }
             switch (finsLvl)
             {
                 case 1:
-                    finalValue += baseData.Acceleration * 0.1f * baseData.FinsMult;
+                    finalForce += baseData.Force * 0.1f * baseData.FinsMult;
                     break;
                 case 2:
-                    finalValue += baseData.Acceleration * 0.15f * baseData.FinsMult;
+                    finalForce += baseData.Force * 0.15f * baseData.FinsMult;
                     break;
                 case 3:
-                    finalValue += baseData.Acceleration * 0.2f * baseData.FinsMult;
+                    finalForce += baseData.Force * 0.2f * baseData.FinsMult;
                     break;
                 case 4:
-                    finalValue += baseData.Acceleration * 0.3f * baseData.FinsMult;
+                    finalForce += baseData.Force * 0.3f * baseData.FinsMult;
                     break;
             }
             switch (bodyLvl)
             {
                 case 3:
-                    finalValue += baseData.Acceleration * 0.05f * baseData.BodyMult;
+                    finalMass -= baseData.Mass * 0.05f * baseData.BodyMult;
                     break;
                 case 4:
-                    finalValue += baseData.Acceleration * 0.1f * baseData.BodyMult;
+                    finalMass -= baseData.Mass * 0.15f * baseData.BodyMult;
                     break;
             }
-            return finalValue;
+            return 1000*finalForce/finalMass;
         }
     }
 }

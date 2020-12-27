@@ -1,11 +1,13 @@
 ﻿using SFML.Graphics;
 using SFML.Window;
 using System;
+using System.Collections.Generic;
 
 namespace SMF.engine
 {
     class InstanceVars
     {
+        public List<IGameState> gameStates = new List<IGameState>();
         public InstanceVars(String windowName, EResolution res)
         {
             Settings = new Settings();

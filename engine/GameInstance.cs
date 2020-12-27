@@ -11,10 +11,9 @@ namespace SMF.engine
     {
         InstanceVars vars;
 
-        public float desired_dt = 0.00833f;
-        private bool wasFullscreen;
+        public float desired_dt = 0.008333f;
 
-        List<IGameState> gameStates = new List<IGameState>();
+        
 
         /// <summary>
         /// Resets the SFML View so it ALWAYS draws entire playfield regardless of window size or aspect ratio.
@@ -58,9 +57,7 @@ namespace SMF.engine
             
             vars.Window.Resized += WindowResized;
 
-            gameStates.Add(new MenuState(vars));
-
-            wasFullscreen = vars.Settings.Fullscreen;
+            vars.gameStates.Add(new MenuState(vars));
 
             vars.Window.Closed += (object sender, EventArgs e) => vars.Settings.isGameOn = false;
         }
@@ -107,13 +104,13 @@ namespace SMF.engine
             vars.Window.DispatchEvents();
             vars.Window.Clear(Color.Black);
 
-            foreach (IGameState state in gameStates)
+            for (int i = 0; i < vars.gameStates.Count; i++)
             {
-                state.Update(dt);
-                if (state.IsVisible())
-                    state.Draw();
-                if (state.IsDisposable())
-                    gameStates.Remove(state);
+                vars.gameStates[i].Update(dt);
+                if (vars.gameStates[i].IsVisible)
+                    vars.gameStates[i].Draw();
+                if (vars.gameStates[i].IsDisposable)
+                    vars.gameStates.Remove(vars.gameStates[i]);
             }
 
             vars.Window.Display();

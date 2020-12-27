@@ -10,7 +10,7 @@ namespace SMF.engine
     {
         void Update(float dt);
         void Draw();
-        bool IsDisposable();
-        bool IsVisible();
+        bool IsDisposable { get; set; }
+        bool IsVisible { get; set; }
     }
 }

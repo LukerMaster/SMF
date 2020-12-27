@@ -1,0 +1,53 @@
+Engine:
+0 - Standard Biological Powering System
+1 - Basic Gasoline Engine
+2 - High Power Engine
+  - Electronic Fuel Injection System
+  - Turbo with Custom Intercooler
+3 - Racing-grade Engine
+  - Racing-grade ECU
+  - Limited-slip Differential
+  - Variable valve Timing and lift Electronic Control System (V-TEC)
+4 - Additional ZumTek Electrical Motor
+  - Extreme-Pressureproof Insulation System
+  - Quad-Turbo System
+  - Racing Flywheel
+Chassis:
+0 - Standard Bone-based chassis
+1 - Iron plated bones
+  - Steel-wire Reinforced joints
+2 - Steel plated bones
+  - Aluminum skull with bumper plates
+  - Carbon-mesh reinforced joints
+3 - Full Carbon-fiber skeleton
+  - Glass-fiber joint reinforcements
+  - Reinforced bumper-plate mechanism
+4 - Full ZumTek Carbon-fiber plated exoskeleton
+  - Extreme-impact anti-explosion reinforcements
+Body:
+0 - Standard Fish skin
+1 - Basic polymer armor
+2 - Iron-plated skin with
+  - anti-impact polymer plates
+3 - Carbon-fiber skin
+  - Electronic self-repair system
+4 - ZumTek Graphene-Enhanced Carbon-fiber skin
+  - Fully Automatic Self-repair system
+Fins:
+0 - Basic flesh fins
+1 - Servo-motor enhancements
+2 - 3 Servo-motor system for each fin
+  - Polymer fin reinforcement
+3 - Dedicated exofin engine
+  - Electromechanical fins with water flow analyzer
+4 - Fully electronic ZumTek automatic swim system
+  - Extreme-impact Fin reinforcements
+Nitro:
+0 - Basic fart&wiggle boost mechanism
+1 - Basic Single-Bottle Dry N2O system
+2 - Advanced Double-Bottle N2O system
+3 - Direct N2O injection system
+  - High-capacity Double-Bottle N2O system
+  - Electronic engine pressure controller
+4 - ZumTek Quad-Bottle automatic direct N2O injection system
+  - ZumTek dual mini jet engine

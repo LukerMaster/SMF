@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FishData>
+	<ID>3</ID>
+	<Name>Doggis</Name>
+	<SizeX>217</SizeX>
+	<SizeY>86</SizeY>
+	
+	<Health>1500</Health>
+	<HealthRegen>100</HealthRegen>
+	<HealthRegenCooldown>1000</HealthRegenCooldown>
+	
+	<Stamina>2000</Stamina>
+	<StaminaRegen>500</StaminaRegen>
+	<StaminaRegenCooldown>500</StaminaRegenCooldown>
+	
+	<MaxSpeed>1400</MaxSpeed>
+	<Acceleration>1200</Acceleration>
+	<Jerk>1000</Jerk>
+	<Friction>0.8</Friction>
+	
+	
+	<EngineMult>1.2</EngineMult>
+	<ChassisMult>1</ChassisMult>
+	<BodyMult>1</BodyMult>
+	<FinsMult>1</FinsMult>
+	<NitroMult>1.2</NitroMult>
+</FishData>

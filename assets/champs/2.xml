@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FishData>
+	<ID>2</ID>
+	<Name>Necrotish</Name>
+	<SizeX>192</SizeX>
+	<SizeY>108</SizeY>
+	
+	<Health>1000</Health>
+	<HealthRegen>-50</HealthRegen>
+	<HealthRegenCooldown>0</HealthRegenCooldown>
+	
+	<Stamina>3000</Stamina>
+	<StaminaRegen>500</StaminaRegen>
+	<StaminaRegenCooldown>500</StaminaRegenCooldown>
+	
+	<MaxSpeed>1200</MaxSpeed>
+	<Acceleration>500</Acceleration>
+	<Jerk>100</Jerk>
+	<Friction>0.1</Friction>
+	
+	
+	<EngineMult>0</EngineMult>
+	<ChassisMult>1.4</ChassisMult>
+	<BodyMult>0</BodyMult>
+	<FinsMult>0</FinsMult>
+	<NitroMult>2</NitroMult>
+</FishData>

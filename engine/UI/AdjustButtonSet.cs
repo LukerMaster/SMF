@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SMF.game
+namespace SMF.engine.UI
 {
     class AdjustButtonSet : MenuComponent
     {
@@ -30,6 +30,7 @@ namespace SMF.game
         public void SetStringFunction(Func<String> f)
         {
             UpdateSetting = f;
+            UpdateSetting();
         }
 
         public void SetOnClickPrev(Action f)

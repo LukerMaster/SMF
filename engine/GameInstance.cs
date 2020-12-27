@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using SMF.engine;
 using SMF.game;
 
 namespace SMF.engine
@@ -43,7 +41,7 @@ namespace SMF.engine
                 view.Viewport = viewport;
             }
             vars.Window.SetView(view);
-            if (vars.Settings.fullscreen && !wasFullscreen)
+            if (vars.Settings.shouldWindowBeRecreated)
             {
                 uint resX = vars.Window.Size.X;
                 uint resY = vars.Window.Size.Y;
@@ -52,15 +50,6 @@ namespace SMF.engine
                 vars.RecreateWindow(vars.Settings.windowName);
                 
             }
-            else if (!vars.Settings.fullscreen && wasFullscreen)
-            {
-                uint resX = vars.Window.Size.X;
-                uint resY = vars.Window.Size.Y;
-                vars.Window.Close();
-                vars.Window.Dispose();
-                vars.RecreateWindow(vars.Settings.windowName);
-            }
-            wasFullscreen = vars.Settings.fullscreen;
         }
 
         public GameInstance(String windowName, EResolution res)
@@ -71,7 +60,7 @@ namespace SMF.engine
 
             gameStates.Add(new MenuState(vars));
 
-            wasFullscreen = vars.Settings.fullscreen;
+            wasFullscreen = vars.Settings.Fullscreen;
 
             vars.Window.Closed += (object sender, EventArgs e) => vars.Settings.isGameOn = false;
         }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FishData>
+	<ID>0</ID>
+	<Name>Lenny</Name>
+	<SizeX>192</SizeX>
+	<SizeY>108</SizeY>
+	
+	<Health>1000</Health>
+	<HealthRegen>0</HealthRegen>
+	<HealthRegenCooldown>1000</HealthRegenCooldown>
+	
+	<Stamina>1000</Stamina>
+	<StaminaRegen>500</StaminaRegen>
+	<StaminaRegenCooldown>1000</StaminaRegenCooldown>
+	
+	<MaxSpeed>1000</MaxSpeed>
+	<Acceleration>1000</Acceleration>
+	<Jerk>1000</Jerk>
+	<Friction>0.5</Friction>
+	
+	
+	<EngineMult>1</EngineMult>
+	<ChassisMult>1</ChassisMult>
+	<BodyMult>1</BodyMult>
+	<FinsMult>1</FinsMult>
+	<NitroMult>1</NitroMult>
+</FishData>

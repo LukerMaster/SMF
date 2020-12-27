@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FishData>
+	<ID>1</ID>
+	<Name>Badaz</Name>
+	<SizeX>192</SizeX>
+	<SizeY>108</SizeY>
+	
+	<Health>2000</Health>
+	<HealthRegen>100</HealthRegen>
+	<HealthRegenCooldown>1000</HealthRegenCooldown>
+	
+	<Stamina>1000</Stamina>
+	<StaminaRegen>500</StaminaRegen>
+	<StaminaRegenCooldown>1000</StaminaRegenCooldown>
+	
+	<MaxSpeed>900</MaxSpeed>
+	<Acceleration>800</Acceleration>
+	<Jerk>800</Jerk>
+	<Friction>0.4</Friction>
+	
+	
+	<EngineMult>0.9</EngineMult>
+	<ChassisMult>1.1</ChassisMult>
+	<BodyMult>1.1</BodyMult>
+	<FinsMult>0.9</FinsMult>
+	<NitroMult>0.8</NitroMult>
+</FishData>

@@ -27,6 +27,12 @@ namespace SMF.game
         public int NitroLvl = 0;
 
         public int MaxHealth { get => (int)TuningValues.GetMaxHealth(baseData, ChassisLvl, BodyLvl, FinsLvl); }
+        public int HealthRegen { get => (int)TuningValues.GetHealthRegen(baseData, BodyLvl); }
+        public int HealthRegenCooldown { get => baseData.HealthRegenCooldown; }
+        public int MaxStamina { get => (int)TuningValues.GetMaxStamina(baseData, EngineLvl, NitroLvl); }
+        public int StaminaRegenCooldown { get => baseData.StaminaRegenCooldown; }
+        public int MaxSpeed { get => (int)TuningValues.GetMaxSpeed(baseData, EngineLvl, FinsLvl); }
+        public int MaxAcceleration { get => (int)TuningValues.GetMaxAcceleration(baseData, EngineLvl, FinsLvl, BodyLvl); }
 
         public void Update(float dt)
         {

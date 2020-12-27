@@ -30,7 +30,24 @@ namespace SMF.game
             switch (ChassisLvl)
             {
                 case 1:
-                    finalValue += baseData.Health * 0.6f * baseData.ChassisMult;
+                    finalValue += baseData.Health * 1.1f * baseData.ChassisMult;
+                    break;
+                case 2:
+                    finalValue += baseData.Health * 1.4f * baseData.ChassisMult;
+                    break;
+                case 3:
+                    finalValue += baseData.Health * 2.2f * baseData.ChassisMult;
+                    break;
+                case 4:
+                    finalValue += baseData.Health * 3.0f * baseData.ChassisMult;
+                    break;
+                default:
+                    break;
+            }
+            switch (BodyLvl)
+            {
+                case 1:
+                    finalValue += baseData.Health * 0.4f * baseData.ChassisMult;
                     break;
                 case 2:
                     finalValue += baseData.Health * 0.7f * baseData.ChassisMult;
@@ -39,24 +56,7 @@ namespace SMF.game
                     finalValue += baseData.Health * 1.1f * baseData.ChassisMult;
                     break;
                 case 4:
-                    finalValue += baseData.Health * 1.5f * baseData.ChassisMult;
-                    break;
-                default:
-                    break;
-            }
-            switch (BodyLvl)
-            {
-                case 1:
-                    finalValue += baseData.Health * 0.2f * baseData.ChassisMult;
-                    break;
-                case 2:
-                    finalValue += baseData.Health * 0.35f * baseData.ChassisMult;
-                    break;
-                case 3:
-                    finalValue += baseData.Health * 0.45f * baseData.ChassisMult;
-                    break;
-                case 4:
-                    finalValue += baseData.Health * 0.7f * baseData.ChassisMult;
+                    finalValue += baseData.Health * 1.6f * baseData.ChassisMult;
                     break;
                 default:
                     break;
@@ -67,10 +67,10 @@ namespace SMF.game
                     finalValue += baseData.Health * 0.05f * baseData.ChassisMult;
                     break;
                 case 3:
-                    finalValue += baseData.Health * 0.05f * baseData.ChassisMult;
+                    finalValue += baseData.Health * 0.1f * baseData.ChassisMult;
                     break;
                 case 4:
-                    finalValue += baseData.Health * 0.2f * baseData.ChassisMult;
+                    finalValue += baseData.Health * 0.25f * baseData.ChassisMult;
                     break;
                 default:
                     break;
@@ -80,8 +80,8 @@ namespace SMF.game
         public static float GetHealthRegen(FishData baseData, int BodyLvl)
         {
             float finalValue = baseData.HealthRegen;
-            if (BodyLvl == 2) finalValue += baseData.HealthRegen * 1.1f * baseData.BodyMult;
-            else if (BodyLvl == 3) finalValue += baseData.HealthRegen * 1.2f * baseData.BodyMult;
+            if (BodyLvl == 3) finalValue += baseData.HealthRegen * (1.1f * baseData.BodyMult) + 200 * baseData.BodyMult;
+            else if (BodyLvl == 4) finalValue += baseData.HealthRegen * (1.2f * baseData.BodyMult) + 600 * baseData.BodyMult;
             return finalValue;
         }
         public static float GetMaxStamina(FishData baseData, int engineLvl, int nitroLvl)
@@ -101,6 +101,105 @@ namespace SMF.game
                     break;
                 case 4:
                     finalValue += baseData.Stamina * 3.0f * baseData.NitroMult;
+                    break;
+            }
+            return finalValue;
+        }
+        public static float GetStaminaRegen(FishData baseData, int nitroLvl)
+        {
+            float finalValue = baseData.StaminaRegen;
+            switch (nitroLvl)
+            {
+                case 1:
+                    finalValue *= Math.Clamp((0.75f / baseData.NitroMult), 0, 1);
+                    break;
+                case 2:
+                    finalValue *= Math.Clamp((0.65f / baseData.NitroMult), 0, 1);
+                    break;
+                case 3:
+                    finalValue *= Math.Clamp((0.55f / baseData.NitroMult), 0, 1);
+                    break;
+                case 4:
+                    finalValue *= Math.Clamp((0.45f / baseData.NitroMult), 0, 1);
+                    break;
+            }
+            return finalValue;
+        }
+        public static float GetMaxSpeed(FishData baseData, int engineLvl, int finsLvl)
+        {
+            float finalValue = baseData.MaxSpeed;
+            switch (engineLvl)
+            {
+                case 1:
+                    finalValue += baseData.MaxSpeed * 0.7f * baseData.EngineMult;
+                    break;
+                case 2:
+                    finalValue += baseData.MaxSpeed * 0.9f * baseData.EngineMult;
+                    break;
+                case 3:
+                    finalValue += baseData.MaxSpeed * 1.1f * baseData.EngineMult;
+                    break;
+                case 4:
+                    finalValue += baseData.MaxSpeed * 1.5f * baseData.EngineMult;
+                    break;
+            }
+            switch (finsLvl)
+            {
+                case 1:
+                    finalValue += baseData.MaxSpeed * 0.1f * baseData.FinsMult;
+                    break;
+                case 2:
+                    finalValue += baseData.MaxSpeed * 0.15f * baseData.FinsMult;
+                    break;
+                case 3:
+                    finalValue += baseData.MaxSpeed * 0.25f * baseData.FinsMult;
+                    break;
+                case 4:
+                    finalValue += baseData.MaxSpeed * 0.4f * baseData.FinsMult;
+                    break;
+            }
+            return finalValue;
+        }
+        public static float GetMaxAcceleration(FishData baseData, int engineLvl, int finsLvl, int bodyLvl)
+        {
+            float finalValue = baseData.Acceleration;
+            switch (engineLvl)
+            {
+                case 1:
+                    finalValue += baseData.Acceleration * 0.1f * baseData.EngineMult;
+                    break;
+                case 2:
+                    finalValue += baseData.Acceleration * 0.15f * baseData.EngineMult;
+                    break;
+                case 3:
+                    finalValue += baseData.Acceleration * 0.3f * baseData.EngineMult;
+                    break;
+                case 4:
+                    finalValue += baseData.Acceleration * 0.45f * baseData.EngineMult;
+                    break;
+            }
+            switch (finsLvl)
+            {
+                case 1:
+                    finalValue += baseData.Acceleration * 0.1f * baseData.FinsMult;
+                    break;
+                case 2:
+                    finalValue += baseData.Acceleration * 0.15f * baseData.FinsMult;
+                    break;
+                case 3:
+                    finalValue += baseData.Acceleration * 0.2f * baseData.FinsMult;
+                    break;
+                case 4:
+                    finalValue += baseData.Acceleration * 0.3f * baseData.FinsMult;
+                    break;
+            }
+            switch (bodyLvl)
+            {
+                case 3:
+                    finalValue += baseData.Acceleration * 0.05f * baseData.BodyMult;
+                    break;
+                case 4:
+                    finalValue += baseData.Acceleration * 0.1f * baseData.BodyMult;
                     break;
             }
             return finalValue;

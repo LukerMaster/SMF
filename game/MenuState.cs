@@ -396,12 +396,12 @@ namespace SMF.game
                 bars[i] = new RectangleShape();
 
             float[] percentages = new float[6];
-            percentages[0] = selectedFish.MaxHealth / 5000.0f;
-            percentages[1] = selectedFish.baseData.HealthRegen / 5000.0f;
-            percentages[2] = selectedFish.baseData.MaxSpeed / 3000.0f;
-            percentages[3] = selectedFish.baseData.Acceleration / 3000.0f;
-            percentages[4] = selectedFish.baseData.Friction / 1.0f;
-            percentages[5] = selectedFish.baseData.Stamina / 5000.0f;
+            percentages[0] = selectedFish.MaxHealth / 20000.0f;
+            percentages[1] = selectedFish.HealthRegen / 10000.0f;
+            percentages[2] = selectedFish.MaxSpeed / 10000.0f;
+            percentages[3] = selectedFish.MaxAcceleration / 10000.0f;
+            percentages[4] = selectedFish.baseData.Friction * selectedFish.baseData.Friction / 1.0f; // TO CHANGE
+            percentages[5] = selectedFish.MaxStamina / 20000.0f;
             bars[0].FillColor = new Color(255, 0, 0, 255);
             bars[1].FillColor = new Color(255, 60, 60, 255);
             bars[2].FillColor = new Color(200, 0, 200, 255);

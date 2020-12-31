@@ -1,6 +1,7 @@
 ﻿using System;
 using SFML.System;
 using SMF.game;
+using SMF.game.fish;
 
 public enum EResolution
 {
@@ -84,6 +85,6 @@ namespace SMF.engine
             }
         }
 
-        public Fish selectedFish;
+        public FishBase selectedFishBase;
     }
 }

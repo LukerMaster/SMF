@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<FishData>
+<FishFileData>
 	<ID>3</ID>
 	<Name>Doggis</Name>
 	<SizeX>152</SizeX>
@@ -24,4 +24,4 @@
 	<BodyMult>1</BodyMult>
 	<FinsMult>1</FinsMult>
 	<NitroMult>1.2</NitroMult>
-</FishData>
+</FishFileData>

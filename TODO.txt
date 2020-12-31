@@ -1,0 +1,7 @@
+*FIX Crash on trying to load 5.png when selecting fish
+*Add waepon selection
+*Add map selection
+*Add weapon targeting and shooting system + ammo
+*Add UI with shown stats of fishes
+*Add second fish' AI
+*Add Ability to pause/exit/win/lose game

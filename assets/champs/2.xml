@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<FishData>
+<FishFileData>
 	<ID>2</ID>
 	<Name>Necrotish</Name>
 	<SizeX>128</SizeX>
@@ -24,4 +24,4 @@
 	<BodyMult>0</BodyMult>
 	<FinsMult>0</FinsMult>
 	<NitroMult>1.4</NitroMult>
-</FishData>
+</FishFileData>

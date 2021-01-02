@@ -50,28 +50,21 @@ namespace SMF.game.fish
         public string Name { get => fileData.Name; }
         public int ID { get => fileData.ID; }
 
-        public Texture Texture; // A little strange that it is possible, isn't it...?
+        public Texture Texture { get; private set; } // A little strange that it is possible, isn't it...?
 
-        public FishBase(Texture tex)
+        public FishBase(int id, Texture tex)
         {
             ChangeFishData(0, tex);
         }
 
         public void ChangeFishData(int id, Texture tex)
         {
-            this.Texture = tex;
             XmlSerializer serializer = new XmlSerializer(typeof(FishFileData));
-            try
+            using (Stream reader = new FileStream("assets/champs/" + id + ".xml", FileMode.Open))
             {
-                using (Stream reader = new FileStream("assets/champs/" + id + ".xml", FileMode.Open))
-                {
-                    fileData = (FishFileData)serializer.Deserialize(reader);
-                }
+                fileData = (FishFileData)serializer.Deserialize(reader);
             }
-            catch (System.IO.FileNotFoundException)
-            {
-                // If there is no fish with this ID, ignore reading process. Leave it as it is.
-            }
+            this.Texture = tex;
         }
 
         public FishBase Copy()

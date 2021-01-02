@@ -11,10 +11,10 @@ namespace SMF.engine
         {
             w.KeyPressed += (object sender, KeyEventArgs e) =>
             {
-                LeftPressed = e.Code == Keyboard.Key.A  || e.Code == Keyboard.Key.Left  ? true : LeftPressed;
+                LeftPressed = e.Code == Keyboard.Key.A || e.Code == Keyboard.Key.Left ? true : LeftPressed;
                 RightPressed = e.Code == Keyboard.Key.D || e.Code == Keyboard.Key.Right ? true : RightPressed;
-                UpPressed = e.Code == Keyboard.Key.W    || e.Code == Keyboard.Key.Up    ? true : UpPressed;
-                DownPressed = e.Code == Keyboard.Key.S  || e.Code == Keyboard.Key.Down  ? true : DownPressed;
+                UpPressed = e.Code == Keyboard.Key.W || e.Code == Keyboard.Key.Up ? true : UpPressed;
+                DownPressed = e.Code == Keyboard.Key.S || e.Code == Keyboard.Key.Down ? true : DownPressed;
                 EnterPressed = e.Code == Keyboard.Key.Enter ? true : EnterPressed;
                 EscapePressed = e.Code == Keyboard.Key.Escape ? true : EscapePressed;
                 BoostPressed = e.Code == Keyboard.Key.LShift ? true : BoostPressed;
@@ -22,10 +22,10 @@ namespace SMF.engine
 
             w.KeyReleased += (object sender, KeyEventArgs e) =>
             {
-                LeftPressed = e.Code == Keyboard.Key.A  || e.Code == Keyboard.Key.Left  ? false : LeftPressed;
+                LeftPressed = e.Code == Keyboard.Key.A || e.Code == Keyboard.Key.Left ? false : LeftPressed;
                 RightPressed = e.Code == Keyboard.Key.D || e.Code == Keyboard.Key.Right ? false : RightPressed;
-                UpPressed = e.Code == Keyboard.Key.W    || e.Code == Keyboard.Key.Up    ? false : UpPressed;
-                DownPressed = e.Code == Keyboard.Key.S  || e.Code == Keyboard.Key.Down  ? false : DownPressed;
+                UpPressed = e.Code == Keyboard.Key.W || e.Code == Keyboard.Key.Up ? false : UpPressed;
+                DownPressed = e.Code == Keyboard.Key.S || e.Code == Keyboard.Key.Down ? false : DownPressed;
                 EnterPressed = e.Code == Keyboard.Key.Enter ? false : EnterPressed;
                 EscapePressed = e.Code == Keyboard.Key.Escape ? false : EscapePressed;
                 BoostPressed = e.Code == Keyboard.Key.LShift ? false : BoostPressed;
@@ -68,6 +68,15 @@ namespace SMF.engine
                     mousePos.Y = (int)(((e.Y - top) / (float)height) * settings.playfieldSize.Y);
                 }
             };
+        }
+
+        /// <summary>
+        /// Using this constructor guarantees that input is always gonna be all OFF.
+        /// It'll be deleted in the future.
+        /// </summary>
+        public Input()
+        {
+
         }
 
         Vector2i mousePos = new Vector2i();

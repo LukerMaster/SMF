@@ -5,7 +5,7 @@
 	<SizeX>128</SizeX>
 	<SizeY>72</SizeY>
 	
-	<Health>1000</Health>
+	<Health>5000</Health>
 	<HealthRegen>-50</HealthRegen>
 	<HealthRegenCooldown>0</HealthRegenCooldown>
 	
@@ -14,14 +14,14 @@
 	<StaminaRegenCooldown>500</StaminaRegenCooldown>
 	
 	<MaxSpeed>500</MaxSpeed>
-	<Force>4</Force>
+	<Force>8</Force>
 	<Mass>100</Mass>
-	<Friction>0.1</Friction>
+	<Friction>0.2</Friction>
 	
 	
 	<EngineMult>0</EngineMult>
-	<ChassisMult>1.4</ChassisMult>
+	<ChassisMult>0.5</ChassisMult>
 	<BodyMult>0</BodyMult>
 	<FinsMult>0</FinsMult>
-	<NitroMult>1.4</NitroMult>
+	<NitroMult>0</NitroMult>
 </FishFileData>

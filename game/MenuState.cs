@@ -9,6 +9,7 @@ using SFML.System;
 using SMF.engine;
 using SMF.engine.UI;
 using SMF.game.fish;
+using SMF.game.weapon;
 
 namespace SMF.game
 {
@@ -28,6 +29,7 @@ namespace SMF.game
         Menu currentMenu;
 
         FishBase menuFishBase;
+        WeaponBase menuWeaponBase;
         Fish fishForCustomizeMenu;
         AssetManager assetManager = new AssetManager();
 
@@ -37,7 +39,7 @@ namespace SMF.game
         {
             this.vars = vars;
 
-            bgSprite = new Sprite(assetManager.GetBackground(0));
+            bgSprite = new Sprite(assetManager.GetByID(AssetManager.EType.Background, 0));
             bgSprite.Scale = new Vector2f((float)vars.Settings.playfieldSize.X / bgSprite.Texture.Size.X, (float)vars.Settings.playfieldSize.Y / bgSprite.Texture.Size.Y);
             smfSprite.Position = new Vector2f(50, 50);
             smfSprite.Scale = new Vector2f(0.6f, 0.6f);
@@ -46,7 +48,12 @@ namespace SMF.game
             if (vars.Settings.selectedFishBase != null)
                 menuFishBase = vars.Settings.selectedFishBase.Copy();
             else
-                menuFishBase = new FishBase(assetManager.GetFishTexture(0));
+                menuFishBase = new FishBase(0, assetManager.GetByID(AssetManager.EType.Fish, 0));
+
+            if (vars.Settings.selectedWeaponBase != null)
+                menuWeaponBase = vars.Settings.selectedWeaponBase.Copy();
+            else
+                menuWeaponBase = new WeaponBase(0, assetManager.GetByID(AssetManager.EType.Weapon, 0));
 
             fishForCustomizeMenu = new Fish(menuFishBase);
 

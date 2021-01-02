@@ -1,13 +1,17 @@
 ﻿using SFML.Graphics;
 using SFML.System;
+using SMF.engine;
+using SMF.game.weapon;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SMF.game.fish
 {
-    class Fish
+    class Fish : GameObject
     {
+        public Weapon weapon;
+
         public bool FacingLeft = false;
 
         private float boostFalloff;
@@ -39,6 +43,14 @@ namespace SMF.game.fish
             SetupStartupValues();
         }
 
+        public Fish(FishBase fishBase, Weapon weapon)
+        {
+            this.weapon = weapon;
+            this.fishBase = fishBase;
+            sprite = new Sprite(fishBase.Texture);
+            SetupStartupValues();
+        }
+
         private void SetupStartupValues()
         {
             boostFalloff = 0.0f;
@@ -47,27 +59,26 @@ namespace SMF.game.fish
             CurrentHealth = fishBase.MaxHealth;
         }
 
-        public void Update(float dt, bool up, bool down, bool left, bool right, bool attack, bool boost)
+        public void Update(float dt, Input input, List<GameObject> others)
         {
-            if (up) acceleration.Y = -fishBase.MaxAcceleration; // Accelerate
-            if (down) acceleration.Y = fishBase.MaxAcceleration;
-            if (!up && !down) acceleration.Y = 0;
-            if (left) { acceleration.X = -fishBase.MaxAcceleration; FacingLeft = true; }
-            if (right) { acceleration.X = fishBase.MaxAcceleration; FacingLeft = false; }
-            if (!left && !right) acceleration.X = 0;
+            if (input.UpPressed) acceleration.Y = -fishBase.MaxAcceleration; // Accelerate
+            if (input.DownPressed) acceleration.Y = fishBase.MaxAcceleration;
+            if (!input.UpPressed && !input.DownPressed) acceleration.Y = 0;
+            if (input.LeftPressed) { acceleration.X = -fishBase.MaxAcceleration; FacingLeft = true; }
+            if (input.RightPressed) { acceleration.X = fishBase.MaxAcceleration; FacingLeft = false; }
+            if (!input.LeftPressed && !input.RightPressed) acceleration.X = 0;
             acceleration.X = Math.Clamp(acceleration.X, -fishBase.MaxAcceleration, fishBase.MaxAcceleration);
             acceleration.Y = Math.Clamp(acceleration.Y, -fishBase.MaxAcceleration, fishBase.MaxAcceleration);
 
 
-
-            if (up && speed.Y > 0 || down && speed.Y < 0) speed.Y *= (float)Math.Pow(1 - fishBase.Friction, dt); // Braking
-            else if (!up && !down) speed.Y *= (float)Math.Pow(1 - fishBase.Friction / 1.25f, dt); // Slight braking
-            if (left && speed.X > 0 || right && speed.X < 0) speed.X *= (float)Math.Pow(1 - fishBase.Friction, dt); // Braking
-            else if (!left && !right) speed.X *= (float)Math.Pow(1 - fishBase.Friction / 1.25f, dt); // Slight braking
+            if (input.UpPressed && speed.Y > 0 || input.DownPressed && speed.Y < 0) speed.Y *= (float)Math.Pow(1 - fishBase.Friction, dt); // Braking
+            else if (!input.UpPressed && !input.DownPressed) speed.Y *= (float)Math.Pow(1 - fishBase.Friction / 1.25f, dt); // Slight braking
+            if (input.LeftPressed && speed.X > 0 || input.RightPressed && speed.X < 0) speed.X *= (float)Math.Pow(1 - fishBase.Friction, dt); // Braking
+            else if (!input.LeftPressed && !input.RightPressed) speed.X *= (float)Math.Pow(1 - fishBase.Friction / 1.25f, dt); // Slight braking
 
             speed += acceleration * dt;
 
-            if (boost && !boostDrainedProtection)
+            if (input.BoostPressed && !boostDrainedProtection)
             {
                 if (CurrentStamina > 0.0f)
                 {
@@ -93,10 +104,16 @@ namespace SMF.game.fish
             if (StaminaCurrentCooldown == 0.0f)
                 CurrentStamina += 500 * dt;
 
-            if (!boost)
+            if (!input.BoostPressed)
                 boostDrainedProtection = false;
 
             position += speed * dt;
+
+            if (weapon != null)
+            {
+                weapon.Update(dt, position, new Vector2f(0, 0), others);
+            }
+
         }
 
         public void Draw(RenderWindow w)
@@ -112,6 +129,14 @@ namespace SMF.game.fish
             else
                 sprite.Scale = new Vector2f((float)fishBase.SpriteSize.X / sprite.Texture.Size.X, (float)fishBase.SpriteSize.Y / sprite.Texture.Size.Y);
             w.Draw(sprite);
+            if (weapon != null)
+            {
+                weapon.Draw(w);
+            }
         }
+
+
+        [Obsolete("Temporary solution!")]
+        public bool ToDestroy { get => false; } // TEMPORARY SOLUTION
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<WeaponFileData>
+	<ID>1</ID>
+	<Name>Pistol</Name>
+	<SizeX>73</SizeX>
+	<SizeY>40</SizeY>
+	
+	<Type>Ranged</Type>
+	<Range>350</Range>
+	<Damage>120</Damage>
+	<BulletSpeed>2700</BulletSpeed>
+	<AmmoCount>7</AmmoCount>
+	<TimeBetweenFire>0.25</TimeBetweenFire>
+	<ReloadTime>2.5</ReloadTime>
+	
+</WeaponFileData>

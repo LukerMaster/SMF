@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<WeaponFileData>
+	<ID>0</ID>
+	<Name>Sword</Name>
+	<SizeX>146</SizeX>
+	<SizeY>25</SizeY>
+	
+	<Type>Melee</Type>
+	<Range>90</Range>
+	<Damage>200</Damage>
+	<BulletSpeed>0</BulletSpeed>
+	<AmmoCount>1</AmmoCount>
+	<TimeBetweenFire>1</TimeBetweenFire>
+	<ReloadTime>1</ReloadTime>
+	
+</WeaponFileData>

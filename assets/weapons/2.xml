@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<WeaponFileData>
+	<ID>2</ID>
+	<Name>Rifle</Name>
+	<SizeX>187</SizeX>
+	<SizeY>35</SizeY>
+	
+	<Type>Ranged</Type>
+	<Range>1200</Range>
+	<Damage>950</Damage>
+	<BulletSpeed>3800</BulletSpeed>
+	<AmmoCount>1</AmmoCount>
+	<TimeBetweenFire>1</TimeBetweenFire>
+	<ReloadTime>5.5</ReloadTime>
+	
+</WeaponFileData>

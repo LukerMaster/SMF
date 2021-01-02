@@ -1,4 +1,3 @@
-*FIX Crash on trying to load 5.png when selecting fish
 *Add waepon selection
 *Add map selection
 *Add weapon targeting and shooting system + ammo

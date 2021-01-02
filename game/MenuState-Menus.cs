@@ -5,6 +5,7 @@ using SMF.engine.UI;
 using SMF.game.fish;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace SMF.game
@@ -48,6 +49,7 @@ namespace SMF.game
             tempBtn.OnClick = () =>
             {
                 vars.Settings.selectedFishBase = menuFishBase;
+                vars.Settings.selectedWeaponBase = menuWeaponBase;
                 vars.gameStates.Add(new ArenaState(vars));
                 IsDisposable = true;
             };
@@ -145,7 +147,19 @@ namespace SMF.game
             tempBtn.Anchor = new Vector2f(0.0f, 0.5f);
             tempBtn.Height = 100;
             tempBtn.Label = "Back";
-            tempBtn.OnClick = () => { currentMenu = CreateCustomizeMenu(); };
+            tempBtn.OnClick = () => {
+                if (true)
+                {
+                    Console.WriteLine("Debug fish stats (turn it off in game/menuState-Menus.cs -> CreatePerformaceTuningMenu()) if needed.");
+                    Console.WriteLine("Health: " + menuFishBase.MaxHealth);
+                    Console.WriteLine("Health Regen: " + menuFishBase.MaxHealthRegen);
+                    Console.WriteLine("Stamina: " + menuFishBase.MaxStamina);
+                    Console.WriteLine("Speed: " + menuFishBase.MaxSpeed);
+                    Console.WriteLine("Acceleration: " + menuFishBase.MaxAcceleration);
+                    Console.WriteLine("Friction: " + menuFishBase.Friction);
+                }
+                currentMenu = CreateCustomizeMenu(); 
+            };
             menu.componentList.Add(tempBtn);
             int currentHeight = 800; // Used to position buttons next to each other no matter which are unlocked.
 
@@ -290,8 +304,16 @@ namespace SMF.game
             tempSet.Height = 100;
             tempSet.Label = "Fish";
             tempSet.SetStringFunction(() => menuFishBase.Name);
-            tempSet.SetOnClickPrev(() => menuFishBase.ChangeFishData(menuFishBase.ID - 1, assetManager.GetFishTexture(menuFishBase.ID - 1)));
-            tempSet.SetOnClickNext(() => menuFishBase.ChangeFishData(menuFishBase.ID + 1, assetManager.GetFishTexture(menuFishBase.ID + 1)));
+            tempSet.SetOnClickPrev(() =>
+            {
+                if (File.Exists("assets/champs/" + (menuFishBase.ID - 1) + ".xml"))
+                    menuFishBase.ChangeFishData(menuFishBase.ID - 1, assetManager.GetByID(AssetManager.EType.Fish, menuFishBase.ID - 1));
+            });
+            tempSet.SetOnClickNext(() =>
+            {
+                if (File.Exists("assets/champs/" + (menuFishBase.ID + 1) + ".xml"))
+                    menuFishBase.ChangeFishData(menuFishBase.ID + 1, assetManager.GetByID(AssetManager.EType.Fish, menuFishBase.ID + 1));
+            });
             menu.componentList.Add(tempSet);
 
             tempBtn = new TextButton(font);
@@ -310,6 +332,24 @@ namespace SMF.game
             tempBtn.Label = "Visual Tuning";
             tempBtn.OnClick = () => { currentMenu = CreateVisualTuningMenu(); };
             menu.componentList.Add(tempBtn);
+
+            tempSet = new AdjustButtonSet(font);
+            tempSet.Position = new Vector2i(10, 500);
+            tempSet.Anchor = new Vector2f(0.0f, 0.5f);
+            tempSet.Height = 100;
+            tempSet.Label = "Weapon";
+            tempSet.SetStringFunction(() => menuWeaponBase.Name);
+            tempSet.SetOnClickPrev(() =>
+            {
+                if (File.Exists("assets/weapons/" + (menuWeaponBase.ID - 1) + ".xml"))
+                    menuWeaponBase.ChangeWeaponData(menuWeaponBase.ID - 1, assetManager.GetByID(AssetManager.EType.Weapon, menuWeaponBase.ID - 1));
+            });
+            tempSet.SetOnClickNext(() =>
+            {
+                if (File.Exists("assets/weapons/" + (menuWeaponBase.ID + 1) + ".xml"))
+                    menuWeaponBase.ChangeWeaponData(menuWeaponBase.ID + 1, assetManager.GetByID(AssetManager.EType.Weapon, menuWeaponBase.ID + 1));
+            });
+            menu.componentList.Add(tempSet);
 
 
             return menu;

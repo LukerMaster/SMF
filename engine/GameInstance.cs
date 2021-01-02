@@ -75,7 +75,13 @@ namespace SMF.engine
             {
                 clock.Restart();
 
+                WindowResized(null, null);
+                vars.Window.DispatchEvents();
+                vars.Window.Clear(Color.Black);
+
                 Update(dt);
+
+                vars.Window.Display();
 
                 elapsed_dt = clock.ElapsedTime.AsSeconds();
                 
@@ -100,10 +106,6 @@ namespace SMF.engine
         /// <param name="dt">Deltatime</param>
         void Update(float dt)
         {
-            WindowResized(null, null);
-            vars.Window.DispatchEvents();
-            vars.Window.Clear(Color.Black);
-
             for (int i = 0; i < vars.gameStates.Count; i++)
             {
                 vars.gameStates[i].Update(dt);
@@ -112,8 +114,6 @@ namespace SMF.engine
                 if (vars.gameStates[i].IsDisposable)
                     vars.gameStates.Remove(vars.gameStates[i]);
             }
-
-            vars.Window.Display();
         }
     }
 }

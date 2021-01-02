@@ -2,6 +2,7 @@
 using SFML.System;
 using SMF.game;
 using SMF.game.fish;
+using SMF.game.weapon;
 
 public enum EResolution
 {
@@ -86,5 +87,6 @@ namespace SMF.engine
         }
 
         public FishBase selectedFishBase;
+        public WeaponBase selectedWeaponBase;
     }
 }

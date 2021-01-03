@@ -65,7 +65,7 @@ namespace SMF.game
         {
             currentMenu.Update(dt,
                 vars.Input.MousePos,
-                vars.Input.LmbPressed,
+                vars.Input.AttackPressed,
                 vars.Input.EnterPressed,
                 vars.Input.UpPressed,
                 vars.Input.DownPressed,
@@ -92,7 +92,7 @@ namespace SMF.game
 
         private void DrawCustomizeMenu()
         {
-            fishForCustomizeMenu.position = new Vector2f(1720, 770);
+            fishForCustomizeMenu.Position = new Vector2f(1720, 770);
             customSprite.Position = new Vector2f(1502, 270);
             customSprite.Scale = new Vector2f(418.0f / customSprite.Texture.Size.X, 700.0f / customSprite.Texture.Size.Y);
             vars.Window.Draw(customSprite);

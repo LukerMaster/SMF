@@ -1,4 +1,5 @@
 ﻿using SFML.Graphics;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +23,9 @@ namespace SMF.game.weapon
         public uint MaxAmmo { get => fileData.AmmoCount; }
         public int ID { get => fileData.ID; }
         public string Name { get => fileData.Name; }
+        public Vector2f Size { get => new Vector2f(fileData.SizeX, fileData.SizeY); }
+        public float TimeBetweenFire { get => fileData.TimeBetweenFire; }
+        public float ReloadTime { get => fileData.ReloadTime; }
 
         public WeaponBase(int id, Texture tex)
         {

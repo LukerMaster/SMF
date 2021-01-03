@@ -11,7 +11,7 @@ namespace SMF.game
     class ArenaState : engine.IGameState
     {
         InstanceVars vars;
-        List<GameObject> objects = new List<GameObject>();
+        List<Actor> objects = new List<Actor>();
         List<Tuple<Fish, Input>> players = new List<Tuple<Fish, Input>>();
         Sprite background;
         AssetManager assetManager;
@@ -25,10 +25,10 @@ namespace SMF.game
             {
                 objects.Add(players[i].Item1);
                 if (i % 2 == 0)
-                    players[i].Item1.position = new SFML.System.Vector2f(vars.Settings.playfieldSize.X * 0.25f, 300 + i * 50);
+                    players[i].Item1.Position = new SFML.System.Vector2f(vars.Settings.playfieldSize.X * 0.25f, 300 + i * 50);
                 else
                 {
-                    players[i].Item1.position = new SFML.System.Vector2f(vars.Settings.playfieldSize.X * 0.75f, 300 + i * 50);
+                    players[i].Item1.Position = new SFML.System.Vector2f(vars.Settings.playfieldSize.X * 0.75f, 300 + i * 50);
                     players[i].Item1.FacingLeft = true;
                 }
                     
@@ -48,7 +48,7 @@ namespace SMF.game
 
         public void Update(float dt)
         {
-            foreach (GameObject o in objects)
+            foreach (Actor o in objects)
                 o.Update(dt, vars.Input, objects);
 
             if (vars.Input.EscapePressed)

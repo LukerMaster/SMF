@@ -8,12 +8,8 @@ using System.Text;
 
 namespace SMF.game.fish
 {
-    class Fish : GameObject
+    class Fish : Actor
     {
-        public Weapon weapon;
-
-        public bool FacingLeft = false;
-
         private float boostFalloff;
         private float currentStamina;
         private float staminaCurrentCooldown;
@@ -26,15 +22,20 @@ namespace SMF.game.fish
 
         private bool boostDrainedProtection = false;
 
+        private Vector2f speed;
+        private Vector2f acceleration;
 
-
-        public Vector2f position = new Vector2f(0, 0);
-        public Vector2f speed = new Vector2f(0, 0);
-        public Vector2f acceleration = new Vector2f(0, 0);
-        public Vector2f scale = new Vector2f(1, 1);
+        public Weapon weapon;
+        public bool FacingLeft = false;
+        public Vector2f Position { get; set; }
+        public Vector2f Scale { get; set; } = new Vector2f(1, 1);
+        public float Rotation { get; set; }
 
         public Sprite sprite;
         public FishBase fishBase;
+
+        [Obsolete("Temporary solution!")]
+        public bool ToDestroy { get => false; } // TEMPORARY SOLUTION
 
         public Fish(FishBase fishBase)
         {
@@ -59,7 +60,7 @@ namespace SMF.game.fish
             CurrentHealth = fishBase.MaxHealth;
         }
 
-        public void Update(float dt, Input input, List<GameObject> others)
+        public void Update(float dt, Input input, List<Actor> others)
         {
             if (input.UpPressed) acceleration.Y = -fishBase.MaxAcceleration; // Accelerate
             if (input.DownPressed) acceleration.Y = fishBase.MaxAcceleration;
@@ -107,11 +108,19 @@ namespace SMF.game.fish
             if (!input.BoostPressed)
                 boostDrainedProtection = false;
 
-            position += speed * dt;
+            Position += speed * dt;
+
+            float weaponRotation = 360 * (float)Math.Atan2((input.MousePos - new Vector2i((int)Position.X, (int)Position.Y)).Y, (input.MousePos - new Vector2i((int)Position.X, (int)Position.Y)).X) / (float)(2 * Math.PI);
 
             if (weapon != null)
             {
-                weapon.Update(dt, position, new Vector2f(0, 0), others);
+                if (input.AttackPressed)
+                    weapon.Attack(0);
+                if (input.ReloadPressed)
+                    weapon.Reload();
+
+                weapon.Rotation = weaponRotation;
+                weapon.Update(dt, input, others);
             }
 
         }
@@ -121,22 +130,20 @@ namespace SMF.game.fish
             sprite.Texture = fishBase.Texture;
             sprite.TextureRect = new IntRect(0, 0, (int)fishBase.Texture.Size.X, (int)fishBase.Texture.Size.Y);
             sprite.Origin = new Vector2f(sprite.Texture.Size.X / 2, sprite.Texture.Size.Y / 2);
-            sprite.Position = position;
-            sprite.Scale = scale;
+            sprite.Position = Position;
             sprite.Color = fishBase.tint;
+            sprite.Scale = new Vector2f((float)fishBase.Size.X / (float)sprite.Texture.Size.X * Scale.X, (float)fishBase.Size.Y / (float)sprite.Texture.Size.Y * Scale.Y);
             if (FacingLeft)
-                sprite.Scale = new Vector2f((float)-fishBase.SpriteSize.X / sprite.Texture.Size.X, (float)fishBase.SpriteSize.Y / sprite.Texture.Size.Y);
-            else
-                sprite.Scale = new Vector2f((float)fishBase.SpriteSize.X / sprite.Texture.Size.X, (float)fishBase.SpriteSize.Y / sprite.Texture.Size.Y);
+                sprite.Scale = new Vector2f(-sprite.Scale.X, sprite.Scale.Y);
+                
+                   
             w.Draw(sprite);
             if (weapon != null)
             {
+                weapon.Position = Position;
                 weapon.Draw(w);
             }
         }
 
-
-        [Obsolete("Temporary solution!")]
-        public bool ToDestroy { get => false; } // TEMPORARY SOLUTION
     }
 }

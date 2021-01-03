@@ -41,7 +41,7 @@ namespace SMF.game.fish
         public int MaxSpeed { get => (int)GetMaxSpeed(); }
         public int MaxAcceleration { get => (int)GetMaxAcceleration(); }
         public float Friction { get => GetFriction(); }
-        public Vector2f SpriteSize { get => new Vector2f(fileData.SizeX, fileData.SizeY); }
+        public Vector2f Size { get => new Vector2f(fileData.SizeX, fileData.SizeY); }
         public bool EngineUpgradable { get => fileData.EngineMult != 0; }
         public bool ChassisUpgradable { get => fileData.ChassisMult != 0; }
         public bool BodyUpgradable { get => fileData.BodyMult != 0; }

@@ -19,7 +19,7 @@ public enum EResolution
 
 namespace SMF.engine
 {
-    class Settings
+    public class Settings
     {
         private EResolution resolution = EResolution.E1280X720;
 

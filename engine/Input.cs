@@ -5,7 +5,7 @@ using System;
 
 namespace SMF.engine
 {
-    class Input
+    public class Input
     {
         public Input(RenderWindow w, Settings settings)
         {
@@ -18,6 +18,7 @@ namespace SMF.engine
                 EnterPressed = e.Code == Keyboard.Key.Enter ? true : EnterPressed;
                 EscapePressed = e.Code == Keyboard.Key.Escape ? true : EscapePressed;
                 BoostPressed = e.Code == Keyboard.Key.LShift ? true : BoostPressed;
+                ReloadPressed = e.Code == Keyboard.Key.R ? true : ReloadPressed;
             };
 
             w.KeyReleased += (object sender, KeyEventArgs e) =>
@@ -29,17 +30,18 @@ namespace SMF.engine
                 EnterPressed = e.Code == Keyboard.Key.Enter ? false : EnterPressed;
                 EscapePressed = e.Code == Keyboard.Key.Escape ? false : EscapePressed;
                 BoostPressed = e.Code == Keyboard.Key.LShift ? false : BoostPressed;
+                ReloadPressed = e.Code == Keyboard.Key.R ? false : ReloadPressed;
             };
 
             w.MouseButtonPressed += (object sender, MouseButtonEventArgs e) =>
             {
-                LmbPressed = e.Button == Mouse.Button.Left ? true : LmbPressed;
+                AttackPressed = e.Button == Mouse.Button.Left ? true : AttackPressed;
                 RmbPressed = e.Button == Mouse.Button.Right ? true : RmbPressed;
             };
 
             w.MouseButtonReleased += (object sender, MouseButtonEventArgs e) =>
             {
-                LmbPressed = e.Button == Mouse.Button.Left ? false : LmbPressed;
+                AttackPressed = e.Button == Mouse.Button.Left ? false : AttackPressed;
                 RmbPressed = e.Button == Mouse.Button.Right ? false : RmbPressed;
             };
 
@@ -91,8 +93,9 @@ namespace SMF.engine
         private bool enterPressed;
         private bool escapePressed;
         private bool boostPressed;
+        private bool reloadPressed;
 
-        public bool LmbPressed { get => lmbPressed; private set => lmbPressed = value; }
+        public bool AttackPressed { get => lmbPressed; private set => lmbPressed = value; }
         public bool RmbPressed { get => rmbPressed; private set => rmbPressed = value; }
         public bool UpPressed { get => upPressed; private set => upPressed = value; }
         public bool LeftPressed { get => leftPressed; private set => leftPressed = value; }
@@ -102,5 +105,6 @@ namespace SMF.engine
         public bool EnterPressed { get => enterPressed; private set => enterPressed = value; }
         public bool EscapePressed { get => escapePressed; private set => escapePressed = value; }
         public bool BoostPressed { get => boostPressed; private set => boostPressed = value; }
+        public bool ReloadPressed { get => reloadPressed; set => reloadPressed = value; }
     }
 }

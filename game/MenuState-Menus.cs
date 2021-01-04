@@ -12,7 +12,7 @@ namespace SMF.game
 {
     partial class MenuState : IGameState
     {
-        Menu CreateMainMenu(int currentlySelected = 0) // Builder/helper function for creating menu faster.
+        Menu CreateMainMenu(int currentlySelected = 3) // Builder/helper function for creating menu faster.
         {
             Menu menu = new Menu();
             menu.FlipUpDown = true;
@@ -307,12 +307,12 @@ namespace SMF.game
             tempSet.SetOnClickPrev(() =>
             {
                 if (File.Exists("assets/champs/" + (menuFishBase.ID - 1) + ".xml"))
-                    menuFishBase.ChangeFishData(menuFishBase.ID - 1, assetManager.GetByID(AssetManager.EType.Fish, menuFishBase.ID - 1));
+                    menuFishBase.ChangeFishData(menuFishBase.ID - 1);
             });
             tempSet.SetOnClickNext(() =>
             {
                 if (File.Exists("assets/champs/" + (menuFishBase.ID + 1) + ".xml"))
-                    menuFishBase.ChangeFishData(menuFishBase.ID + 1, assetManager.GetByID(AssetManager.EType.Fish, menuFishBase.ID + 1));
+                    menuFishBase.ChangeFishData(menuFishBase.ID + 1);
             });
             menu.componentList.Add(tempSet);
 
@@ -342,12 +342,12 @@ namespace SMF.game
             tempSet.SetOnClickPrev(() =>
             {
                 if (File.Exists("assets/weapons/" + (menuWeaponBase.ID - 1) + ".xml"))
-                    menuWeaponBase.ChangeWeaponData(menuWeaponBase.ID - 1, assetManager.GetByID(AssetManager.EType.Weapon, menuWeaponBase.ID - 1));
+                    menuWeaponBase.ChangeWeaponData(menuWeaponBase.ID - 1);
             });
             tempSet.SetOnClickNext(() =>
             {
                 if (File.Exists("assets/weapons/" + (menuWeaponBase.ID + 1) + ".xml"))
-                    menuWeaponBase.ChangeWeaponData(menuWeaponBase.ID + 1, assetManager.GetByID(AssetManager.EType.Weapon, menuWeaponBase.ID + 1));
+                    menuWeaponBase.ChangeWeaponData(menuWeaponBase.ID + 1);
             });
             menu.componentList.Add(tempSet);
 

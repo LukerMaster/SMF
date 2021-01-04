@@ -55,7 +55,7 @@ namespace SMF.game
             else
                 menuWeaponBase = new WeaponBase(0, assetManager.GetByID(AssetManager.EType.Weapon, 0));
 
-            fishForCustomizeMenu = new Fish(menuFishBase);
+            fishForCustomizeMenu = new Fish(menuFishBase, assetManager.GetByID(AssetManager.EType.Fish , menuFishBase.ID));
 
             currentMenu = CreateMainMenu();
             
@@ -71,9 +71,6 @@ namespace SMF.game
                 vars.Input.DownPressed,
                 vars.Input.LeftPressed,
                 vars.Input.RightPressed);
-
-            
-
         }
 
         public void Draw()

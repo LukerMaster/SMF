@@ -37,18 +37,20 @@ namespace SMF.game.fish
         [Obsolete("Temporary solution!")]
         public bool ToDestroy { get => false; } // TEMPORARY SOLUTION
 
-        public Fish(FishBase fishBase)
+        public byte DrawLayer { get => 0; }
+
+        public Fish(FishBase fishBase, Texture tex)
         {
             this.fishBase = fishBase;
-            sprite = new Sprite(fishBase.Texture);
+            sprite = new Sprite(tex);
             SetupStartupValues();
         }
 
-        public Fish(FishBase fishBase, Weapon weapon)
+        public Fish(FishBase fishBase, Texture tex, Weapon weapon)
         {
             this.weapon = weapon;
             this.fishBase = fishBase;
-            sprite = new Sprite(fishBase.Texture);
+            sprite = new Sprite(tex);
             SetupStartupValues();
         }
 
@@ -60,7 +62,7 @@ namespace SMF.game.fish
             CurrentHealth = fishBase.MaxHealth;
         }
 
-        public void Update(float dt, Input input, List<Actor> others)
+        public void Update(float dt, Input input, Scene scene, AssetManager assets)
         {
             if (input.UpPressed) acceleration.Y = -fishBase.MaxAcceleration; // Accelerate
             if (input.DownPressed) acceleration.Y = fishBase.MaxAcceleration;
@@ -115,20 +117,17 @@ namespace SMF.game.fish
             if (weapon != null)
             {
                 if (input.AttackPressed)
-                    weapon.Attack(0);
+                    weapon.Attack(0, scene, assets);
                 if (input.ReloadPressed)
                     weapon.Reload();
 
                 weapon.Rotation = weaponRotation;
-                weapon.Update(dt, input, others);
             }
 
         }
 
         public void Draw(RenderWindow w)
         {
-            sprite.Texture = fishBase.Texture;
-            sprite.TextureRect = new IntRect(0, 0, (int)fishBase.Texture.Size.X, (int)fishBase.Texture.Size.Y);
             sprite.Origin = new Vector2f(sprite.Texture.Size.X / 2, sprite.Texture.Size.Y / 2);
             sprite.Position = Position;
             sprite.Color = fishBase.tint;
@@ -141,9 +140,7 @@ namespace SMF.game.fish
             if (weapon != null)
             {
                 weapon.Position = Position;
-                weapon.Draw(w);
             }
         }
-
     }
 }

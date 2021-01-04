@@ -16,7 +16,6 @@ namespace SMF.game.weapon
     /// </summary>
     public class WeaponBase
     {
-        public Texture Texture { get; private set; }
         private WeaponFileData fileData;
 
         public int MaxRange { get => fileData.Range; }
@@ -29,17 +28,16 @@ namespace SMF.game.weapon
 
         public WeaponBase(int id, Texture tex)
         {
-            ChangeWeaponData(0, tex);
+            ChangeWeaponData(0);
         }
 
-        public void ChangeWeaponData(int id, Texture tex)
+        public void ChangeWeaponData(int id)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(WeaponFileData));
             using (Stream reader = new FileStream("assets/weapons/" + id + ".xml", FileMode.Open))
             {
                 fileData = (WeaponFileData)serializer.Deserialize(reader);
             }
-            this.Texture = tex;
         }
 
         public WeaponBase Copy()

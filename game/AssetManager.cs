@@ -1,17 +1,13 @@
 ﻿using SFML.Graphics;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
+
 
 namespace SMF.game
 {
-    class AssetManager
+    public class AssetManager
     {
-        private Texture[] fishTextures = new Texture[256];
-        private Texture[] weaponTextures = new Texture[256];
         private Dictionary<EType, Texture[]> textures = new Dictionary<EType, Texture[]>();
-        private Texture background;
+        private Dictionary<string, Texture> customTextures = new Dictionary<string, Texture>();
 
         public AssetManager()
         {
@@ -47,7 +43,13 @@ namespace SMF.game
                 return textures[type][id];
             }
         }
-        
+        public Texture GetCustomTexture(string path)
+        {
+            if (!customTextures.ContainsKey(path))
+                customTextures.Add(path, new Texture(path));
+
+            return customTextures[path];
+        }
 
         public enum EType
         {

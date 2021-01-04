@@ -25,22 +25,23 @@ namespace SMF.game.weapon
         public float Rotation { get; set; }
         public float ShootAnimProgress { get => shootAnimProgress; set => shootAnimProgress = Math.Clamp(value, 0, 1); }
         public float ReloadTimeRemaining { get => reloadTimeRemaining; set => reloadTimeRemaining = Math.Max(value, 0); }
+        public byte DrawLayer { get => 1; }
 
-        public RangedWeapon(WeaponBase weaponBase)
+        public RangedWeapon(WeaponBase weaponBase, Texture tex)
         {
             this.weaponBase = weaponBase;
             currentAmmoCount = weaponBase.MaxAmmo;
-            sprite = new Sprite(weaponBase.Texture);
+            sprite = new Sprite(tex);
         }
 
-        public void Attack(int type = 0)
+        public void Attack(int type, Scene scene, AssetManager assets)
         {
             if (currentShootCooldown <= 0 && currentAmmoCount > 0 && ReloadTimeRemaining <= 0)
             {
                 ShootAnimProgress = 0.0f;
                 currentShootCooldown = weaponBase.TimeBetweenFire;
                 CurrentAmmoCount--;
-                Console.WriteLine(CurrentAmmoCount + "/" + MaxAmmoCount);
+                scene.Instantiate(new Bullet(Position, new Vector2f(20, 20), assets));
             }
         }
 
@@ -64,7 +65,7 @@ namespace SMF.game.weapon
                 CurrentAmmoCount = MaxAmmoCount;
             }
         }
-        public void Update(float dt, Input input, List<Actor> others)
+        public void Update(float dt, Input input, Scene scene, AssetManager assets)
         {
             ShootAnimProgress += 8 * dt;
             currentShootCooldown -= dt;

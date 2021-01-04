@@ -50,21 +50,18 @@ namespace SMF.game.fish
         public string Name { get => fileData.Name; }
         public int ID { get => fileData.ID; }
 
-        public Texture Texture { get; private set; } // A little strange that it is possible, isn't it...?
-
         public FishBase(int id, Texture tex)
         {
-            ChangeFishData(0, tex);
+            ChangeFishData(0);
         }
 
-        public void ChangeFishData(int id, Texture tex)
+        public void ChangeFishData(int id)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(FishFileData));
             using (Stream reader = new FileStream("assets/champs/" + id + ".xml", FileMode.Open))
             {
                 fileData = (FishFileData)serializer.Deserialize(reader);
             }
-            this.Texture = tex;
         }
 
         public FishBase Copy()

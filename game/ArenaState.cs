@@ -5,13 +5,14 @@ using SMF.game.weapon;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static SMF.game.Scene;
 
 namespace SMF.game
 {
     class ArenaState : engine.IGameState
     {
         InstanceVars vars;
-        List<Actor> objects = new List<Actor>();
+        SceneController sceneController = new SceneController();
         List<Tuple<Fish, Input>> players = new List<Tuple<Fish, Input>>();
         Sprite background;
         AssetManager assetManager;
@@ -20,10 +21,10 @@ namespace SMF.game
             this.vars = vars;
             assetManager = new AssetManager();
             background = new Sprite(assetManager.GetByID(AssetManager.EType.Background, 0));
-            players.Add(new Tuple<Fish, Input>(new Fish(vars.Settings.selectedFishBase,new RangedWeapon(vars.Settings.selectedWeaponBase)), vars.Input));
+            players.Add(new Tuple<Fish, Input>((Fish)sceneController.scene.Instantiate(new Fish(vars.Settings.selectedFishBase, assetManager.GetByID(AssetManager.EType.Fish, vars.Settings.selectedWeaponBase.ID))), vars.Input));
+            players[players.Count - 1].Item1.weapon = (Weapon)sceneController.scene.Instantiate(new RangedWeapon(vars.Settings.selectedWeaponBase, assetManager.GetByID(AssetManager.EType.Weapon, vars.Settings.selectedWeaponBase.ID)));
             for (int i = 0; i < players.Count; i++)
             {
-                objects.Add(players[i].Item1);
                 if (i % 2 == 0)
                     players[i].Item1.Position = new SFML.System.Vector2f(vars.Settings.playfieldSize.X * 0.25f, 300 + i * 50);
                 else
@@ -33,13 +34,7 @@ namespace SMF.game
                 }
                     
             }
-        }
-        public void Draw()
-        {
-            background.Scale = new SFML.System.Vector2f((float)vars.Settings.playfieldSize.X / background.Texture.Size.X, (float)vars.Settings.playfieldSize.Y / background.Texture.Size.Y);
-            vars.Window.Draw(background);
-            foreach (Tuple<Fish, Input> f in players)
-                f.Item1.Draw(vars.Window);
+
         }
 
         public bool IsDisposable { get; set; } = false;
@@ -48,8 +43,9 @@ namespace SMF.game
 
         public void Update(float dt)
         {
-            foreach (Actor o in objects)
-                o.Update(dt, vars.Input, objects);
+
+            sceneController.Update(dt, vars.Input, assetManager);
+
 
             if (vars.Input.EscapePressed)
             {
@@ -57,6 +53,13 @@ namespace SMF.game
                 IsDisposable = true;
             }
 
+        }
+        public void Draw()
+        {
+            background.Scale = new SFML.System.Vector2f((float)vars.Settings.playfieldSize.X / background.Texture.Size.X, (float)vars.Settings.playfieldSize.Y / background.Texture.Size.Y);
+            vars.Window.Draw(background);
+            sceneController.Draw(vars.Window);
+            
         }
 
     }

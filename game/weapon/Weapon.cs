@@ -14,7 +14,7 @@ namespace SMF.game.weapon
         /// </summary>
         /// <param name="type">Used to determine which attack is being used. Default attack type is 0, and you can
         /// see how many attacks are there with "AttacksCount" parameter.</param>
-        public void Attack(int type = 0);
+        public void Attack(int type, Scene scene, AssetManager assets);
         public void Reload();
         public uint AttacksCount { get; }
         public uint CurrentAmmoCount { get; set; }

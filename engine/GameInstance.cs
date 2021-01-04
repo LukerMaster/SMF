@@ -13,8 +13,6 @@ namespace SMF.engine
 
         public float desired_dt = 0.008333f;
 
-        
-
         /// <summary>
         /// Resets the SFML View so it ALWAYS draws entire playfield regardless of window size or aspect ratio.
         /// </summary>

@@ -49,9 +49,9 @@ namespace SMF.engine
 
         public bool isGameOn = true;
 
-        public string windowName = "SMF";
-
         public bool shouldWindowBeRecreated = false;
+
+        public string windowName = "SMF";
 
         public Vector2u playfieldSize = new Vector2u(1920, 1080);
 

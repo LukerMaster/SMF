@@ -38,16 +38,18 @@ namespace SMF.game
                 for (int i = 0; i < scene.actorsToAdd.Count; i++)
                 {
                     scene.actors.Add(scene.actorsToAdd[i]);
-                    scene.actorsToAdd.Clear();
                 }
-                for (int i = 0; i < scene.actorsToAdd.Count; i++)
+                scene.actorsToAdd.Clear();
+                for (int i = 0; i < scene.actorsToRemove.Count; i++)
                 {
                     scene.actors.Remove(scene.actorsToRemove[i]);
-                    scene.actorsToRemove.Clear();
                 }
+                scene.actorsToRemove.Clear();
+                scene.actors.RemoveAll(a => a.ToDestroy);
 
+                Console.WriteLine(scene.actors.Count);
                 foreach (Actor a in scene.actors)
-                    a.Update(dt, input, scene, assetMgr);
+                    a.Update(dt, scene, assetMgr);
             }
             public void Draw(RenderWindow w)
             {

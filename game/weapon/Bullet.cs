@@ -12,7 +12,7 @@ namespace SMF.game.weapon
     {
         public Vector2f Velocity;
         public Sprite sprite = new Sprite();
-        public bool ToDestroy => new Vector2(Velocity.X, Velocity.Y).LengthSquared() > 1.0f;
+        public bool ToDestroy => new Vector2(Velocity.X, Velocity.Y).LengthSquared() < 1.0f;
 
         public byte DrawLayer { get => 0; }
 
@@ -26,25 +26,29 @@ namespace SMF.game.weapon
         {
             Position = startingPos;
             Velocity = velocity;
+            Rotation = 360 * (float)Math.Atan2(velocity.Y, Velocity.X) / (float)(2 * Math.PI);
             sprite = new Sprite(assets.GetCustomTexture("assets/misc/bullet.png"));
         }
 
-        public void Update(float dt, Input input, Scene scene, AssetManager assets)
+        public void Update(float dt, Scene scene, AssetManager assets)
         {
             List<Actor> Targets = scene.GetActorsOfClass(typeof(Fish));
-            foreach (Actor t in Targets)
-            {
-                t.Position += new Vector2f(-1, -1);
-            }
+            
             Position += Velocity * dt;
-            Velocity *= (float)Math.Pow(0.7, dt);
+            Velocity *= (float)Math.Pow(0.01, dt);
         }
 
         public void Draw(RenderWindow w)
         {
             sprite.Position = Position;
             sprite.Scale = new Vector2f(15 / sprite.Texture.Size.X, 10 / sprite.Texture.Size.Y);
+            sprite.Rotation = Rotation;
             w.Draw(sprite);
+        }
+
+        public void ReceiveInput(Input input)
+        {
+            
         }
     }
 }

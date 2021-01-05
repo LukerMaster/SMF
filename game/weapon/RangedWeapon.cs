@@ -41,12 +41,17 @@ namespace SMF.game.weapon
                 ShootAnimProgress = 0.0f;
                 currentShootCooldown = weaponBase.TimeBetweenFire;
                 CurrentAmmoCount--;
-                scene.Instantiate(new Bullet(Position, new Vector2f(20, 20), assets));
+
+                float rotX = (float)Math.Cos((Rotation - 45) * 0.0174532925) - (float)Math.Sin((Rotation - 45) * 0.0174532925);
+                float rotY = (float)Math.Sin((Rotation - 45) * 0.0174532925) + (float)Math.Cos((Rotation - 45) * 0.0174532925);
+
+                scene.Instantiate(new Bullet(Position + new Vector2f(rotX * weaponBase.Size.X, rotY * weaponBase.Size.X), new Vector2f(rotX * weaponBase.BulletSpeed, rotY * weaponBase.BulletSpeed), assets));
             }
         }
 
         public void Draw(RenderWindow w)
         {
+            sprite.TextureRect = new IntRect(0, 0, (int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y);
             sprite.Position = Position;
             sprite.Scale = new Vector2f((float)weaponBase.Size.X / (float)sprite.Texture.Size.X * Scale.X, (float)weaponBase.Size.Y / (float)sprite.Texture.Size.Y * Scale.Y);
             sprite.Rotation = Rotation;
@@ -65,7 +70,7 @@ namespace SMF.game.weapon
                 CurrentAmmoCount = MaxAmmoCount;
             }
         }
-        public void Update(float dt, Input input, Scene scene, AssetManager assets)
+        public void Update(float dt, Scene scene, AssetManager assets)
         {
             ShootAnimProgress += 8 * dt;
             currentShootCooldown -= dt;
@@ -84,6 +89,11 @@ namespace SMF.game.weapon
             {
                 sprite.Scale = new Vector2f(sprite.Scale.X * 0.7f, sprite.Scale.Y * 0.7f);
             }
+        }
+
+        public void ReceiveInput(Input input)
+        {
+            
         }
     }
 }

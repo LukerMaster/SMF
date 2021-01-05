@@ -308,11 +308,13 @@ namespace SMF.game
             {
                 if (File.Exists("assets/champs/" + (menuFishBase.ID - 1) + ".xml"))
                     menuFishBase.ChangeFishData(menuFishBase.ID - 1);
+                    fishForCustomizeMenu = new Fish(menuFishBase, assetManager.GetByID(AssetManager.EType.Fish, menuFishBase.ID));
             });
             tempSet.SetOnClickNext(() =>
             {
                 if (File.Exists("assets/champs/" + (menuFishBase.ID + 1) + ".xml"))
                     menuFishBase.ChangeFishData(menuFishBase.ID + 1);
+                    fishForCustomizeMenu = new Fish(menuFishBase, assetManager.GetByID(AssetManager.EType.Fish, menuFishBase.ID));
             });
             menu.componentList.Add(tempSet);
 

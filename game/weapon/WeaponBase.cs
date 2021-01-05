@@ -25,6 +25,7 @@ namespace SMF.game.weapon
         public Vector2f Size { get => new Vector2f(fileData.SizeX, fileData.SizeY); }
         public float TimeBetweenFire { get => fileData.TimeBetweenFire; }
         public float ReloadTime { get => fileData.ReloadTime; }
+        public float BulletSpeed { get => fileData.BulletSpeed; }
 
         public WeaponBase(int id, Texture tex)
         {

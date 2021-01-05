@@ -1,13 +1,13 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using SMF.engine;
-using System;
 
 namespace SMF.game
 {
     public interface Actor
     {
-        public void Update(float dt, Input input, Scene scene, AssetManager assetMgr);
+        public void Update(float dt, Scene scene, AssetManager assetMgr);
+        public void ReceiveInput(Input input);
         public void Draw(RenderWindow w);
         public bool ToDestroy { get; }
         public Vector2f Position { get; set; }

@@ -1,17 +1,15 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml.Serialization;
 
-namespace SMF.game.fish
+namespace SMF
 {
     /// <summary>
     /// Base fish settings class for creating fishes. This class keeps everything needed to instantiate fish
     /// but does not contain any concrete fish values like position, current health etc.
-    /// Each fish uses a reference to an object of this class to know what their max values are, what is its texture etc.
+    /// Each fish uses a reference to an object of this class to know what their max values are like health, stamina etc.
     /// If you need to reset fish to it's starting state, just instantiate new fish with same FishBase object.
     /// </summary>
     public partial class FishBase

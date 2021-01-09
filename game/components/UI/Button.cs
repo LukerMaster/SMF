@@ -1,10 +1,11 @@
-﻿using SFML.Graphics;
+﻿using SFBE;
+using SFML.Graphics;
 using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SMF.engine.UI
+namespace SMF
 {
     abstract class Button : MenuComponent
     {
@@ -61,5 +62,6 @@ namespace SMF.engine.UI
         public bool IsClicked { get => isClicked; private set => isClicked = value; }
         public bool IsFocused { get => isFocused; private set => isFocused = value; }
         public bool IsHovered { get => isHovered; private set => isHovered = value; }
+        public string FontName { get; set; }
     }
 }

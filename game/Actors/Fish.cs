@@ -1,12 +1,8 @@
 ﻿using SFML.Graphics;
 using SFML.System;
-using SMF.engine;
-using SMF.game.weapon;
 using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SMF.game.fish
+using SFBE;
+namespace SMF
 {
     class Fish : Actor
     {
@@ -25,7 +21,7 @@ namespace SMF.game.fish
         private Vector2f speed;
         private Vector2f acceleration;
 
-        public Weapon weapon;
+        public IWeapon weapon;
         public bool FacingLeft = false;
         public Vector2f Position { get; set; }
         public Vector2f Scale { get; set; } = new Vector2f(1, 1);
@@ -34,11 +30,6 @@ namespace SMF.game.fish
         private Sprite sprite;
         public FishBase fishBase;
 
-        [Obsolete("Temporary solution!")]
-        public bool ToDestroy { get => false; } // TEMPORARY SOLUTION
-
-        public byte DrawLayer { get => 0; }
-
         public Fish(FishBase fishBase, Texture tex)
         {
             this.fishBase = fishBase;
@@ -46,7 +37,7 @@ namespace SMF.game.fish
             SetupStartupValues();
         }
 
-        public Fish(FishBase fishBase, Texture tex, Weapon weapon)
+        public Fish(FishBase fishBase, Texture tex, IWeapon weapon)
         {
             this.weapon = weapon;
             this.fishBase = fishBase;
@@ -71,7 +62,7 @@ namespace SMF.game.fish
         private bool boostPressed;
         private bool reloadPressed;
         private Vector2i mousePos;
-        public void ReceiveInput(Input input)
+        public void ReceiveInput(FishInput input)
         {
             lmbPressed = input.AttackPressed;
             upPressed = input.UpPressed;
@@ -80,11 +71,14 @@ namespace SMF.game.fish
             downPressed = input.DownPressed;
             boostPressed = input.BoostPressed;
             reloadPressed = input.ReloadPressed;
-
-            mousePos = input.MousePos;
         }
 
-        public void Update(float dt, Scene scene, AssetManager assets)
+        protected override void Update(float dt, Level level)
+        {
+            
+        }
+
+        protected override void FixedUpdate(float dt, Level level)
         {
             if (upPressed) acceleration.Y = -fishBase.MaxAcceleration; // Accelerate
             if (downPressed) acceleration.Y = fishBase.MaxAcceleration;
@@ -139,16 +133,15 @@ namespace SMF.game.fish
             if (weapon != null)
             {
                 if (lmbPressed)
-                    weapon.Attack(0, scene, assets);
+                    weapon.Attack(0, level);
                 if (reloadPressed)
                     weapon.Reload();
 
                 weapon.Rotation = weaponRotation;
             }
-
         }
 
-        public void Draw(RenderWindow w)
+        protected override void Draw(RenderWindow w, AssetManager assets)
         {
             sprite.TextureRect = new IntRect(0, 0, (int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y);
             sprite.Origin = new Vector2f(sprite.Texture.Size.X / 2, sprite.Texture.Size.Y / 2);

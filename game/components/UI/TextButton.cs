@@ -1,25 +1,27 @@
-﻿using SFML.Graphics;
+﻿using SFBE;
+using SFML.Graphics;
 using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SMF.engine.UI
+namespace SMF
 {
-    class TextButton : Button
+    class TextButton : Button, MenuComponentWithText
     {
         Text labelText = new Text();
 
         private float focusPercent;
         private float clickPercent;
 
-        public TextButton(Font font)
+        public TextButton()
         {
-            labelText.Font = font;
             Position = new Vector2i(0, 0);
             Anchor = new Vector2f(0.0f, 0.0f);
             Height = 10;
         }
+
+        public Font font;
 
         public Vector2i Position;
         public Vector2f Anchor;
@@ -27,6 +29,7 @@ namespace SMF.engine.UI
         public string Label;
         protected float FocusPercent { get => focusPercent; set => focusPercent = Math.Clamp(value, 0.0f, 1.0f); }
         protected float ClickPercent { get => clickPercent; set => clickPercent = Math.Clamp(value, 0.0f, 1.0f); }
+        Font MenuComponentWithText.font { get => font; set => font = value; }
 
         public float GetWidth()
         {
@@ -35,6 +38,7 @@ namespace SMF.engine.UI
 
         public override void Update(float dt, Vector2i mousePos, bool isMousePressed, bool isSelected = false, bool isEnterPressed = false, bool isLeftPressed = false, bool isRightPressed = false)
         {
+            labelText.Font = font;
             labelText.DisplayedString = Label;
             labelText.CharacterSize = (uint)(Height / 1.25f);
 

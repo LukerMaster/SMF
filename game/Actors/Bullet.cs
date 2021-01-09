@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using SFBE;
 using SFML.Graphics;
 using SFML.System;
-using SMF.engine;
-using SMF.game.fish;
 
-namespace SMF.game.weapon
+namespace SMF
 {
     public class Bullet : Actor
     {
@@ -20,35 +19,31 @@ namespace SMF.game.weapon
         public Vector2f Scale { get; set; }
         public float Rotation { get; set; }
 
-
-
-        public Bullet(Vector2f startingPos, Vector2f velocity, AssetManager assets)
+        public Bullet(Vector2f startingPos, Vector2f velocity)
         {
             Position = startingPos;
             Velocity = velocity;
             Rotation = 360 * (float)Math.Atan2(velocity.Y, Velocity.X) / (float)(2 * Math.PI);
-            sprite = new Sprite(assets.GetCustomTexture("assets/misc/bullet.png"));
+            sprite = new Sprite();
         }
 
-        public void Update(float dt, Scene scene, AssetManager assets)
+        protected override void Update(float dt, Level level)
         {
-            List<Actor> Targets = scene.GetActorsOfClass(typeof(Fish));
-            
+        }
+
+        protected override void FixedUpdate(float dt, Level level)
+        {
             Position += Velocity * dt;
             Velocity *= (float)Math.Pow(0.01, dt);
         }
 
-        public void Draw(RenderWindow w)
+        protected override void Draw(RenderWindow w, AssetManager assets)
         {
+            sprite.Texture = ((FishAssetManager)assets).GetCustomTexture("assets/misc/bullet.png");
             sprite.Position = Position;
             sprite.Scale = new Vector2f(15 / sprite.Texture.Size.X, 10 / sprite.Texture.Size.Y);
             sprite.Rotation = Rotation;
             w.Draw(sprite);
-        }
-
-        public void ReceiveInput(Input input)
-        {
-            
         }
     }
 }

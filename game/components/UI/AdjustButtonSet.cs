@@ -1,12 +1,11 @@
-﻿using SFML.Graphics;
+﻿using SFBE;
+using SFML.Graphics;
 using SFML.System;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace SMF.engine.UI
+namespace SMF
 {
-    class AdjustButtonSet : MenuComponent
+    class AdjustButtonSet : MenuComponentWithText
     {
         TextButton labelButton;
 
@@ -20,12 +19,17 @@ namespace SMF.engine.UI
         public String Label;
 
         public int Height;
+        public int SpaceForSettingWidth;
+
+        public Font font;
 
         public Vector2f Anchor;
 
         public Vector2i Position;
 
         public bool IsHovered { get { return labelButton.IsHovered || prevButton.IsHovered || nextButton.IsHovered; } }
+
+        Font MenuComponentWithText.font { get => font; set => font = value; }
 
         public void SetStringFunction(Func<String> f)
         {
@@ -42,23 +46,21 @@ namespace SMF.engine.UI
             nextButton.OnClick += f;
         }
 
-        public AdjustButtonSet(Font font)
+        public AdjustButtonSet()
         {
-            currentSetting.Font = font;
-            labelButton = new TextButton(font);
-            prevButton = new TextButton(font);
-            nextButton = new TextButton(font);
-        }
 
-        public void Update(float dt, Vector2i mousePos, bool isMousePressed, bool isSelected, bool isEnterPressed, bool isLeft, bool isRight)
-        {
-            labelButton.Update(dt, mousePos, false, isSelected, false);
-            nextButton.Update(dt, mousePos, isMousePressed, isSelected, isRight);
-            prevButton.Update(dt, mousePos, isMousePressed, isSelected, isLeft);
+            labelButton = new TextButton();
+            prevButton = new TextButton();
+            nextButton = new TextButton();
         }
 
         public void Draw(RenderWindow w)
         {
+            currentSetting.Font = font;
+            prevButton.font = font;
+            nextButton.font = font;
+            labelButton.font = font;
+
             labelButton.Label = Label;
             currentSetting.DisplayedString = UpdateSetting();
             prevButton.Label = "<";
@@ -72,8 +74,8 @@ namespace SMF.engine.UI
 
             labelButton.Position = Position;
             prevButton.Position = new Vector2i((int)(Position.X + labelButton.GetWidth()), Position.Y);
-            currentSetting.Position = new Vector2f(prevButton.Position.X + prevButton.GetWidth(), Position.Y);
-            nextButton.Position = new Vector2i((int)(currentSetting.Position.X + currentSetting.GetGlobalBounds().Width + 10), Position.Y);
+            nextButton.Position = new Vector2i((int)(prevButton.Position.X + prevButton.GetWidth() + SpaceForSettingWidth), Position.Y);
+            currentSetting.Position = new Vector2f(prevButton.Position.X + prevButton.GetWidth() + (SpaceForSettingWidth - currentSetting.GetGlobalBounds().Width) / 2, Position.Y);
 
             labelButton.Position -=     new Vector2i((int)(width * Anchor.X), (int)(Height * Anchor.Y));
             prevButton.Position -=      new Vector2i((int)(width * Anchor.X), (int)(Height * Anchor.Y));
@@ -87,5 +89,11 @@ namespace SMF.engine.UI
 
         }
 
+        void MenuComponent.Update(float dt, Vector2i mousePos, bool isMousePressed, bool isSelected, bool isEnterPressed, bool isLeftPressed, bool isRightPressed)
+        {
+            labelButton.Update(dt, mousePos, false, isSelected, false);
+            nextButton.Update(dt, mousePos, isMousePressed, isSelected, isRightPressed);
+            prevButton.Update(dt, mousePos, isMousePressed, isSelected, isLeftPressed);
+        }
     }
 }

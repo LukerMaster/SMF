@@ -5,24 +5,17 @@ using SMF.game.weapon;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static SMF.game.Scene;
+using SFBE;
 
-namespace SMF.game
+namespace SMF
 {
-    class ArenaState : engine.IGameState
+    class ArenaState : SFBE.Level
     {
-        InstanceVars vars;
-        SceneController sceneController = new SceneController();
         List<Fish> players = new List<Fish>();
         Sprite background;
-        AssetManager assetManager;
-        public ArenaState(InstanceVars vars)
+        FishAssetManager assetManager;
+        public ArenaState()
         {
-            this.vars = vars;
-            assetManager = new AssetManager();
-            background = new Sprite(assetManager.GetByID(AssetManager.EType.Background, 0));
-            players.Add((Fish)sceneController.scene.Instantiate(new Fish(vars.Settings.selectedFishBase, assetManager.GetByID(AssetManager.EType.Fish, vars.Settings.selectedFishBase.ID))));
-            players[players.Count - 1].weapon = (Weapon)sceneController.scene.Instantiate(new RangedWeapon(vars.Settings.selectedWeaponBase, assetManager.GetByID(AssetManager.EType.Weapon, vars.Settings.selectedWeaponBase.ID)));
             for (int i = 0; i < players.Count; i++)
             {
                 if (i % 2 == 0)

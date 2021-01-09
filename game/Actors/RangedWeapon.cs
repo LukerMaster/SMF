@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SFBE;
 using SFML.Graphics;
 using SFML.System;
-using SMF.engine;
 
-namespace SMF.game.weapon
+namespace SMF
 {
-    class RangedWeapon : Weapon
+    class RangedWeapon : Actor, IWeapon
     {
         private WeaponBase weaponBase;
         private Sprite sprite;
@@ -34,34 +34,6 @@ namespace SMF.game.weapon
             sprite = new Sprite(tex);
         }
 
-        public void Attack(int type, Scene scene, AssetManager assets)
-        {
-            if (currentShootCooldown <= 0 && currentAmmoCount > 0 && ReloadTimeRemaining <= 0)
-            {
-                ShootAnimProgress = 0.0f;
-                currentShootCooldown = weaponBase.TimeBetweenFire;
-                CurrentAmmoCount--;
-
-                float rotX = (float)Math.Cos((Rotation - 45) * 0.0174532925) - (float)Math.Sin((Rotation - 45) * 0.0174532925);
-                float rotY = (float)Math.Sin((Rotation - 45) * 0.0174532925) + (float)Math.Cos((Rotation - 45) * 0.0174532925);
-
-                scene.Instantiate(new Bullet(Position + new Vector2f(rotX * weaponBase.Size.X, rotY * weaponBase.Size.X), new Vector2f(rotX * weaponBase.BulletSpeed, rotY * weaponBase.BulletSpeed), assets));
-            }
-        }
-
-        public void Draw(RenderWindow w)
-        {
-            sprite.TextureRect = new IntRect(0, 0, (int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y);
-            sprite.Position = Position;
-            sprite.Scale = new Vector2f((float)weaponBase.Size.X / (float)sprite.Texture.Size.X * Scale.X, (float)weaponBase.Size.Y / (float)sprite.Texture.Size.Y * Scale.Y);
-            sprite.Rotation = Rotation;
-            ModifySpriteByAnim();
-
-            if (Rotation > 90 || Rotation < -90)
-                sprite.Scale = new Vector2f(sprite.Scale.X, -sprite.Scale.Y);
-            w.Draw(sprite);
-        }
-
         public void Reload()
         {
             if (ReloadTimeRemaining <= 0)
@@ -69,14 +41,6 @@ namespace SMF.game.weapon
                 ReloadTimeRemaining = weaponBase.ReloadTime;
                 CurrentAmmoCount = MaxAmmoCount;
             }
-        }
-        public void Update(float dt, Scene scene, AssetManager assets)
-        {
-            ShootAnimProgress += 8 * dt;
-            currentShootCooldown -= dt;
-            ReloadTimeRemaining -= dt;
-            if (currentAmmoCount == 0 && ShootAnimProgress == 1)
-                Reload();
         }
         private void ModifySpriteByAnim()
         {
@@ -91,9 +55,46 @@ namespace SMF.game.weapon
             }
         }
 
-        public void ReceiveInput(Input input)
+        void IWeapon.Attack(int type, Level scene)
         {
-            
+            if (currentShootCooldown <= 0 && currentAmmoCount > 0 && ReloadTimeRemaining <= 0)
+            {
+                ShootAnimProgress = 0.0f;
+                currentShootCooldown = weaponBase.TimeBetweenFire;
+                CurrentAmmoCount--;
+
+                float rotX = (float)Math.Cos((Rotation - 45) * 0.0174532925) - (float)Math.Sin((Rotation - 45) * 0.0174532925);
+                float rotY = (float)Math.Sin((Rotation - 45) * 0.0174532925) + (float)Math.Cos((Rotation - 45) * 0.0174532925);
+
+                scene.InstantiateActor(new Bullet(Position + new Vector2f(rotX * weaponBase.Size.X, rotY * weaponBase.Size.X), new Vector2f(rotX * weaponBase.BulletSpeed, rotY * weaponBase.BulletSpeed)));
+            }
+        }
+
+        protected override void Update(float dt, Level level)
+        {
+            ShootAnimProgress += 8 * dt;
+            currentShootCooldown -= dt;
+            ReloadTimeRemaining -= dt;
+            if (currentAmmoCount == 0 && ShootAnimProgress == 1)
+                Reload();
+        }
+
+        protected override void FixedUpdate(float dt, Level level)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void Draw(RenderWindow w, AssetManager assets)
+        {
+            sprite.TextureRect = new IntRect(0, 0, (int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y);
+            sprite.Position = Position;
+            sprite.Scale = new Vector2f((float)weaponBase.Size.X / (float)sprite.Texture.Size.X * Scale.X, (float)weaponBase.Size.Y / (float)sprite.Texture.Size.Y * Scale.Y);
+            sprite.Rotation = Rotation;
+            ModifySpriteByAnim();
+
+            if (Rotation > 90 || Rotation < -90)
+                sprite.Scale = new Vector2f(sprite.Scale.X, -sprite.Scale.Y);
+            w.Draw(sprite);
         }
     }
 }

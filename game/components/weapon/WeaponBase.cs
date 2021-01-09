@@ -6,12 +6,12 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace SMF.game.weapon
+namespace SMF
 {
     /// <summary>
     /// Base weapon settings class for creating weapons. This class keeps everything needed to instantiate a weapon
     /// but does not contain any concrete fish values like current ammo etc.
-    /// Each weapon uses a reference to an object of this class to know what their max values are, what is its texture etc.
+    /// Each weapon uses a reference to an object of this class to know what their max values are etc.
     /// If you need to reset weapon to it's starting state, just instantiate new weapon with same WeaponBase object.
     /// </summary>
     public class WeaponBase

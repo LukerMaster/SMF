@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SMF.game
+namespace SMF
 {
     abstract class FileData
     {

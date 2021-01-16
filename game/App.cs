@@ -1,5 +1,5 @@
 ﻿using System;
-using SFBE;
+using SFBF;
 
 namespace SMF
 {
@@ -13,7 +13,7 @@ namespace SMF
             initialSettings.ViewCenterPos = new SFML.System.Vector2i(1920 / 2, 1080 / 2);
             initialSettings.ViewSize = new SFML.System.Vector2u(1920, 1080);
 
-            SFBE.Engine engine = new SFBE.Engine();
+            SFBF.Engine engine = new SFBF.Engine();
             engine.Data.assets = new FishAssetManager();
             engine.Data.InstantiateLevel(new MenuLevel(engine.Data, initialSettings));
             engine.Run();

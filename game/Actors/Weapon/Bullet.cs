@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using SFBE;
+using SFBF;
 using SFML.Graphics;
 using SFML.System;
 
@@ -43,7 +43,7 @@ namespace SMF
         {
             Position += Velocity * dt;
             Velocity *= (float)Math.Pow(0.01, dt);
-            List<Fish> fishes = level.GetActorsOfClass<Fish>();
+            List<ICollidable> fishes = level.GetActorsOfClass<ICollidable>();
             foreach (ICollidable f in fishes)
             {
                 if (f != owner && f.isPointColliding(new Vector2f(sprite.GetGlobalBounds().Left - sprite.GetGlobalBounds().Width / 2, sprite.GetGlobalBounds().Top - sprite.GetGlobalBounds().Height / 2)))

@@ -9,9 +9,9 @@ namespace SMF
     partial class MenuLevel : Level
     {
         public bool ShowCustomizeMenu;
-        public float MasterSoundVolume;
-        public float MusicSoundVolume;
-        public float SfxSoundVolume;
+        public float MasterSoundVolume = 0.1f;
+        public float MusicSoundVolume = 1.0f;
+        public float SfxSoundVolume = 1.0f;
         public Fish fishForCustomizeMenu;
 
         public bool Exit = false;
@@ -19,22 +19,37 @@ namespace SMF
 
 
         Menu currentMenu;
+        CustomizeMenu customizeMenu;
 
         FishAssetManager assets;
 
         public FishBase menuFishBase;
-        public WeaponBase menuWeaponBase;
-        public MenuLevel(Instance instance, WindowSettings settings)
+        public WeaponBuilder weaponBuilder = new WeaponBuilder();
+        public MenuLevel(Instance instance, WindowSettings settings, FishBase fishBase = null)
         {
-            Settings = settings;
             assets = (FishAssetManager)instance.assets;
+
+            if (fishBase == null)
+                menuFishBase = new FishBase(0);
+            else
+                menuFishBase = fishBase;
+
+            Settings = settings;
+            
             currentMenu = (Menu)InstantiateActor(new Menu("roboto"));
-            currentMenu.BottomLeftPos = new SFML.System.Vector2f(20, 1060);
+            currentMenu.BottomLeftPos = new SFML.System.Vector2f(20, 960);
             CreateMainMenu();
             InstantiateActor(new MainBackground(Settings.ViewSize));
 
-            menuFishBase = new FishBase(0, assets.GetByID(FishAssetManager.EType.Fish, 0));
-            menuWeaponBase = new WeaponBase(0, assets.GetByID(FishAssetManager.EType.Weapon, 0));
+            
+
+            fishForCustomizeMenu = (Fish)InstantiateActor(new Fish(menuFishBase));
+            fishForCustomizeMenu.Position = new SFML.System.Vector2f(1700, 750);
+            fishForCustomizeMenu.Scale = new SFML.System.Vector2f(2.0f, 2.0f);
+            fishForCustomizeMenu.FacingLeft = true;
+            fishForCustomizeMenu.DrawOrder = 1;
+
+            fishForCustomizeMenu.weapon = weaponBuilder.CreateWeapon(0);
 
         }
         protected override void FixedUpdateScript(float dt, Instance data)
@@ -48,9 +63,18 @@ namespace SMF
 
             if (StartArena)
             {
-                data.InstantiateLevel(new ArenaLevel(menuFishBase, data, Settings));
+                data.InstantiateLevel(new ArenaLevel(menuFishBase, data, Settings, fishForCustomizeMenu.weapon.ID, MasterSoundVolume * MusicSoundVolume));
                 data.DestroyLevel(this);
             }
+            if (ShowCustomizeMenu && customizeMenu == null)
+                customizeMenu = (CustomizeMenu)InstantiateActor(new CustomizeMenu(menuFishBase));
+            if (!ShowCustomizeMenu && customizeMenu != null)
+            {
+                DestroyActor(customizeMenu);
+                customizeMenu = null;
+            }
+                
+                
         }
     }
 }

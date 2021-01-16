@@ -97,10 +97,7 @@ namespace SMF
             for (int i = 0; i < componentList.Count; i++)
             {
                 if (componentList[i] is MenuComponentWithText)
-                {
                     ((MenuComponentWithText)componentList[i]).font = ((FishAssetManager)assets).GetFont(fontName);
-                    Console.WriteLine("done");
-                }
                 componentList[i].Draw(w);
             }
         }

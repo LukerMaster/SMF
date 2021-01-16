@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SMF
 {
-    class FishInput
+    public class FishInput
     {
         public bool AttackPressed;
         public bool UpPressed;
@@ -14,5 +14,7 @@ namespace SMF
         public bool DownPressed;
         public bool BoostPressed;
         public bool ReloadPressed;
+
+        public Vector2f MousePos;
     }
 }

@@ -6,7 +6,7 @@
 	<SizeY>40</SizeY>
 	
 	<Type>Ranged</Type>
-	<Range>350</Range>
+	<BulletSlowdown>0.01</BulletSlowdown>
 	<Damage>120</Damage>
 	<BulletSpeed>2700</BulletSpeed>
 	<AmmoCount>7</AmmoCount>

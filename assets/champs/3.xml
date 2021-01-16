@@ -7,11 +7,11 @@
 	
 	<Health>1500</Health>
 	<HealthRegen>100</HealthRegen>
-	<HealthRegenCooldown>1000</HealthRegenCooldown>
+	<HealthRegenCooldown>1</HealthRegenCooldown>
 	
 	<Stamina>2000</Stamina>
 	<StaminaRegen>500</StaminaRegen>
-	<StaminaRegenCooldown>500</StaminaRegenCooldown>
+	<StaminaRegenCooldown>2</StaminaRegenCooldown>
 	
 	<MaxSpeed>500</MaxSpeed>
 	<Force>120</Force>

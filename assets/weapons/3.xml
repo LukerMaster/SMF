@@ -6,11 +6,11 @@
 	<SizeY>40</SizeY>
 	
 	<Type>Ranged</Type>
-	<Range>300</Range>
+	<BulletSlowdown>0.008</BulletSlowdown>
 	<Damage>45</Damage>
 	<BulletSpeed>2400</BulletSpeed>
 	<AmmoCount>30</AmmoCount>
 	<TimeBetweenFire>0.05</TimeBetweenFire>
-	<ReloadTime>3.5</ReloadTime>
+	<ReloadTime>1.8</ReloadTime>
 	
 </WeaponFileData>

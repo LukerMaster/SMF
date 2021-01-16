@@ -11,7 +11,7 @@
 	
 	<Stamina>3000</Stamina>
 	<StaminaRegen>500</StaminaRegen>
-	<StaminaRegenCooldown>500</StaminaRegenCooldown>
+	<StaminaRegenCooldown>2</StaminaRegenCooldown>
 	
 	<MaxSpeed>500</MaxSpeed>
 	<Force>8</Force>

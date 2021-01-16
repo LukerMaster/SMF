@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <Folder Include="game\components\fish\" />
-    <Folder Include="game\components\weapon\" />
+    <Folder Include="game\components\GameUI\" />
   </ItemGroup>
 
 </Project>

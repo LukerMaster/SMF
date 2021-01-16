@@ -6,11 +6,9 @@
 	<SizeY>25</SizeY>
 	
 	<Type>Melee</Type>
+	
 	<Range>90</Range>
-	<Damage>200</Damage>
-	<BulletSpeed>0</BulletSpeed>
-	<AmmoCount>1</AmmoCount>
-	<TimeBetweenFire>1</TimeBetweenFire>
-	<ReloadTime>1</ReloadTime>
+	<Damage>10000</Damage>
+	<TimeBetweenAttack>1</TimeBetweenAttack>
 	
 </WeaponFileData>

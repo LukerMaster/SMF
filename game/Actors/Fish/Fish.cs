@@ -4,17 +4,19 @@ using System;
 using SFBE;
 namespace SMF
 {
-    class Fish : Actor
+    public class Fish : Actor, ICollidable
     {
         private float boostFalloff;
         private float currentStamina;
         private float staminaCurrentCooldown;
+        private float healthCurrentCooldown;
         private float currentHealth;
 
-        private float BoostFalloff { get => boostFalloff; set => boostFalloff = Math.Clamp(value, 0.0f, 1.0f); }
-        private float StaminaCurrentCooldown { get => staminaCurrentCooldown; set => staminaCurrentCooldown = Math.Clamp(value, 0, fishBase.MaxStaminaRegenCooldown); }
-        private float CurrentStamina { get => currentStamina; set => currentStamina = Math.Clamp(value, 0, fishBase.MaxStamina); }
-        private float CurrentHealth { get => currentHealth; set => currentHealth = Math.Clamp(value, 0, fishBase.MaxHealth); }
+        public float BoostFalloff { get => boostFalloff; set => boostFalloff = Math.Clamp(value, 0.0f, 1.0f); }
+        public float StaminaCurrentCooldown { get => staminaCurrentCooldown; set => staminaCurrentCooldown = Math.Clamp(value, 0, fishBase.MaxStaminaRegenCooldown); }
+        public float HealthCurrentCooldown { get => healthCurrentCooldown; set => healthCurrentCooldown = Math.Clamp(value, 0, fishBase.MaxHealthRegenCooldown); }
+        public float CurrentStamina { get => currentStamina; set => currentStamina = Math.Clamp(value, 0, fishBase.MaxStamina); }
+        public float CurrentHealth { get => currentHealth; set => currentHealth = Math.Clamp(value, 0, fishBase.MaxHealth); }
 
         private bool boostDrainedProtection = false;
 
@@ -27,21 +29,19 @@ namespace SMF
         public Vector2f Scale { get; set; } = new Vector2f(1, 1);
         public float Rotation { get; set; }
 
-        private Sprite sprite;
+        private Sprite sprite = new Sprite();
         public FishBase fishBase;
 
-        public Fish(FishBase fishBase, Texture tex)
+        public Fish(FishBase fishBase)
         {
             this.fishBase = fishBase;
-            sprite = new Sprite(tex);
             SetupStartupValues();
         }
 
-        public Fish(FishBase fishBase, Texture tex, IWeapon weapon)
+        public Fish(FishBase fishBase, IWeapon weapon)
         {
             this.weapon = weapon;
             this.fishBase = fishBase;
-            sprite = new Sprite(tex);
             SetupStartupValues();
         }
 
@@ -61,7 +61,7 @@ namespace SMF
         private bool downPressed;
         private bool boostPressed;
         private bool reloadPressed;
-        private Vector2i mousePos;
+        private Vector2f mousePos;
         public void ReceiveInput(FishInput input)
         {
             lmbPressed = input.AttackPressed;
@@ -71,6 +71,7 @@ namespace SMF
             downPressed = input.DownPressed;
             boostPressed = input.BoostPressed;
             reloadPressed = input.ReloadPressed;
+            mousePos = input.MousePos;
         }
 
         protected override void Update(float dt, Level level)
@@ -78,6 +79,11 @@ namespace SMF
             
         }
 
+        public void TakeDamage(float amount)
+        {
+            CurrentHealth -= amount;
+            HealthCurrentCooldown = fishBase.MaxHealthRegenCooldown;
+        }
         protected override void FixedUpdate(float dt, Level level)
         {
             if (upPressed) acceleration.Y = -fishBase.MaxAcceleration; // Accelerate
@@ -116,7 +122,7 @@ namespace SMF
             else
             {
                 BoostFalloff -= dt;
-                StaminaCurrentCooldown -= dt * 1000;
+                StaminaCurrentCooldown -= dt;
                 speed.X = Math.Clamp(speed.X, -fishBase.MaxSpeed - (fishBase.MaxSpeed * 0.25f * BoostFalloff), fishBase.MaxSpeed + (fishBase.MaxSpeed * 0.25f * BoostFalloff));
                 speed.Y = Math.Clamp(speed.Y, -fishBase.MaxSpeed - (fishBase.MaxSpeed * 0.25f * BoostFalloff), fishBase.MaxSpeed + (fishBase.MaxSpeed * 0.25f * BoostFalloff));
             }
@@ -128,21 +134,30 @@ namespace SMF
 
             Position += speed * dt;
 
-            float weaponRotation = 360 * (float)Math.Atan2((mousePos - new Vector2i((int)Position.X, (int)Position.Y)).Y, (mousePos - new Vector2i((int)Position.X, (int)Position.Y)).X) / (float)(2 * Math.PI);
+            float weaponRotation = 360 * (float)Math.Atan2((mousePos - Position).Y, (mousePos - Position).X) / (float)(2 * Math.PI);
 
             if (weapon != null)
             {
                 if (lmbPressed)
-                    weapon.Attack(0, level);
+                    weapon.Attack(level, new Vector2f((float)mousePos.X, (float)mousePos.Y));
                 if (reloadPressed)
                     weapon.Reload();
 
                 weapon.Rotation = weaponRotation;
             }
+
+            // Regeneration
+
+            if (HealthCurrentCooldown <= 0 && CurrentHealth > 0)
+            {
+                CurrentHealth += fishBase.GetHealthRegen() * dt;
+            }
+            HealthCurrentCooldown -= dt;
         }
 
         protected override void Draw(RenderWindow w, AssetManager assets)
         {
+            sprite.Texture = ((FishAssetManager)assets).GetByID(FishAssetManager.EType.Fish, fishBase.ID);
             sprite.TextureRect = new IntRect(0, 0, (int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y);
             sprite.Origin = new Vector2f(sprite.Texture.Size.X / 2, sprite.Texture.Size.Y / 2);
             sprite.Position = Position;
@@ -150,12 +165,29 @@ namespace SMF
             sprite.Scale = new Vector2f((float)fishBase.Size.X / (float)sprite.Texture.Size.X * (float)Scale.X, (float)fishBase.Size.Y / (float)sprite.Texture.Size.Y * Scale.Y);
             if (FacingLeft)
                 sprite.Scale = new Vector2f(-sprite.Scale.X, sprite.Scale.Y);
+            if (CurrentHealth <= 0)
+                sprite.Scale = new Vector2f(sprite.Scale.X, -sprite.Scale.Y);
 
             w.Draw(sprite);
             if (weapon != null)
             {
                 weapon.Position = Position;
             }
+        }
+
+        bool ICollidable.isPointColliding(Vector2f point)
+        {
+            if (sprite.GetGlobalBounds().Contains(point.X, point.Y))
+                return true;
+            else
+                return false;
+        }
+        bool ICollidable.isBoxColliding(FloatRect rect)
+        {
+            if (sprite.GetGlobalBounds().Intersects(rect))
+                return true;
+            else
+                return false;
         }
     }
 }

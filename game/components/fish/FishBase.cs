@@ -48,9 +48,9 @@ namespace SMF
         public string Name { get => fileData.Name; }
         public int ID { get => fileData.ID; }
 
-        public FishBase(int id, Texture tex)
+        public FishBase(int id)
         {
-            ChangeFishData(0);
+            ChangeFishData(id);
         }
 
         public void ChangeFishData(int id)

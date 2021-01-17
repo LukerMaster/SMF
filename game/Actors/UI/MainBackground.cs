@@ -22,7 +22,7 @@ namespace SMF
             DrawOrder = -1;
             Size = size;
         }
-        override protected void Draw(RenderWindow w, AssetManager assets)
+        override protected void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             FishAssetManager asset = (FishAssetManager)assets;
             bg.Texture = asset.GetCustomTexture("assets/maps/0.png");
@@ -35,12 +35,12 @@ namespace SMF
             w.Draw(title);
         }
 
-        override protected void FixedUpdate(float dt, Level level) 
+        override protected void FixedUpdate(float dt, Level level, AssetManager assets) 
         {
             
         }
 
-        override protected void Update(float dt, Level level)
+        override protected void Update(float dt, Level level, AssetManager assets)
         {
             
         }

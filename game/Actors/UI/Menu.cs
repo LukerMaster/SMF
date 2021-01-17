@@ -64,7 +64,7 @@ namespace SMF
         }
         float KeyboardCooldown { get => keyboardCooldown; set => keyboardCooldown = Math.Max(0, value); }
 
-        protected override void Update(float dt, Level level)
+        protected override void Update(float dt, Level level, AssetManager assets)
         {
             if (SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.Up) && KeyboardCooldown == 0) { if (FlipUpDown) CurrentlySelected--; else CurrentlySelected++; keyboardCooldown = 0.2f; }
             if (SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.Down) && KeyboardCooldown == 0) { if (FlipUpDown) CurrentlySelected++; else CurrentlySelected--; keyboardCooldown = 0.2f; }
@@ -88,11 +88,11 @@ namespace SMF
             KeyboardCooldown -= dt;
         }
 
-        protected override void FixedUpdate(float dt, Level level)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
         }
 
-        protected override void Draw(RenderWindow w, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             for (int i = 0; i < componentList.Count; i++)
             {

@@ -78,7 +78,7 @@ namespace SMF
             }
         }
 
-        protected override void Update(float dt, Level level)
+        protected override void Update(float dt, Level level, AssetManager assets)
         {
             ShootAnimProgress += 8 * dt;
             currentShootCooldown -= dt;
@@ -87,12 +87,12 @@ namespace SMF
                 (this as IWeapon).Reload();
         }
 
-        protected override void FixedUpdate(float dt, Level level)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
             
         }
 
-        protected override void Draw(RenderWindow w, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             sprite.Texture = (assets as FishAssetManager).GetByID(FishAssetManager.EType.Weapon, (this as IWeapon).ID);
             sprite.TextureRect = new IntRect(0, 0, (int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y);

@@ -15,7 +15,7 @@ namespace SMF
             referencedFish = fish;
         }
 
-        protected override void Draw(RenderWindow w, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             float barSize = 250.0f;
             float barThickness = 15.0f;
@@ -49,12 +49,12 @@ namespace SMF
             w.Draw(staminaRect);
         }
 
-        protected override void FixedUpdate(float dt, Level level)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
             
         }
 
-        protected override void Update(float dt, Level level)
+        protected override void Update(float dt, Level level, AssetManager assets)
         {
             
         }

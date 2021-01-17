@@ -74,7 +74,7 @@ namespace SMF
             mousePos = input.MousePos;
         }
 
-        protected override void Update(float dt, Level level)
+        protected override void Update(float dt, Level level, AssetManager assets)
         {
             
         }
@@ -84,7 +84,7 @@ namespace SMF
             CurrentHealth -= amount;
             HealthCurrentCooldown = fishBase.MaxHealthRegenCooldown;
         }
-        protected override void FixedUpdate(float dt, Level level)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
             if (upPressed) acceleration.Y = -fishBase.MaxAcceleration; // Accelerate
             if (downPressed) acceleration.Y = fishBase.MaxAcceleration;
@@ -155,7 +155,7 @@ namespace SMF
             HealthCurrentCooldown -= dt;
         }
 
-        protected override void Draw(RenderWindow w, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             sprite.Texture = ((FishAssetManager)assets).GetByID(FishAssetManager.EType.Fish, fishBase.ID);
             sprite.TextureRect = new IntRect(0, 0, (int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y);

@@ -20,7 +20,7 @@ namespace SMF
 
             mainText.DisplayedString = str;
         }
-        protected override void Draw(RenderWindow w, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             float offset = (float)(Math.Pow(currentTime / lifeTime - 1, 10));
             mainText.CharacterSize = 120;
@@ -30,12 +30,12 @@ namespace SMF
             w.Draw(mainText);
         }
 
-        protected override void FixedUpdate(float dt, Level level)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
             
         }
 
-        protected override void Update(float dt, Level level)
+        protected override void Update(float dt, Level level, AssetManager assets)
         {
             currentTime -= dt;
         }

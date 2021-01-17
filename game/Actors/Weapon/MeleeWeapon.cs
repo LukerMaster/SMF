@@ -35,12 +35,12 @@ namespace SMF
             
         }
 
-        protected override void Update(float dt, Level level)
+        protected override void Update(float dt, Level level, AssetManager assets)
         {
             
         }
 
-        protected override void FixedUpdate(float dt, Level level)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
             if (Math.Sign(previousRotation) != Math.Sign((this as IWeapon).Rotation))
                 previousRotation = -previousRotation;
@@ -56,7 +56,7 @@ namespace SMF
             }
         }
 
-        protected override void Draw(RenderWindow w, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             sprite.Texture = (assets as FishAssetManager).GetByID(FishAssetManager.EType.Weapon, (this as IWeapon).ID);
             sprite.Scale = new Vector2f((float)weaponData.SizeX / sprite.Texture.Size.X, (float)weaponData.SizeY / sprite.Texture.Size.Y);

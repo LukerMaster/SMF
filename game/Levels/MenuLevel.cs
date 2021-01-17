@@ -59,7 +59,7 @@ namespace SMF
 
         protected override void UpdateScript(float dt, Instance data)
         {
-            if (Exit) data.IsGameOn = false;
+            if (Exit) data.IsOn = false;
 
             if (StartArena)
             {

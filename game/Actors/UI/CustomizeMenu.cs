@@ -15,7 +15,7 @@ namespace SMF
         {
             this.fishBase = fishBase;
         }
-        protected override void Draw(RenderWindow w, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             menuSprite.Texture = ((FishAssetManager)assets).GetCustomTexture("assets/menu/custom_menu.png");
             menuSprite.Position = new Vector2f(1502, 270);
@@ -48,12 +48,12 @@ namespace SMF
             }
         }
 
-        protected override void FixedUpdate(float dt, Level level)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
             
         }
 
-        protected override void Update(float dt, Level level)
+        protected override void Update(float dt, Level level, AssetManager assets)
         {
 
         }

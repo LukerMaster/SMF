@@ -9,7 +9,7 @@ namespace SMF
     class ArenaBackground : Actor
     {
         Sprite background = new Sprite();
-        protected override void Draw(RenderWindow w, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             DrawOrder = -2;
             background.Texture = (assets as FishAssetManager).GetByID(FishAssetManager.EType.Background, 0);
@@ -18,12 +18,12 @@ namespace SMF
             
         }
 
-        protected override void FixedUpdate(float dt, Level level)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
             
         }
 
-        protected override void Update(float dt, Level level)
+        protected override void Update(float dt, Level level, AssetManager assets)
         {
 
         }

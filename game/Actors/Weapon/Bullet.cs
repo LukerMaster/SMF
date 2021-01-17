@@ -35,11 +35,11 @@ namespace SMF
             sprite = new Sprite();
         }
 
-        protected override void Update(float dt, Level level)
+        protected override void Update(float dt, Level level, AssetManager assets)
         {
         }
 
-        protected override void FixedUpdate(float dt, Level level)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
             Position += Velocity * dt;
             Velocity *= (float)Math.Pow(0.01, dt);
@@ -56,7 +56,7 @@ namespace SMF
             }
         }
 
-        protected override void Draw(RenderWindow w, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             sprite.Texture = ((FishAssetManager)assets).GetCustomTexture("assets/misc/bullet.png");
             sprite.Position = Position;

@@ -15,5 +15,6 @@ namespace SMF
         public int ID { get; }
         public float Rotation { get; set; }
         public Vector2f Position { get; set; }
+        public Vector2f Scale { get; set; }
     }
 }

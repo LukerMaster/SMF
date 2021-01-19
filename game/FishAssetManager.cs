@@ -1,7 +1,7 @@
 ﻿using SFML.Graphics;
 using System.Collections.Generic;
 using SFBF;
-
+using SFML.Audio;
 
 namespace SMF
 {
@@ -9,6 +9,7 @@ namespace SMF
     {
         private Dictionary<EType, Texture[]> textures = new Dictionary<EType, Texture[]>();
         private Dictionary<string, Texture> customTextures = new Dictionary<string, Texture>();
+        private Dictionary<string, SoundBuffer> customSounds = new Dictionary<string, SoundBuffer>();
         private Dictionary<string, Font> fonts = new Dictionary<string, Font>();
 
         public FishAssetManager()
@@ -51,6 +52,14 @@ namespace SMF
                 customTextures.Add(path, new Texture(path));
 
             return customTextures[path];
+        }
+
+        public SoundBuffer GetCustomSoundBuffer(string path)
+        {
+            if (!customSounds.ContainsKey(path))
+                customSounds.Add(path, new SoundBuffer(path));
+
+            return customSounds[path];
         }
 
         public Font GetFont(string name)

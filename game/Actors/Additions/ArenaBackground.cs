@@ -18,6 +18,11 @@ namespace SMF
             
         }
 
+        public void SetTint(Color Tint)
+        {
+            background.Color = Tint;
+        }
+
         protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
             

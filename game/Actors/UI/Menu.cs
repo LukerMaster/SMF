@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SFBF;
+using SFML.Audio;
 
 namespace SMF
 {
@@ -11,6 +12,10 @@ namespace SMF
     {
         private List<MenuComponent> componentList = new List<MenuComponent>();
 
+        private GameSettings settings;
+
+        private SoundBuffer HoverSound;
+        private SoundBuffer ClickSound;
         public void AddButton(string label, Action ac)
         {
             TextButton temp = new TextButton();
@@ -19,6 +24,8 @@ namespace SMF
             temp.Height = (int)ButtonHeight;
             temp.Label = label;
             temp.OnClick += ac;
+            temp.OnClick += () => { Sound s = new Sound(ClickSound); s.Volume = settings.MasterSoundVolume * settings.SfxSoundVolume * 100; s.Play(); };
+            temp.OnEnterFocus += () => { Sound s = new Sound(HoverSound); s.Volume = settings.MasterSoundVolume * settings.SfxSoundVolume * 100; s.Play(); };
             componentList.Add(temp);
         }
         public void AddButtonSet(string label, Func<String> labelFunction, Action OnClickPrev, Action OnClickNext, int SpaceForTextWidth, Action OnFocusAction = null)
@@ -29,9 +36,12 @@ namespace SMF
             temp.Height = (int)ButtonHeight;
             temp.Label = label;
             temp.SetStringFunction(labelFunction);
+            temp.SetOnClickPrev(() => { Sound s = new Sound(ClickSound); s.Volume = settings.MasterSoundVolume * settings.SfxSoundVolume * 100; s.Play(); });
             temp.SetOnClickPrev(OnClickPrev);
+            temp.SetOnClickNext(() => { Sound s = new Sound(ClickSound); s.Volume = settings.MasterSoundVolume * settings.SfxSoundVolume * 100; s.Play(); });
             temp.SetOnClickNext(OnClickNext);
-            temp.SetOnFocus(OnFocusAction);
+            temp.SetOnFocusConstant(OnFocusAction);
+            temp.SetOnEnterFocus(() => { Sound s = new Sound(HoverSound); s.Volume = settings.MasterSoundVolume * settings.SfxSoundVolume * 100; s.Play(); } );
             temp.SpaceForSettingWidth = SpaceForTextWidth;
             componentList.Add(temp);
         }
@@ -42,9 +52,10 @@ namespace SMF
 
         string fontName;
 
-        public Menu(string font)
+        public Menu(string font, GameSettings settings)
         {
             this.fontName = font;
+            this.settings = settings;
         }
 
         int currentlySelected = 0;
@@ -67,6 +78,9 @@ namespace SMF
 
         protected override void Update(float dt, Level level, AssetManager assets)
         {
+            HoverSound = (assets as FishAssetManager).GetCustomSoundBuffer("assets/sounds/menu_select.wav");
+            ClickSound = (assets as FishAssetManager).GetCustomSoundBuffer("assets/sounds/menu_click.wav");
+
             if (SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.Up) && KeyboardCooldown == 0) { if (FlipUpDown) CurrentlySelected--; else CurrentlySelected++; keyboardCooldown = 0.2f; }
             if (SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.Down) && KeyboardCooldown == 0) { if (FlipUpDown) CurrentlySelected++; else CurrentlySelected--; keyboardCooldown = 0.2f; }
 

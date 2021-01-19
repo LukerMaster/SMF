@@ -17,12 +17,12 @@
 	<Force>300</Force>
 	<NitrousForce>150</NitrousForce>
 	<Mass>1000</Mass>
-	<Friction>0.88</Friction>
+	<Friction>0.7</Friction>
 	
 	
-	<EngineMult>0.5</EngineMult>
+	<EngineMult>0.2</EngineMult>
 	<ChassisMult>1</ChassisMult>
 	<BodyMult>0.7</BodyMult>
 	<FinsMult>1</FinsMult>
-	<NitrousMult>1.2</NitrousMult>
+	<NitrousMult>0.6</NitrousMult>
 </FishFileData>

@@ -24,7 +24,9 @@ namespace SMF
             if (IsHovered || isSelected)
             {
                 IsFocused = true;
-                OnFocus?.Invoke();
+                OnFocusConstant?.Invoke();
+                if (!wasFocused)
+                    OnEnterFocus?.Invoke();
             }
             else
             {
@@ -55,7 +57,8 @@ namespace SMF
         private bool isHovered;
 
         public Action OnClick;
-        public Action OnFocus;
+        public Action OnEnterFocus;
+        public Action OnFocusConstant;
 
         protected FloatRect hitbox;
 

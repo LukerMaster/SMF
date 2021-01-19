@@ -2,8 +2,6 @@
 using SFML.Graphics;
 using SFML.System;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SMF
 {
@@ -29,7 +27,7 @@ namespace SMF
             upgradeDesription.Font = (assets as FishAssetManager).GetFont("roboto");
             upgradeDesription.Position = new Vector2f(20, 220);
             upgradeDesription.CharacterSize = 35;
-            upgradeDesription.Color = new Color(255, 255, 255, 255);
+            upgradeDesription.FillColor = new Color(255, 255, 255, 255);
             upgradeDesription.OutlineColor = new Color(255, 255, 255, 255);
             upgradeDesription.OutlineThickness = 0.5f;
             upgradeDesription.DisplayedString = UpgradeString;

@@ -34,10 +34,12 @@ namespace SMF
         uint IWeapon.DPS { get => (uint)(weaponData.Damage / weaponData.TimeBetweenFire); }
         float IWeapon.Rotation { get; set; }
         Vector2f IWeapon.Position { get; set; }
+        Vector2f IWeapon.Scale { get; set; } = new Vector2f(1.0f, 1.0f);
         int IWeapon.ID { get => weaponData.ID; }
 
         public RangedWeapon(WeaponFileData data, Fish owner = null)
         {
+            DrawOrder = 7;
             this.owner = owner;
             weaponData = data;
             currentAmmoCount = weaponData.AmmoCount;
@@ -97,7 +99,7 @@ namespace SMF
             sprite.Texture = (assets as FishAssetManager).GetByID(FishAssetManager.EType.Weapon, (this as IWeapon).ID);
             sprite.TextureRect = new IntRect(0, 0, (int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y);
             sprite.Position = (this as IWeapon).Position;
-            sprite.Scale = new Vector2f((float)weaponData.SizeX / (float)sprite.Texture.Size.X * Scale.X, (float)weaponData.SizeY / (float)sprite.Texture.Size.Y * Scale.Y);
+            sprite.Scale = new Vector2f((this as IWeapon).Scale.X * (float)weaponData.SizeX / (float)sprite.Texture.Size.X * Scale.X, (this as IWeapon).Scale.Y * (float)weaponData.SizeY / (float)sprite.Texture.Size.Y * Scale.Y);
             sprite.Rotation = (this as IWeapon).Rotation;
             ModifySpriteByAnim();
 

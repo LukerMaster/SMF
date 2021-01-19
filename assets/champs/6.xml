@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <FishFileData>
 	<ID>6</ID>
-	<Name>The Horny One</Name>
+	<Name>Horny</Name>
 	<SizeX>92</SizeX>
 	<SizeY>90</SizeY>
 	
-	<Health>900</Health>
-	<HealthRegen>80</HealthRegen>
+	<Health>950</Health>
+	<HealthRegen>100</HealthRegen>
 	<HealthRegenCooldown>1</HealthRegenCooldown>
 	
 	<Nitrous>1000</Nitrous>
@@ -20,9 +20,9 @@
 	<Friction>0.65</Friction>
 	
 	
-	<EngineMult>1</EngineMult>
-	<ChassisMult>0.3</ChassisMult>
-	<BodyMult>0.3</BodyMult>
+	<EngineMult>0.6</EngineMult>
+	<ChassisMult>0.2</ChassisMult>
+	<BodyMult>0.2</BodyMult>
 	<FinsMult>0.4</FinsMult>
 	<NitrousMult>1</NitrousMult>
 </FishFileData>

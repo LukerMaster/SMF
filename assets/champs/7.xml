@@ -14,7 +14,7 @@
 	<NitrousRegenCooldown>1</NitrousRegenCooldown>
 	
 	<MaxSpeed>500</MaxSpeed>
-	<Force>300</Force>
+	<Force>250</Force>
 	<NitrousForce>100</NitrousForce>
 	<Mass>1000</Mass>
 	<Friction>0.88</Friction>

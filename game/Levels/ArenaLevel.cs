@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
 using SFBF;
 using SFML.Graphics;
 using SFML.System;
@@ -26,18 +27,39 @@ namespace SMF
 
         FishInput input = new FishInput();
 
+        FightTimer timer;
+
         // Arguments in here are going to be changed. Nothing to worry about.
         public ArenaLevel(Instance data, WindowSettings s, GameSettings gameSettings)
         {
+            
             this.gameSettings = gameSettings;
             Settings = s;
             player = new Fish(this.gameSettings.playerFishBase);
             player.weapon = new WeaponBuilder().CreateWeapon(this.gameSettings.selectedWeaponID, player);
-            FishBase opponentFishBase = new FishBase(new Random().Next(0, 9));
-            opponentFishBase.BodyLvl = player.fishBase.BodyLvl + new Random().Next(-1, 2);
-            opponentFishBase.EngineLvl = player.fishBase.EngineLvl + new Random().Next(-1, 2);
-            opponentFishBase.ChassisLvl = player.fishBase.ChassisLvl + new Random().Next(-1, 2);
-            opponentFishBase.FinsLvl = player.fishBase.FinsLvl + new Random().Next(-1, 2);
+            FishBase opponentFishBase;
+            if (gameSettings.SameOpponentFish)
+                opponentFishBase = new FishBase(player.fishBase.ID);
+            else
+                opponentFishBase = new FishBase(new Random().Next(0, Int32.Parse(XDocument.Load("assets/champs/FishData.xml").Root.Element("FishAmount").Value)));
+
+
+            if (gameSettings.SameOpponentUpgrades)
+            {
+                opponentFishBase.BodyLvl = player.fishBase.BodyLvl;
+                opponentFishBase.EngineLvl = player.fishBase.EngineLvl;
+                opponentFishBase.ChassisLvl = player.fishBase.ChassisLvl;
+                opponentFishBase.FinsLvl = player.fishBase.FinsLvl;
+                opponentFishBase.NitrousLvl = player.fishBase.NitrousLvl;
+            }
+            else
+            {
+                opponentFishBase.BodyLvl = player.fishBase.BodyLvl + new Random().Next(-1, 2);
+                opponentFishBase.EngineLvl = player.fishBase.EngineLvl + new Random().Next(-1, 2);
+                opponentFishBase.ChassisLvl = player.fishBase.ChassisLvl + new Random().Next(-1, 2);
+                opponentFishBase.FinsLvl = player.fishBase.FinsLvl + new Random().Next(-1, 2);
+                opponentFishBase.NitrousLvl = player.fishBase.NitrousLvl + new Random().Next(-1, 2);
+            }
             opponentFishBase.tint = new Color((byte)new Random().Next(0, 256), (byte)new Random().Next(0, 256), (byte)new Random().Next(0, 256), 255);
             opponent = new Fish(opponentFishBase);
             
@@ -52,13 +74,19 @@ namespace SMF
             InstantiateActor(opponent.weapon as Actor);
             InstantiateActor(new HealthBar(player));
             InstantiateActor(new HealthBar(opponent));
-            InstantiateActor(new ArenaMusicPlayer(new Random().Next(0, 8), -4000, this.gameSettings.MasterSoundVolume * this.gameSettings.MusicSoundVolume));
+            int songAmount = Int32.Parse(XDocument.Load("assets/music/songs.xml").Root.Element("Amount").Value);
+            if (songAmount != 0)
+                InstantiateActor(new ArenaMusicPlayer(new Random().Next(0, songAmount), -4000, this.gameSettings.MasterSoundVolume * this.gameSettings.MusicSoundVolume));
 
             player.Position = new SFML.System.Vector2f(this.Settings.ViewSize.X * 0.25f, this.Settings.ViewSize.Y * 0.25f);
             opponent.Position = new SFML.System.Vector2f(this.Settings.ViewSize.X * 0.75f, this.Settings.ViewSize.Y * 0.25f);
             opponent.FacingLeft = true;
 
-            InstantiateActor(new ArenaBackground());
+            ArenaBackground arenaBG = (ArenaBackground)InstantiateActor(new ArenaBackground());
+
+            timer = (FightTimer)InstantiateActor(new FightTimer(gameSettings.FightTimer));
+            timer.OnCountdownFinishConstant += () => { player.DamageMultiplier = timer.DamageMult; opponent.DamageMultiplier = timer.DamageMult; };
+            timer.OnCountdownFinish += () => { arenaBG.SetTint(new Color(255, 80, 80, 255)); };
         }
         protected override void FixedUpdateScript(float dt, Instance data)
         {
@@ -97,15 +125,16 @@ namespace SMF
             if (!gameStarted)
             {
                 timeToStart -= dt;
-                if (timeToStart <= 3 && prevTimeToStart > 3)
+                if (timeToStart <= 3.25 && prevTimeToStart > 3.25)
                     InstantiateActor(new TextNotification("3", 1));
-                if (timeToStart <= 2 && prevTimeToStart > 2)
+                if (timeToStart <= 2.25 && prevTimeToStart > 2.25)
                     InstantiateActor(new TextNotification("2", 1));
-                if (timeToStart <= 1 && prevTimeToStart > 1)
+                if (timeToStart <= 1.25 && prevTimeToStart > 1.25)
                     InstantiateActor(new TextNotification("1", 1));
-                if (timeToStart <= 0 && prevTimeToStart > 0)
+                if (timeToStart <= 0.25 && prevTimeToStart > 0.25)
                 {
-                    InstantiateActor(new TextNotification("FIGHT!", 1));
+                    InstantiateActor(new TextNotification("FIGHT!", 1.0f));
+                    timer.Stopped = false;
                     gameStarted = true;
                 }
                 prevTimeToStart = timeToStart;
@@ -167,6 +196,7 @@ namespace SMF
 
                 if (gameOver)
                 {
+                    timer.Stopped = true;
                     List<ArenaMusicPlayer> musicPlayer = GetActorsOfClass<ArenaMusicPlayer>();
                     musicPlayer[0].StartFading();
                     gameOverTime += dt;

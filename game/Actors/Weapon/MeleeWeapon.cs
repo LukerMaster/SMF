@@ -21,6 +21,7 @@ namespace SMF
 
         float previousRotation;
         Vector2f IWeapon.Position { get; set; }
+        Vector2f IWeapon.Scale { get; set; } = new Vector2f(1.0f, 1.0f);
         int IWeapon.ID { get => weaponData.ID; }
 
         Sprite sprite = new Sprite();
@@ -59,7 +60,7 @@ namespace SMF
         protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             sprite.Texture = (assets as FishAssetManager).GetByID(FishAssetManager.EType.Weapon, (this as IWeapon).ID);
-            sprite.Scale = new Vector2f((float)weaponData.SizeX / sprite.Texture.Size.X, (float)weaponData.SizeY / sprite.Texture.Size.Y);
+            sprite.Scale = new Vector2f((this as IWeapon).Scale.X * (float)weaponData.SizeX / sprite.Texture.Size.X, (this as IWeapon).Scale.Y * (float)weaponData.SizeY / sprite.Texture.Size.Y);
             sprite.Position = (this as IWeapon).Position;
             sprite.Rotation = (this as IWeapon).Rotation;
 
@@ -70,6 +71,7 @@ namespace SMF
 
         public MeleeWeapon(WeaponFileData data, Fish owner = null)
         {
+            DrawOrder = 7;
             this.owner = owner;
             weaponData = data;
         }

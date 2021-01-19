@@ -47,6 +47,7 @@ namespace SMF
 
         private void SetupStartupValues()
         {
+            DrawOrder = 5;
             boostFalloff = 0.0f;
             CurrentNitrous = fishBase.MaxNitrous;
             NitrousCurrentCooldown = fishBase.MaxNitrousRegenCooldown;
@@ -62,6 +63,8 @@ namespace SMF
         private bool boostPressed;
         private bool reloadPressed;
         private Vector2f mousePos;
+
+        public float DamageMultiplier { get; set; } = 1.0f;
         public void ReceiveInput(FishInput input)
         {
             lmbPressed = input.AttackPressed;
@@ -81,7 +84,7 @@ namespace SMF
 
         public void TakeDamage(float amount)
         {
-            CurrentHealth -= amount;
+            CurrentHealth -= amount * DamageMultiplier;
             HealthCurrentCooldown = fishBase.MaxHealthRegenCooldown;
         }
         protected override void FixedUpdate(float dt, Level level, AssetManager assets)
@@ -124,7 +127,9 @@ namespace SMF
             speed += acceleration * dt;
 
             if (!upPressed && !downPressed) speed.Y *= (float)Math.Pow(1 - fishBase.Friction, dt); // braking
+            if (upPressed && speed.Y > 0 || downPressed && speed.Y < 0) speed.Y *= (float)Math.Pow(1 - fishBase.Friction, dt); // braking
             if (!leftPressed && !rightPressed) speed.X *= (float)Math.Pow(1 - fishBase.Friction, dt); //  braking
+            if (leftPressed && speed.X > 0 || rightPressed && speed.X < 0) speed.X *= (float)Math.Pow(1 - fishBase.Friction, dt); // braking
 
             if (Math.Abs(speed.X) > fishBase.MaxSpeed) speed.X *= (float)Math.Pow(0.8, dt);
             if (Math.Abs(speed.Y) > fishBase.MaxSpeed) speed.Y *= (float)Math.Pow(0.8, dt);

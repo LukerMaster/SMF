@@ -20,9 +20,9 @@
 	<Friction>0.6</Friction>
 	
 	
-	<EngineMult>1</EngineMult>
-	<ChassisMult>1</ChassisMult>
-	<BodyMult>1</BodyMult>
+	<EngineMult>0.7</EngineMult>
+	<ChassisMult>0.7</ChassisMult>
+	<BodyMult>0.6</BodyMult>
 	<FinsMult>1</FinsMult>
 	<NitrousMult>1.2</NitrousMult>
 </FishFileData>

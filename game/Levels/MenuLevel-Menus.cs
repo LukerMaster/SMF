@@ -1,11 +1,7 @@
 ﻿using SFBF;
 using SFML.Graphics;
-using SFML.System;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Numerics;
 using System.Xml.Linq;
 
 namespace SMF
@@ -18,7 +14,7 @@ namespace SMF
             currentMenu.AddButton("Exit", () => Exit = true);
             currentMenu.AddButton("Options", () => CreateOptionsMenu());
             currentMenu.AddButton("Customize", () => CreateCustomizeMenu());
-            currentMenu.AddButton("Singleplayer", () => StartArena = true);
+            currentMenu.AddButton("Singleplayer", () => CreateSinglePlayerMenu(4));
 
             currentMenu.CurrentlySelected = currentlySelected;
         }
@@ -43,19 +39,19 @@ namespace SMF
             currentMenu.AddButton("Back", () => CreateCustomizeMenu(0));
 
             if (gameSettings.playerFishBase.EngineUpgradable)
-                currentMenu.AddButtonSet("Engine", () => FishBase.GetLabelForTuningLevel(gameSettings.playerFishBase.EngineLvl), () => gameSettings.playerFishBase.EngineLvl--, () => gameSettings.playerFishBase.EngineLvl++, 350, () => customizeMenu.UpgradeString = XDocument.Load("assets/champs/TuningStuff.xml").Root.Element("Engine").Element("L" + gameSettings.playerFishBase.EngineLvl.ToString()).Value);
+                currentMenu.AddButtonSet("Engine", () => FishBase.GetLabelForTuningLevel(gameSettings.playerFishBase.EngineLvl), () => gameSettings.playerFishBase.EngineLvl--, () => gameSettings.playerFishBase.EngineLvl++, 350, () => customizeMenu.UpgradeString = XDocument.Load("assets/champs/FishData.xml").Root.Element("Engine").Element("L" + gameSettings.playerFishBase.EngineLvl.ToString()).Value);
 
             if (gameSettings.playerFishBase.ChassisUpgradable)
-                currentMenu.AddButtonSet("Chassis", () => FishBase.GetLabelForTuningLevel(gameSettings.playerFishBase.ChassisLvl), () => gameSettings.playerFishBase.ChassisLvl--, () => gameSettings.playerFishBase.ChassisLvl++, 350, () => customizeMenu.UpgradeString = XDocument.Load("assets/champs/TuningStuff.xml").Root.Element("Chassis").Element("L" + gameSettings.playerFishBase.ChassisLvl.ToString()).Value);
+                currentMenu.AddButtonSet("Chassis", () => FishBase.GetLabelForTuningLevel(gameSettings.playerFishBase.ChassisLvl), () => gameSettings.playerFishBase.ChassisLvl--, () => gameSettings.playerFishBase.ChassisLvl++, 350, () => customizeMenu.UpgradeString = XDocument.Load("assets/champs/FishData.xml").Root.Element("Chassis").Element("L" + gameSettings.playerFishBase.ChassisLvl.ToString()).Value);
 
             if (gameSettings.playerFishBase.BodyUpgradable)
-                currentMenu.AddButtonSet("Body", () => FishBase.GetLabelForTuningLevel(gameSettings.playerFishBase.BodyLvl), () => gameSettings.playerFishBase.BodyLvl--, () => gameSettings.playerFishBase.BodyLvl++, 350, () => customizeMenu.UpgradeString = XDocument.Load("assets/champs/TuningStuff.xml").Root.Element("Body").Element("L" + gameSettings.playerFishBase.BodyLvl.ToString()).Value);
+                currentMenu.AddButtonSet("Body", () => FishBase.GetLabelForTuningLevel(gameSettings.playerFishBase.BodyLvl), () => gameSettings.playerFishBase.BodyLvl--, () => gameSettings.playerFishBase.BodyLvl++, 350, () => customizeMenu.UpgradeString = XDocument.Load("assets/champs/FishData.xml").Root.Element("Body").Element("L" + gameSettings.playerFishBase.BodyLvl.ToString()).Value);
 
             if (gameSettings.playerFishBase.FinsUpgradable)
-                currentMenu.AddButtonSet("Fins", () => FishBase.GetLabelForTuningLevel(gameSettings.playerFishBase.FinsLvl), () => gameSettings.playerFishBase.FinsLvl--, () => gameSettings.playerFishBase.FinsLvl++, 350, () => customizeMenu.UpgradeString = XDocument.Load("assets/champs/TuningStuff.xml").Root.Element("Fins").Element("L" + gameSettings.playerFishBase.FinsLvl.ToString()).Value);
+                currentMenu.AddButtonSet("Fins", () => FishBase.GetLabelForTuningLevel(gameSettings.playerFishBase.FinsLvl), () => gameSettings.playerFishBase.FinsLvl--, () => gameSettings.playerFishBase.FinsLvl++, 350, () => customizeMenu.UpgradeString = XDocument.Load("assets/champs/FishData.xml").Root.Element("Fins").Element("L" + gameSettings.playerFishBase.FinsLvl.ToString()).Value);
 
             if (gameSettings.playerFishBase.NitrousUpgradable)
-                currentMenu.AddButtonSet("Nitrous", () => FishBase.GetLabelForTuningLevel(gameSettings.playerFishBase.NitrousLvl), () => gameSettings.playerFishBase.NitrousLvl--, () => { gameSettings.playerFishBase.NitrousLvl++; if (gameSettings.playerFishBase.EngineLvl == 0) gameSettings.playerFishBase.EngineLvl++; }, 350, () => customizeMenu.UpgradeString = XDocument.Load("assets/champs/TuningStuff.xml").Root.Element("Nitrous").Element("L" + gameSettings.playerFishBase.NitrousLvl.ToString()).Value);
+                currentMenu.AddButtonSet("Nitrous", () => FishBase.GetLabelForTuningLevel(gameSettings.playerFishBase.NitrousLvl), () => gameSettings.playerFishBase.NitrousLvl--, () => { gameSettings.playerFishBase.NitrousLvl++; if (gameSettings.playerFishBase.EngineLvl == 0) gameSettings.playerFishBase.EngineLvl++; }, 350, () => customizeMenu.UpgradeString = XDocument.Load("assets/champs/FishData.xml").Root.Element("Nitrous").Element("L" + gameSettings.playerFishBase.NitrousLvl.ToString()).Value);
 
             currentMenu.CurrentlySelected = currentlySelected;
         }
@@ -101,6 +97,17 @@ namespace SMF
                     fishForCustomizeMenu.weapon = weaponBuilder.CreateWeapon(fishForCustomizeMenu.weapon.ID + 1);
                 gameSettings.selectedWeaponID = fishForCustomizeMenu.weapon.ID;
             }, 400);
+            currentMenu.CurrentlySelected = currentlySelected;
+        }
+        
+        void CreateSinglePlayerMenu(int currentlySelected = 0)
+        {
+            currentMenu.ClearMenu();
+            currentMenu.AddButton("Back", () => { CreateMainMenu(3); });
+            currentMenu.AddButtonSet("Fight Timer", () => ((int)gameSettings.FightTimer).ToString(), () => gameSettings.FightTimer -= 5.0f, () => gameSettings.FightTimer += 5.0f, 150);
+            currentMenu.AddButtonSet("Opponent Fish", () => gameSettings.SameOpponentFish ? "Same" : "Random", () => gameSettings.SameOpponentFish = !gameSettings.SameOpponentFish, () => gameSettings.SameOpponentFish = !gameSettings.SameOpponentFish, 300);
+            currentMenu.AddButtonSet("Opponent Upgrades", () => gameSettings.SameOpponentUpgrades ? "Same" : "Similar", () => gameSettings.SameOpponentUpgrades = !gameSettings.SameOpponentUpgrades, () => gameSettings.SameOpponentUpgrades = !gameSettings.SameOpponentUpgrades, 300);
+            currentMenu.AddButton("Play", () => StartArena = true);
             currentMenu.CurrentlySelected = currentlySelected;
         }
     }

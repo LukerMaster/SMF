@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FishFileData>
+	<ID>8</ID>
+	<Name>Chad</Name>
+	<SizeX>160</SizeX>
+	<SizeY>90</SizeY>
+	
+	<Health>1700</Health>
+	<HealthRegen>10</HealthRegen>
+	<HealthRegenCooldown>1</HealthRegenCooldown>
+	
+	<Nitrous>2000</Nitrous>
+	<NitrousRegen>500</NitrousRegen>
+	<NitrousRegenCooldown>1</NitrousRegenCooldown>
+	
+	<MaxSpeed>1000</MaxSpeed>
+	<Force>300</Force>
+	<NitrousForce>150</NitrousForce>
+	<Mass>1000</Mass>
+	<Friction>0.88</Friction>
+	
+	
+	<EngineMult>0.5</EngineMult>
+	<ChassisMult>1</ChassisMult>
+	<BodyMult>0.7</BodyMult>
+	<FinsMult>1</FinsMult>
+	<NitrousMult>1.2</NitrousMult>
+</FishFileData>

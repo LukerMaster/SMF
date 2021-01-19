@@ -1,0 +1,62 @@
+<Root>
+<FishAmount>9</FishAmount>
+<Engine>
+<L0>Standard Biological Powering System</L0>
+<L1>Basic Gasoline Engine</L1>
+<L2>High Power Engine
+Electronic Fuel Injection System
+Turbo with Custom Intercooler</L2>
+<L3>Racing-grade Engine
+Racing-grade ECU
+Limited-slip Differential
+Variable valve Timing and lift Electronic Control System (V-TEC)</L3>
+<L4>Additional ZumTek Electrical Motor
+Extreme-Pressureproof Insulation System
+Quad-Turbo System
+Racing Flywheel</L4>
+</Engine>
+<Chassis>
+<L0>Standard Bone-based chassis</L0>
+<L1>Iron plated bones
+Steel-wire Reinforced joints</L1>
+<L2>Steel plated bones
+Aluminum skull with bumper plates
+Carbon-mesh reinforced joints</L2>
+<L3>Full Carbon-fiber skeleton
+Glass-fiber joint reinforcements
+Reinforced bumper-plate mechanism</L3>
+<L4>Full ZumTek Carbon-fiber plated exoskeleton
+Extreme-impact anti-explosion reinforcements</L4>
+</Chassis>
+<Body>
+<L0>Standard fish skin</L0>
+<L1>Basic polymer armor</L1>
+<L2>Iron-plated skin
+Anti-impact polymer plates</L2>
+<L3>Carbon-fiber skin
+Electronic self-repair system</L3>
+<L4>ZumTek Graphene-Enhanced Carbon-fiber skin
+Fully Automatic Self-repair system</L4>
+</Body>
+<Fins>
+<L0>Basic flesh fins</L0>
+<L1>Servo-motor enhancements</L1>
+<L2>3 Servo-motor system for each fin
+Polymer fin reinforcement</L2>
+<L3>Dedicated exofin engine
+Electromechanical fins with water flow analyzer</L3>
+<L4>Fully electronic ZumTek automatic swim system
+Extreme-impact Fin reinforcements
+Water-jet based braking system</L4>
+</Fins>
+<Nitrous>
+<L0>Basic fart'n'wiggle boost mechanism</L0>
+<L1>Basic Single-Bottle Dry N2O system</L1>
+<L2>Advanced Double-Bottle N2O system</L2>
+<L3>Direct N2O injection system
+High-capacity Double-Bottle N2O system
+Electronic engine pressure controller</L3>
+<L4>ZumTek Quad-Bottle automatic direct N2O injection system
+ZumTek dual mini jet engine</L4>
+</Nitrous>
+</Root>

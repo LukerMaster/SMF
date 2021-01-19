@@ -30,16 +30,16 @@ namespace SMF
             switch (ChassisLvl)
             {
                 case 1:
-                    finalValue += fileData.Health * 1.1f * fileData.ChassisMult;
+                    finalValue += fileData.Health * 0.4f * fileData.ChassisMult;
                     break;
                 case 2:
-                    finalValue += fileData.Health * 1.4f * fileData.ChassisMult;
+                    finalValue += fileData.Health * 0.7f * fileData.ChassisMult;
                     break;
                 case 3:
-                    finalValue += fileData.Health * 2.2f * fileData.ChassisMult;
+                    finalValue += fileData.Health * 1.0f * fileData.ChassisMult;
                     break;
                 case 4:
-                    finalValue += fileData.Health * 3.0f * fileData.ChassisMult;
+                    finalValue += fileData.Health * 1.25f * fileData.ChassisMult;
                     break;
                 default:
                     break;
@@ -47,16 +47,16 @@ namespace SMF
             switch (BodyLvl)
             {
                 case 1:
-                    finalValue += fileData.Health * 0.4f * fileData.ChassisMult;
+                    finalValue += fileData.Health * 0.1f * fileData.ChassisMult;
                     break;
                 case 2:
-                    finalValue += fileData.Health * 0.7f * fileData.ChassisMult;
+                    finalValue += fileData.Health * 0.2f * fileData.ChassisMult;
                     break;
                 case 3:
-                    finalValue += fileData.Health * 1.1f * fileData.ChassisMult;
+                    finalValue += fileData.Health * 0.25f * fileData.ChassisMult;
                     break;
                 case 4:
-                    finalValue += fileData.Health * 1.6f * fileData.ChassisMult;
+                    finalValue += fileData.Health * 0.4f * fileData.ChassisMult;
                     break;
                 default:
                     break;
@@ -64,13 +64,13 @@ namespace SMF
             switch (FinsLvl)
             {
                 case 2:
-                    finalValue += fileData.Health * 0.05f * fileData.ChassisMult;
+                    finalValue += fileData.Health * 0.02f * fileData.ChassisMult;
                     break;
                 case 3:
-                    finalValue += fileData.Health * 0.1f * fileData.ChassisMult;
+                    finalValue += fileData.Health * 0.04f * fileData.ChassisMult;
                     break;
                 case 4:
-                    finalValue += fileData.Health * 0.25f * fileData.ChassisMult;
+                    finalValue += fileData.Health * 0.1f * fileData.ChassisMult;
                     break;
                 default:
                     break;
@@ -80,47 +80,27 @@ namespace SMF
         public float GetHealthRegen()
         {
             float finalValue = fileData.HealthRegen;
-            if (BodyLvl == 3) finalValue += fileData.HealthRegen * (1.1f * fileData.BodyMult) + 200 * fileData.BodyMult;
-            else if (BodyLvl == 4) finalValue += fileData.HealthRegen * (1.2f * fileData.BodyMult) + 600 * fileData.BodyMult;
+            if (BodyLvl == 3) finalValue += fileData.HealthRegen * (1.1f * fileData.BodyMult) + 20 * fileData.BodyMult;
+            else if (BodyLvl == 4) finalValue += fileData.HealthRegen * (1.2f * fileData.BodyMult) + 60 * fileData.BodyMult;
             return finalValue;
         }
-        public float GetMaxStamina()
+        public float GetMaxNitrousForce()
         {
-            float finalValue = fileData.Stamina;
-            if (engineLvl > 2) finalValue += fileData.Stamina * 1.1f * fileData.EngineMult;
+            float finalValue = fileData.NitrousForce;
+            if (engineLvl > 2) finalValue += fileData.NitrousForce * 1.1f * fileData.EngineMult;
             switch (nitroLvl)
             {
                 case 1:
-                    finalValue += fileData.Stamina * 0.75f * fileData.NitroMult;
+                    finalValue += fileData.NitrousForce * 2.0f * fileData.NitrousMult;
                     break;
                 case 2:
-                    finalValue += fileData.Stamina * 1.5f * fileData.NitroMult;
+                    finalValue += fileData.NitrousForce * 4.0f * fileData.NitrousMult;
                     break;
                 case 3:
-                    finalValue += fileData.Stamina * 2.25f * fileData.NitroMult;
+                    finalValue += fileData.NitrousForce * 6.0f * fileData.NitrousMult;
                     break;
                 case 4:
-                    finalValue += fileData.Stamina * 3.0f * fileData.NitroMult;
-                    break;
-            }
-            return finalValue;
-        }
-        public float GetStaminaRegen()
-        {
-            float finalValue = fileData.StaminaRegen;
-            switch (nitroLvl)
-            {
-                case 1:
-                    finalValue *= Math.Clamp((0.75f / fileData.NitroMult), 0, 1);
-                    break;
-                case 2:
-                    finalValue *= Math.Clamp((0.65f / fileData.NitroMult), 0, 1);
-                    break;
-                case 3:
-                    finalValue *= Math.Clamp((0.55f / fileData.NitroMult), 0, 1);
-                    break;
-                case 4:
-                    finalValue *= Math.Clamp((0.45f / fileData.NitroMult), 0, 1);
+                    finalValue += fileData.NitrousForce * 12.0f * fileData.NitrousMult;
                     break;
             }
             return finalValue;
@@ -160,10 +140,9 @@ namespace SMF
             }
             return finalValue;
         }
-        public float GetMaxAcceleration()
+        public float GetMaxForce()
         {
             float finalForce = fileData.Force;
-            float finalMass = fileData.Mass;
             switch (engineLvl)
             {
                 case 1:
@@ -194,6 +173,11 @@ namespace SMF
                     finalForce += fileData.Force * 2.5f * fileData.FinsMult;
                     break;
             }
+            return finalForce;
+        }
+        public float GetMass()
+        {
+            float finalMass = fileData.Mass;
             switch (bodyLvl)
             {
                 case 3:
@@ -203,7 +187,27 @@ namespace SMF
                     finalMass -= fileData.Mass * 0.15f * fileData.BodyMult;
                     break;
             }
-            return 1000*finalForce/finalMass;
+            return finalMass;
+        }
+        public float GetMaxNitrous()
+        {
+            float finalValue = fileData.Nitrous;
+            switch (nitroLvl)
+            {
+                case 1:
+                    finalValue += fileData.Nitrous * 1.0f;
+                    break;
+                case 2:
+                    finalValue += fileData.Nitrous * 1.25f;
+                    break;
+                case 3:
+                    finalValue += fileData.Nitrous * 1.5f;
+                    break;
+                case 4:
+                    finalValue += fileData.Nitrous * 2.0f;
+                    break;
+            }
+            return finalValue;
         }
         public float GetFriction()
         {
@@ -211,16 +215,16 @@ namespace SMF
             switch (finsLvl)
             {
                 case 1:
-                    finalValue = Math.Min(finalValue * 1.1f, 0.98f);
+                    finalValue = Math.Min(finalValue * 1.1f, 0.99f);
                     break;
                 case 2:
-                    finalValue = Math.Min(finalValue * 1.2f, 0.98f);
+                    finalValue = Math.Min(finalValue * 1.2f, 0.99f);
                     break;
                 case 3:
-                    finalValue = Math.Min(finalValue * 1.5f, 0.98f);
+                    finalValue = Math.Min(finalValue * 1.5f, 0.99f);
                     break;
                 case 4:
-                    finalValue = Math.Min(finalValue * 2.0f, 0.98f);
+                    finalValue = Math.Min(finalValue * 2.0f, 0.99f);
                     break;
             }
             return finalValue;

@@ -5,16 +5,17 @@
 	<SizeX>128</SizeX>
 	<SizeY>72</SizeY>
 	
-	<Health>5000</Health>
+	<Health>3000</Health>
 	<HealthRegen>-50</HealthRegen>
 	<HealthRegenCooldown>0</HealthRegenCooldown>
 	
-	<Stamina>3000</Stamina>
-	<StaminaRegen>500</StaminaRegen>
-	<StaminaRegenCooldown>2</StaminaRegenCooldown>
+	<Nitrous>1500</Nitrous>
+	<NitrousRegen>750</NitrousRegen>
+	<NitrousRegenCooldown>2</NitrousRegenCooldown>
 	
 	<MaxSpeed>500</MaxSpeed>
 	<Force>8</Force>
+	<NitrousForce>12</NitrousForce>
 	<Mass>100</Mass>
 	<Friction>0.2</Friction>
 	
@@ -23,5 +24,5 @@
 	<ChassisMult>0.5</ChassisMult>
 	<BodyMult>0</BodyMult>
 	<FinsMult>0</FinsMult>
-	<NitroMult>0</NitroMult>
+	<NitrousMult>0</NitrousMult>
 </FishFileData>

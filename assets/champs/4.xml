@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FishFileData>
+	<ID>4</ID>
+	<Name>Angerfish</Name>
+	<SizeX>200</SizeX>
+	<SizeY>200</SizeY>
+	
+	<Health>1800</Health>
+	<HealthRegen>2</HealthRegen>
+	<HealthRegenCooldown>1</HealthRegenCooldown>
+	
+	<Nitrous>800</Nitrous>
+	<NitrousRegen>300</NitrousRegen>
+	<NitrousRegenCooldown>1</NitrousRegenCooldown>
+	
+	<MaxSpeed>600</MaxSpeed>
+	<Force>220</Force>
+	<NitrousForce>220</NitrousForce>
+	<Mass>2100</Mass>
+	<Friction>0.6</Friction>
+	
+	
+	<EngineMult>1</EngineMult>
+	<ChassisMult>0.7</ChassisMult>
+	<BodyMult>0.8</BodyMult>
+	<FinsMult>1</FinsMult>
+	<NitrousMult>1</NitrousMult>
+</FishFileData>

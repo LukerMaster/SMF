@@ -15,7 +15,7 @@ namespace SMF
 
             SFBF.Engine engine = new SFBF.Engine();
             engine.Data.assets = new FishAssetManager();
-            engine.Data.InstantiateLevel(new MenuLevel(engine.Data, initialSettings));
+            engine.Data.InstantiateLevel(new MenuLevel(engine.Data, initialSettings, new GameSettings()));
             engine.Run();
         }
     }

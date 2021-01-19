@@ -21,7 +21,7 @@ namespace SMF
             temp.OnClick += ac;
             componentList.Add(temp);
         }
-        public void AddButtonSet(string label, Func<String> labelFunction, Action OnClickPrev, Action OnClickNext, int SpaceForTextWidth)
+        public void AddButtonSet(string label, Func<String> labelFunction, Action OnClickPrev, Action OnClickNext, int SpaceForTextWidth, Action OnFocusAction = null)
         {
             AdjustButtonSet temp = new AdjustButtonSet();
             temp.Position = new Vector2i((int)BottomLeftPos.X, (int)(BottomLeftPos.Y - ButtonHeight * componentList.Count));
@@ -31,6 +31,7 @@ namespace SMF
             temp.SetStringFunction(labelFunction);
             temp.SetOnClickPrev(OnClickPrev);
             temp.SetOnClickNext(OnClickNext);
+            temp.SetOnFocus(OnFocusAction);
             temp.SpaceForSettingWidth = SpaceForTextWidth;
             componentList.Add(temp);
         }
@@ -81,8 +82,8 @@ namespace SMF
                     SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left),
                     i == CurrentlySelected,
                     SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.Enter),
-                    SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.Left),
-                    SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.Right));
+                    (SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.Left) || SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.A)),
+                    (SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.Right) || SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.D)));
             }
 
             KeyboardCooldown -= dt;

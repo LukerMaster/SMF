@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <FishFileData>
-	<ID>0</ID>
-	<Name>Lenny</Name>
-	<SizeX>128</SizeX>
-	<SizeY>72</SizeY>
+	<ID>7</ID>
+	<Name>Ninja</Name>
+	<SizeX>117</SizeX>
+	<SizeY>110</SizeY>
 	
-	<Health>1000</Health>
+	<Health>1200</Health>
 	<HealthRegen>10</HealthRegen>
 	<HealthRegenCooldown>1</HealthRegenCooldown>
 	
-	<Nitrous>1000</Nitrous>
+	<Nitrous>1500</Nitrous>
 	<NitrousRegen>500</NitrousRegen>
 	<NitrousRegenCooldown>1</NitrousRegenCooldown>
 	
-	<MaxSpeed>400</MaxSpeed>
-	<Force>100</Force>
-	<NitrousForce>80</NitrousForce>
+	<MaxSpeed>500</MaxSpeed>
+	<Force>300</Force>
+	<NitrousForce>100</NitrousForce>
 	<Mass>1000</Mass>
-	<Friction>0.5</Friction>
+	<Friction>0.88</Friction>
 	
 	
-	<EngineMult>1</EngineMult>
+	<EngineMult>0.7</EngineMult>
 	<ChassisMult>1</ChassisMult>
 	<BodyMult>1</BodyMult>
 	<FinsMult>1</FinsMult>

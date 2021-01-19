@@ -7,20 +7,20 @@ namespace SMF
     public class Fish : Actor, ICollidable
     {
         private float boostFalloff;
-        private float currentStamina;
-        private float staminaCurrentCooldown;
+        private float currentNitrous;
+        private float nitrousCurrentCooldown;
         private float healthCurrentCooldown;
         private float currentHealth;
 
-        public float BoostFalloff { get => boostFalloff; set => boostFalloff = Math.Clamp(value, 0.0f, 1.0f); }
-        public float StaminaCurrentCooldown { get => staminaCurrentCooldown; set => staminaCurrentCooldown = Math.Clamp(value, 0, fishBase.MaxStaminaRegenCooldown); }
+        public float NitrousFalloff { get => boostFalloff; set => boostFalloff = Math.Clamp(value, 0.0f, 1.0f); }
+        public float NitrousCurrentCooldown { get => nitrousCurrentCooldown; set => nitrousCurrentCooldown = Math.Clamp(value, 0, fishBase.MaxNitrousRegenCooldown); }
         public float HealthCurrentCooldown { get => healthCurrentCooldown; set => healthCurrentCooldown = Math.Clamp(value, 0, fishBase.MaxHealthRegenCooldown); }
-        public float CurrentStamina { get => currentStamina; set => currentStamina = Math.Clamp(value, 0, fishBase.MaxStamina); }
+        public float CurrentNitrous { get => currentNitrous; set => currentNitrous = Math.Clamp(value, 0, fishBase.MaxNitrous); }
         public float CurrentHealth { get => currentHealth; set => currentHealth = Math.Clamp(value, 0, fishBase.MaxHealth); }
 
         private bool boostDrainedProtection = false;
 
-        private Vector2f speed;
+        public Vector2f speed;
         private Vector2f acceleration;
 
         public IWeapon weapon;
@@ -48,8 +48,8 @@ namespace SMF
         private void SetupStartupValues()
         {
             boostFalloff = 0.0f;
-            CurrentStamina = fishBase.MaxStamina;
-            StaminaCurrentCooldown = fishBase.MaxStaminaRegenCooldown;
+            CurrentNitrous = fishBase.MaxNitrous;
+            NitrousCurrentCooldown = fishBase.MaxNitrousRegenCooldown;
             CurrentHealth = fishBase.MaxHealth;
         }
 
@@ -86,33 +86,14 @@ namespace SMF
         }
         protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
-            if (upPressed) acceleration.Y = -fishBase.MaxAcceleration; // Accelerate
-            if (downPressed) acceleration.Y = fishBase.MaxAcceleration;
-            if (!upPressed && !downPressed) acceleration.Y = 0;
-            if (leftPressed) { acceleration.X = -fishBase.MaxAcceleration; FacingLeft = true; }
-            if (rightPressed) { acceleration.X = fishBase.MaxAcceleration; FacingLeft = false; }
-            if (!leftPressed && !rightPressed) acceleration.X = 0;
-            acceleration.X = Math.Clamp(acceleration.X, -fishBase.MaxAcceleration, fishBase.MaxAcceleration);
-            acceleration.Y = Math.Clamp(acceleration.Y, -fishBase.MaxAcceleration, fishBase.MaxAcceleration);
-
-
-            if (upPressed && speed.Y > 0 || downPressed && speed.Y < 0) speed.Y *= (float)Math.Pow(1 - fishBase.Friction, dt); // Braking
-            else if (!upPressed && !downPressed) speed.Y *= (float)Math.Pow(1 - fishBase.Friction / 1.25f, dt); // Slight braking
-            if (leftPressed && speed.X > 0 || rightPressed && speed.X < 0) speed.X *= (float)Math.Pow(1 - fishBase.Friction, dt); // Braking
-            else if (!leftPressed && !rightPressed) speed.X *= (float)Math.Pow(1 - fishBase.Friction / 1.25f, dt); // Slight braking
-
-            speed += acceleration * dt;
-
+            float CurrentAcceleration = 1000 * fishBase.MaxForce / fishBase.Mass;
             if (boostPressed && !boostDrainedProtection)
             {
-                if (CurrentStamina > 0.0f)
+                if (CurrentNitrous > 0.0f)
                 {
-                    BoostFalloff = 1.0f;
-                    CurrentStamina -= dt * 1000;
-                    speed += acceleration * dt;
-                    StaminaCurrentCooldown = fishBase.MaxStaminaRegenCooldown;
-                    speed.X = Math.Clamp(speed.X, -fishBase.MaxSpeed * 1.25f, fishBase.MaxSpeed * 1.25f);
-                    speed.Y = Math.Clamp(speed.Y, -fishBase.MaxSpeed * 1.25f, fishBase.MaxSpeed * 1.25f);
+                    CurrentNitrous -= dt * 1000;
+                    CurrentAcceleration = 1000 * (fishBase.MaxForce + fishBase.MaxNitrousForce) / fishBase.Mass;
+                    NitrousCurrentCooldown = fishBase.MaxNitrousRegenCooldown;
                 }
                 else
                 {
@@ -121,16 +102,32 @@ namespace SMF
             }
             else
             {
-                BoostFalloff -= dt;
-                StaminaCurrentCooldown -= dt;
-                speed.X = Math.Clamp(speed.X, -fishBase.MaxSpeed - (fishBase.MaxSpeed * 0.25f * BoostFalloff), fishBase.MaxSpeed + (fishBase.MaxSpeed * 0.25f * BoostFalloff));
-                speed.Y = Math.Clamp(speed.Y, -fishBase.MaxSpeed - (fishBase.MaxSpeed * 0.25f * BoostFalloff), fishBase.MaxSpeed + (fishBase.MaxSpeed * 0.25f * BoostFalloff));
+                NitrousCurrentCooldown -= dt;
             }
-            if (StaminaCurrentCooldown == 0.0f)
-                CurrentStamina += 500 * dt;
+
+            if (NitrousCurrentCooldown == 0.0f)
+                CurrentNitrous += 500 * dt;
 
             if (!boostPressed)
                 boostDrainedProtection = false;
+
+
+            if (upPressed) acceleration.Y = -CurrentAcceleration; // Accelerate
+            if (downPressed) acceleration.Y = CurrentAcceleration;
+            if (!upPressed && !downPressed) acceleration.Y = 0;
+            if (leftPressed) { acceleration.X = -CurrentAcceleration; FacingLeft = true; }
+            if (rightPressed) { acceleration.X = CurrentAcceleration; FacingLeft = false; }
+            if (!leftPressed && !rightPressed) acceleration.X = 0;
+            //acceleration.X = Math.Clamp(acceleration.X, -Acceleration, Acceleration);
+            //acceleration.Y = Math.Clamp(acceleration.Y, -Acceleration, Acceleration);
+
+            speed += acceleration * dt;
+
+            if (!upPressed && !downPressed) speed.Y *= (float)Math.Pow(1 - fishBase.Friction, dt); // braking
+            if (!leftPressed && !rightPressed) speed.X *= (float)Math.Pow(1 - fishBase.Friction, dt); //  braking
+
+            if (Math.Abs(speed.X) > fishBase.MaxSpeed) speed.X *= (float)Math.Pow(0.8, dt);
+            if (Math.Abs(speed.Y) > fishBase.MaxSpeed) speed.Y *= (float)Math.Pow(0.8, dt);
 
             Position += speed * dt;
 
@@ -138,12 +135,11 @@ namespace SMF
 
             if (weapon != null)
             {
+                weapon.Rotation = weaponRotation;
                 if (lmbPressed)
                     weapon.Attack(level, new Vector2f((float)mousePos.X, (float)mousePos.Y));
                 if (reloadPressed)
                     weapon.Reload();
-
-                weapon.Rotation = weaponRotation;
             }
 
             // Regeneration

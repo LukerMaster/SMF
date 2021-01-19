@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FishFileData>
+	<ID>5</ID>
+	<Name>Emo</Name>
+	<SizeX>150</SizeX>
+	<SizeY>73</SizeY>
+	
+	<Health>900</Health>
+	<HealthRegen>-2</HealthRegen>
+	<HealthRegenCooldown>1</HealthRegenCooldown>
+	
+	<Nitrous>1200</Nitrous>
+	<NitrousRegen>200</NitrousRegen>
+	<NitrousRegenCooldown>0.25</NitrousRegenCooldown>
+	
+	<MaxSpeed>900</MaxSpeed>
+	<Force>220</Force>
+	<NitrousForce>80</NitrousForce>
+	<Mass>700</Mass>
+	<Friction>0.6</Friction>
+	
+	
+	<EngineMult>1</EngineMult>
+	<ChassisMult>1</ChassisMult>
+	<BodyMult>1</BodyMult>
+	<FinsMult>1</FinsMult>
+	<NitrousMult>1.2</NitrousMult>
+</FishFileData>

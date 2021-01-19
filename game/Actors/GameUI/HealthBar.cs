@@ -37,9 +37,9 @@ namespace SMF
             staminaRect.Origin = new SFML.System.Vector2f(0.0f, 0.0f);
             staminaRect.Position = new SFML.System.Vector2f(referencedFish.Position.X - barSize / 2, referencedFish.Position.Y - referencedFish.fishBase.Size.Y / 2 - barThickness - 2);
             staminaRect.Size = new SFML.System.Vector2f(1, 1);
-            staminaRect.Scale = new SFML.System.Vector2f(barSize * referencedFish.CurrentStamina / referencedFish.fishBase.MaxStamina, -barThickness / 4);
+            staminaRect.Scale = new SFML.System.Vector2f(barSize * referencedFish.CurrentNitrous / referencedFish.fishBase.MaxNitrous, -barThickness / 4);
             staminaRect.FillColor = new Color(255, 255, 80, 180);
-            if (referencedFish.CurrentStamina < referencedFish.fishBase.MaxStamina * 0.4f)
+            if (referencedFish.CurrentNitrous < referencedFish.fishBase.MaxNitrous * 0.4f)
             {
                 staminaRect.FillColor = new Color(255, 150, 0, 255);
             }

@@ -29,22 +29,24 @@ namespace SMF
         public int ChassisLvl { get => chassisLvl; set => chassisLvl = Math.Clamp(value, 0, MAX_UPGRADE_LVL); }
         public int BodyLvl { get => bodyLvl; set => bodyLvl = Math.Clamp(value, 0, MAX_UPGRADE_LVL); }
         public int FinsLvl { get => finsLvl; set => finsLvl = Math.Clamp(value, 0, MAX_UPGRADE_LVL); }
-        public int NitroLvl { get => nitroLvl; set => nitroLvl = Math.Clamp(value, 0, MAX_UPGRADE_LVL); }
+        public int NitrousLvl { get => nitroLvl; set => nitroLvl = Math.Clamp(value, 0, MAX_UPGRADE_LVL); }
 
         public int MaxHealth { get => (int)GetMaxHealth(); }
         public int MaxHealthRegen { get => (int)GetHealthRegen(); }
-        public int MaxHealthRegenCooldown { get => fileData.HealthRegenCooldown; }
-        public int MaxStamina { get => (int)GetMaxStamina(); }
-        public int MaxStaminaRegenCooldown { get => fileData.StaminaRegenCooldown; }
+        public float MaxHealthRegenCooldown { get => fileData.HealthRegenCooldown; }
+        public int MaxNitrous { get => (int)GetMaxNitrous(); }
+        public int MaxNitrousForce { get => (int)GetMaxNitrousForce(); }
+        public float MaxNitrousRegenCooldown { get => fileData.NitrousRegenCooldown; }
         public int MaxSpeed { get => (int)GetMaxSpeed(); }
-        public int MaxAcceleration { get => (int)GetMaxAcceleration(); }
+        public int MaxForce { get => (int)GetMaxForce(); }
+        public int Mass { get => (int)GetMass(); }
         public float Friction { get => GetFriction(); }
         public Vector2f Size { get => new Vector2f(fileData.SizeX, fileData.SizeY); }
         public bool EngineUpgradable { get => fileData.EngineMult != 0; }
         public bool ChassisUpgradable { get => fileData.ChassisMult != 0; }
         public bool BodyUpgradable { get => fileData.BodyMult != 0; }
         public bool FinsUpgradable { get => fileData.FinsMult != 0; }
-        public bool NitroUpgradable { get => fileData.NitroMult != 0; }
+        public bool NitrousUpgradable { get => fileData.NitrousMult != 0; }
         public string Name { get => fileData.Name; }
         public int ID { get => fileData.ID; }
 
@@ -83,13 +85,14 @@ namespace SMF
 
             public int Health = 1000;
             public int HealthRegen = 0;
-            public int HealthRegenCooldown = 0;
-            public int Stamina = 2000;
-            public int StaminaRegen = 500;
-            public int StaminaRegenCooldown = 1000;
+            public float HealthRegenCooldown = 0;
+            public int Nitrous = 1000;
+            public int NitrousRegen = 500;
+            public float NitrousRegenCooldown = 1000;
 
             public int MaxSpeed = 500;
             public int Force = 50;
+            public int NitrousForce = 50;
             public int Mass = 1000;
             public float Friction = 0.5f;
 
@@ -97,7 +100,7 @@ namespace SMF
             public float ChassisMult = 1;
             public float BodyMult = 1;
             public float FinsMult = 1;
-            public float NitroMult = 1;
+            public float NitrousMult = 1;
         }
     }
 }

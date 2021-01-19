@@ -27,7 +27,7 @@ namespace SMF
         public ArenaMusicPlayer(int song, int offset, float Volume)
         {
             this.Volume = Volume;
-            bgm = new Music("assets/music/" + song + ".wav");
+            bgm = new Music("assets/music/" + song + ".ogg");
             bgm.PlayingOffset = Time.FromMilliseconds(Int32.Parse(File.ReadLines("assets/music/timings").Skip(song).Take(1).First()) + offset);
             bgm.Volume = this.Volume * 100;
             bgm.Play();

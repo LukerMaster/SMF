@@ -45,7 +45,12 @@ namespace SMF
         {
             nextButton.OnClick += f;
         }
-
+        public void SetOnFocus(Action f)
+        {
+            nextButton.OnFocus += f;
+            prevButton.OnFocus += f;
+            labelButton.OnFocus += f;
+        }
         public AdjustButtonSet()
         {
 

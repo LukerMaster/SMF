@@ -9,9 +9,6 @@ namespace SMF
     partial class MenuLevel : Level
     {
         public bool ShowCustomizeMenu;
-        public float MasterSoundVolume = 0.1f;
-        public float MusicSoundVolume = 1.0f;
-        public float SfxSoundVolume = 1.0f;
         public Fish fishForCustomizeMenu;
 
         public bool Exit = false;
@@ -23,16 +20,16 @@ namespace SMF
 
         FishAssetManager assets;
 
-        public FishBase menuFishBase;
+        GameSettings gameSettings = new GameSettings();
+
         public WeaponBuilder weaponBuilder = new WeaponBuilder();
-        public MenuLevel(Instance instance, WindowSettings settings, FishBase fishBase = null)
+        public MenuLevel(Instance instance, WindowSettings settings, GameSettings gameSettings)
         {
             assets = (FishAssetManager)instance.assets;
 
-            if (fishBase == null)
-                menuFishBase = new FishBase(0);
-            else
-                menuFishBase = fishBase;
+            this.gameSettings = gameSettings;
+            if (this.gameSettings == null)
+                this.gameSettings = new GameSettings();
 
             Settings = settings;
             
@@ -43,7 +40,7 @@ namespace SMF
 
             
 
-            fishForCustomizeMenu = (Fish)InstantiateActor(new Fish(menuFishBase));
+            fishForCustomizeMenu = (Fish)InstantiateActor(new Fish(this.gameSettings.playerFishBase));
             fishForCustomizeMenu.Position = new SFML.System.Vector2f(1700, 750);
             fishForCustomizeMenu.Scale = new SFML.System.Vector2f(2.0f, 2.0f);
             fishForCustomizeMenu.FacingLeft = true;
@@ -63,11 +60,11 @@ namespace SMF
 
             if (StartArena)
             {
-                data.InstantiateLevel(new ArenaLevel(menuFishBase, data, Settings, fishForCustomizeMenu.weapon.ID, MasterSoundVolume * MusicSoundVolume));
+                data.InstantiateLevel(new ArenaLevel(data, Settings, gameSettings));
                 data.DestroyLevel(this);
             }
             if (ShowCustomizeMenu && customizeMenu == null)
-                customizeMenu = (CustomizeMenu)InstantiateActor(new CustomizeMenu(menuFishBase));
+                customizeMenu = (CustomizeMenu)InstantiateActor(new CustomizeMenu(this.gameSettings.playerFishBase));
             if (!ShowCustomizeMenu && customizeMenu != null)
             {
                 DestroyActor(customizeMenu);

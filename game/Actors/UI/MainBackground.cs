@@ -24,7 +24,7 @@ namespace SMF
         }
         override protected void Draw(RenderWindow w, Level level, AssetManager assets)
         {
-            FishAssetManager asset = (FishAssetManager)assets;
+            FishAssetBox asset = (FishAssetBox)assets.Assets;
             bg.Texture = asset.GetCustomTexture("assets/maps/0.png");
             title.Texture = asset.GetCustomTexture("assets/menu/title.png");
             bg.Scale = new Vector2f((float)Size.X / bg.Texture.Size.X, (float)Size.Y / bg.Texture.Size.Y);

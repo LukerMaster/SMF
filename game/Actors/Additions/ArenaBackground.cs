@@ -12,7 +12,7 @@ namespace SMF
         protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
             DrawOrder = -2;
-            background.Texture = (assets as FishAssetManager).GetByID(FishAssetManager.EType.Background, 0);
+            background.Texture = (assets.Assets as FishAssetBox).GetByID(FishAssetBox.EType.Background, 0);
             background.Scale = new SFML.System.Vector2f((float)w.GetView().Size.X / background.Texture.Size.X, (float)w.GetView().Size.Y / background.Texture.Size.Y);
             w.Draw(background);
             

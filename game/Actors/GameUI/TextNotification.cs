@@ -26,7 +26,7 @@ namespace SMF
             mainText.CharacterSize = 120;
             mainText.Origin = new SFML.System.Vector2f(0.0f, 1.0f);
             mainText.Position = new SFML.System.Vector2f(w.GetView().Size.X / 2 - mainText.GetGlobalBounds().Width / 2, (w.GetView().Size.Y / 2) + (offset * w.GetView().Size.Y));
-            mainText.Font = (assets as FishAssetManager).GetFont("cute");
+            mainText.Font = (assets.Assets as FishAssetBox).GetFont("cute");
             w.Draw(mainText);
         }
 

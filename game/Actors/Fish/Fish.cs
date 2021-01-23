@@ -158,7 +158,7 @@ namespace SMF
 
         protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
-            sprite.Texture = ((FishAssetManager)assets).GetByID(FishAssetManager.EType.Fish, fishBase.ID);
+            sprite.Texture = ((FishAssetBox)assets.Assets).GetByID(FishAssetBox.EType.Fish, fishBase.ID);
             sprite.TextureRect = new IntRect(0, 0, (int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y);
             sprite.Origin = new Vector2f(sprite.Texture.Size.X / 2, sprite.Texture.Size.Y / 2);
             sprite.Position = Position;

@@ -20,7 +20,7 @@ namespace SMF
         Menu currentMenu;
         CustomizeMenu customizeMenu;
 
-        FishAssetManager assets;
+        FishAssetBox assets;
         MenuMusicPlayer musicPlayer;
 
         GameSettings gameSettings = new GameSettings();
@@ -31,7 +31,7 @@ namespace SMF
             if (File.Exists("assets/music/menu.ogg"))
                 musicPlayer = (MenuMusicPlayer)InstantiateActor(new MenuMusicPlayer(gameSettings));
 
-            assets = (FishAssetManager)instance.assets;
+            assets = (FishAssetBox)instance.AssetMgr.Assets;
 
             this.gameSettings = gameSettings;
             if (this.gameSettings == null)

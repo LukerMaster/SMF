@@ -5,14 +5,14 @@ using SFML.Audio;
 
 namespace SMF
 {
-    public class FishAssetManager : AssetManager
+    public class FishAssetBox : AssetBox
     {
         private Dictionary<EType, Texture[]> textures = new Dictionary<EType, Texture[]>();
         private Dictionary<string, Texture> customTextures = new Dictionary<string, Texture>();
         private Dictionary<string, SoundBuffer> customSounds = new Dictionary<string, SoundBuffer>();
         private Dictionary<string, Font> fonts = new Dictionary<string, Font>();
 
-        public FishAssetManager()
+        public FishAssetBox()
         {
             textures.Add(EType.Background, new Texture[256]);
             textures.Add(EType.Fish, new Texture[256]);

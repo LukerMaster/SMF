@@ -23,7 +23,7 @@ namespace SMF
         Text timer = new Text();
         protected override void Draw(RenderWindow w, Level level = null, AssetManager assets = null)
         {
-            timer.Font = (assets as FishAssetManager).GetFont("cute");
+            timer.Font = (assets.Assets as FishAssetBox).GetFont("cute");
             timer.Origin = new SFML.System.Vector2f(0.5f * timer.GetLocalBounds().Width, 0.0f);
             timer.Position = new SFML.System.Vector2f(level.Settings.ViewSize.X / 2, 20);
             timer.CharacterSize = 70;

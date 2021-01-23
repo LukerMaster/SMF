@@ -19,12 +19,12 @@ namespace SMF
         }
         protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
-            menuSprite.Texture = ((FishAssetManager)assets).GetCustomTexture("assets/menu/custom_menu.png");
+            menuSprite.Texture = ((FishAssetBox)assets.Assets).GetCustomTexture("assets/menu/custom_menu.png");
             menuSprite.Position = new Vector2f(1502, 270);
             menuSprite.Scale = new Vector2f(418.0f / menuSprite.Texture.Size.X, 700.0f / menuSprite.Texture.Size.Y);
             w.Draw(menuSprite);
 
-            upgradeDesription.Font = (assets as FishAssetManager).GetFont("roboto");
+            upgradeDesription.Font = (assets.Assets as FishAssetBox).GetFont("roboto");
             upgradeDesription.Position = new Vector2f(20, 220);
             upgradeDesription.CharacterSize = 35;
             upgradeDesription.FillColor = new Color(255, 255, 255, 255);

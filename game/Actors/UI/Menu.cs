@@ -78,8 +78,8 @@ namespace SMF
 
         protected override void Update(float dt, Level level, AssetManager assets)
         {
-            HoverSound = (assets as FishAssetManager).GetCustomSoundBuffer("assets/sounds/menu_select.wav");
-            ClickSound = (assets as FishAssetManager).GetCustomSoundBuffer("assets/sounds/menu_click.wav");
+            HoverSound = (assets.Assets as FishAssetBox).GetCustomSoundBuffer("assets/sounds/menu_select.wav");
+            ClickSound = (assets.Assets as FishAssetBox).GetCustomSoundBuffer("assets/sounds/menu_click.wav");
 
             if (SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.Up) && KeyboardCooldown == 0) { if (FlipUpDown) CurrentlySelected--; else CurrentlySelected++; keyboardCooldown = 0.2f; }
             if (SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.Down) && KeyboardCooldown == 0) { if (FlipUpDown) CurrentlySelected++; else CurrentlySelected--; keyboardCooldown = 0.2f; }
@@ -112,7 +112,7 @@ namespace SMF
             for (int i = 0; i < componentList.Count; i++)
             {
                 if (componentList[i] is MenuComponentWithText)
-                    ((MenuComponentWithText)componentList[i]).font = ((FishAssetManager)assets).GetFont(fontName);
+                    ((MenuComponentWithText)componentList[i]).font = ((FishAssetBox)assets.Assets).GetFont(fontName);
                 componentList[i].Draw(w);
             }
         }

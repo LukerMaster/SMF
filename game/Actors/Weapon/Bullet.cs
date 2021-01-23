@@ -58,7 +58,7 @@ namespace SMF
 
         protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
-            sprite.Texture = ((FishAssetManager)assets).GetCustomTexture("assets/misc/bullet.png");
+            sprite.Texture = ((FishAssetBox)assets.Assets).GetCustomTexture("assets/misc/bullet.png");
             sprite.Position = Position;
             sprite.Scale = new Vector2f(15 / sprite.Texture.Size.X, 10 / sprite.Texture.Size.Y);
             sprite.Rotation = Rotation;

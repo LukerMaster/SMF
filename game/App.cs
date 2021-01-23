@@ -16,7 +16,7 @@ namespace SMF
             initialSettings.WindowIcon = new SFML.Graphics.Image("assets/icon.png");
 
             SFBF.Engine engine = new SFBF.Engine();
-            engine.Data.assets = new FishAssetManager();
+            engine.SetAssetBoxType(typeof(FishAssetBox));
             engine.Data.InstantiateLevel(new MenuLevel(engine.Data, initialSettings, new GameSettings()));
             engine.Run();
         }
